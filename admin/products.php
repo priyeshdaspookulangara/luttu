@@ -1,14 +1,9 @@
 <?php
-require_once '../includes/db_connect.php';
-require_once '../classes/Database.php';
-require_once '../classes/User.php';
+$page_title = 'Manage Products — Admin';
+require_once '../includes/header.php';
 require_once '../classes/Product.php';
-require_once '../classes/Category.php';
 
-$database = new Database($conn);
-$user = new User($database);
 $prod = new Product($database);
-$cat = new Category($database);
 
 if (!$user->isLoggedIn() || !$user->isAdmin()) {
     header('Location: ../login.php');
@@ -61,20 +56,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 if ($_FILES['product_images']['error'][$i] === 0) {
                     $tmp_name = $_FILES['product_images']['tmp_name'][$i];
                     $size = $_FILES['product_images']['size'][$i];
-
-                    // Requirement: Restrict file sizes (e.g., 2MB)
-                    if ($size > 2 * 1024 * 1024) {
-                        continue; // Skip files larger than 2MB
-                    }
+                    if ($size > 2 * 1024 * 1024) continue;
 
                     $mime_type = mime_content_type($tmp_name);
-                    $allowed_types = [
-                        'image/jpeg' => 'jpg',
-                        'image/png'  => 'png',
-                        'image/gif'  => 'gif',
-                        'image/webp' => 'webp'
-                    ];
-
+                    $allowed_types = ['image/jpeg' => 'jpg', 'image/png' => 'png', 'image/gif' => 'gif', 'image/webp' => 'webp'];
                     if (array_key_exists($mime_type, $allowed_types)) {
                         $ext = $allowed_types[$mime_type];
                         $new_filename = uniqid() . '.' . $ext;
@@ -96,180 +81,153 @@ if (isset($_GET['edit'])) {
     $editing_prod = $prod->getById($_GET['edit']);
 }
 
-$products = $prod->getAll();
-$categories = $cat->getAll();
+$products_list = $prod->getAll();
+$categories_list = $cat->getAll();
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manage Products - Admin</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand" href="dashboard.php">Admin Panel</a>
-            <div class="navbar-nav">
-                <a class="nav-link" href="categories.php">Categories</a>
-                <a class="nav-link active" href="products.php">Products</a>
-                <a class="nav-link" href="pv_settings.php">PV Settings</a>
-                <a class="nav-link" href="withdrawals.php">Withdrawals</a>
-                <a class="nav-link" href="../logout.php">Logout</a>
-            </div>
-        </div>
-    </nav>
-    <div class="container mt-4">
-        <h2>Manage Products</h2>
-        <?php if ($message): ?>
-            <div class="alert alert-success mt-3"><?php echo h($message); ?></div>
-        <?php endif; ?>
+<div class="pg-hero">
+    <div class="pg-hero-eyebrow">Admin Panel</div>
+    <div class="pg-hero-title">Manage <em>Products</em></div>
+</div>
 
-        <div class="card mt-4">
-            <div class="card-header"><?php echo $editing_prod ? 'Edit Product' : 'Add New Product'; ?></div>
-            <div class="card-body">
-                <form method="POST" enctype="multipart/form-data">
-                    <?php csrf_field(); ?>
-                    <input type="hidden" name="action" value="<?php echo $editing_prod ? 'update' : 'create'; ?>">
-                    <?php if ($editing_prod): ?>
-                        <input type="hidden" name="id" value="<?php echo h($editing_prod['id']); ?>">
-                    <?php endif; ?>
-                    <div class="row mb-3">
-                        <div class="col-md-4">
-                            <label class="form-label">Product Name</label>
-                            <input type="text" name="name" class="form-control" value="<?php echo $editing_prod ? h($editing_prod['name']) : ''; ?>" required>
-                        </div>
-                        <div class="col-md-4">
-                            <label class="form-label">Category</label>
-                            <select name="category_id" class="form-select" id="category_id" onchange="loadAttributes()">
-                                <option value="">Select Category</option>
-                                <?php foreach ($categories as $c): ?>
-                                    <option value="<?php echo h($c['id']); ?>" data-attrs='<?php echo h($c['custom_attributes']); ?>' <?php echo ($editing_prod && $editing_prod['category_id'] == $c['id']) ? 'selected' : ''; ?>>
-                                        <?php echo h($c['name']); ?>
-                                    </option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
-                        <div class="col-md-4">
-                            <label class="form-label">Price (Public)</label>
-                            <input type="number" step="0.01" name="price" class="form-control" value="<?php echo $editing_prod ? h($editing_prod['price']) : ''; ?>" required>
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-md-4">
-                            <label class="form-label">Margin Amount (Internal)</label>
-                            <input type="number" step="0.01" name="margin_amount" class="form-control" value="<?php echo $editing_prod ? h($editing_prod['margin_amount']) : ''; ?>" required>
-                        </div>
-                        <div class="col-md-4">
-                            <label class="form-label">PV Value</label>
-                            <input type="number" step="0.01" name="pv_value" class="form-control" value="<?php echo $editing_prod ? h($editing_prod['pv_value']) : ''; ?>" required>
-                        </div>
-                        <div class="col-md-4">
-                            <label class="form-label">Images (Max 2MB per file)</label>
-                            <input type="file" name="product_images[]" class="form-control" multiple>
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-md-4">
-                            <label class="form-label">Brand</label>
-                            <input type="text" name="brand" class="form-control" value="<?php echo $editing_prod ? h($editing_prod['brand']) : ''; ?>">
-                        </div>
-                        <div class="col-md-4">
-                            <label class="form-label">Manufacturer</label>
-                            <input type="text" name="manufacturer" class="form-control" value="<?php echo $editing_prod ? h($editing_prod['manufacturer']) : ''; ?>">
-                        </div>
-                        <div class="col-md-4">
-                            <label class="form-label">Supplier</label>
-                            <input type="text" name="supplier" class="form-control" value="<?php echo $editing_prod ? h($editing_prod['supplier']) : ''; ?>">
-                        </div>
-                    </div>
-                    <div id="dynamic-attributes" class="mb-3">
-                        <?php if ($editing_prod && !empty($editing_prod['attributes'])):
-                            $attrs = json_decode($editing_prod['attributes'], true);
-                            echo '<h5>Custom Attributes</h5><div class="row">';
-                            foreach ($attrs as $key => $val) {
-                                echo '<div class="col-md-3 mb-2">
-                                    <label class="form-label">'.h($key).'</label>
-                                    <input type="hidden" name="attr_key[]" value="'.h($key).'">
-                                    <input type="text" name="attr_val[]" class="form-control" value="'.h($val).'">
-                                </div>';
-                            }
-                            echo '</div>';
-                        endif; ?>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Description</label>
-                        <textarea name="description" class="form-control" rows="3"><?php echo $editing_prod ? h($editing_prod['description']) : ''; ?></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary"><?php echo $editing_prod ? 'Update Product' : 'Add Product'; ?></button>
-                    <?php if ($editing_prod): ?>
-                        <a href="products.php" class="btn btn-secondary">Cancel</a>
-                    <?php endif; ?>
-                </form>
-            </div>
-        </div>
+<div class="section">
+    <?php if ($message): ?>
+        <div style="background:var(--sage);color:var(--white);padding:15px;margin-bottom:20px;border-radius:var(--r);font-size:.9rem"><?php echo h($message); ?></div>
+    <?php endif; ?>
 
-        <table class="table table-striped mt-4">
-            <thead>
+    <div style="background:var(--white);padding:30px;border-radius:var(--r-lg);border:1px solid var(--sand);margin-bottom:40px">
+        <div style="font-size:.62rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#888;margin-bottom:20px"><?php echo $editing_prod ? 'Edit Product' : 'Add New Product'; ?></div>
+        <form method="POST" enctype="multipart/form-data">
+            <?php csrf_field(); ?>
+            <input type="hidden" name="action" value="<?php echo $editing_prod ? 'update' : 'create'; ?>">
+            <?php if ($editing_prod): ?>
+                <input type="hidden" name="id" value="<?php echo h($editing_prod['id']); ?>">
+            <?php endif; ?>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:20px">
+                <div class="form-field">
+                    <label class="form-label">Product Name</label>
+                    <input type="text" name="name" class="form-input" value="<?php echo $editing_prod ? h($editing_prod['name']) : ''; ?>" required>
+                </div>
+                <div class="form-field">
+                    <label class="form-label">Category</label>
+                    <select name="category_id" class="form-input" id="category_id" onchange="loadAttributes()" style="appearance:auto">
+                        <option value="">Select Category</option>
+                        <?php foreach ($categories_list as $c): ?>
+                            <option value="<?php echo h($c['id']); ?>" data-attrs='<?php echo h($c['custom_attributes']); ?>' <?php echo ($editing_prod && $editing_prod['category_id'] == $c['id']) ? 'selected' : ''; ?>>
+                                <?php echo h($c['name']); ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <div class="form-field">
+                    <label class="form-label">Price (₹)</label>
+                    <input type="number" step="0.01" name="price" class="form-input" value="<?php echo $editing_prod ? h($editing_prod['price']) : ''; ?>" required>
+                </div>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:20px">
+                <div class="form-field">
+                    <label class="form-label">Margin Amount (₹)</label>
+                    <input type="number" step="0.01" name="margin_amount" class="form-input" value="<?php echo $editing_prod ? h($editing_prod['margin_amount']) : ''; ?>" required>
+                </div>
+                <div class="form-field">
+                    <label class="form-label">PV Value</label>
+                    <input type="number" step="0.01" name="pv_value" class="form-input" value="<?php echo $editing_prod ? h($editing_prod['pv_value']) : ''; ?>" required>
+                </div>
+                <div class="form-field">
+                    <label class="form-label">Images (Max 2MB)</label>
+                    <input type="file" name="product_images[]" class="form-input" multiple style="padding:10px">
+                </div>
+            </div>
+            <div id="dynamic-attributes" class="mb-3">
+                <?php if ($editing_prod && !empty($editing_prod['attributes'])):
+                    $attrs = json_decode($editing_prod['attributes'], true);
+                    echo '<h5>Custom Attributes</h5><div style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-bottom:20px">';
+                    foreach ($attrs as $key => $val) {
+                        echo '<div class="form-field">
+                            <label class="form-label">'.h($key).'</label>
+                            <input type="hidden" name="attr_key[]" value="'.h($key).'">
+                            <input type="text" name="attr_val[]" class="form-input" value="'.h($val).'">
+                        </div>';
+                    }
+                    echo '</div>';
+                endif; ?>
+            </div>
+            <div class="form-field">
+                <label class="form-label">Description</label>
+                <textarea name="description" class="form-input" rows="3"><?php echo $editing_prod ? h($editing_prod['description']) : ''; ?></textarea>
+            </div>
+            <div style="display:flex;gap:10px">
+                <button type="submit" class="btn btn-terra"><?php echo $editing_prod ? 'Update' : 'Add'; ?></button>
+                <?php if ($editing_prod): ?>
+                    <a href="products.php" class="btn btn-outline">Cancel</a>
+                <?php endif; ?>
+            </div>
+        </form>
+    </div>
+
+    <div style="background:var(--white);border-radius:var(--r-lg);border:1px solid var(--sand);overflow:hidden">
+        <table style="width:100%;border-collapse:collapse;font-size:.85rem">
+            <thead style="background:var(--cream);color:#888;font-size:.72rem;text-transform:uppercase;letter-spacing:1px">
                 <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Category</th>
-                    <th>Price</th>
-                    <th>PV</th>
-                    <th>Actions</th>
+                    <th style="padding:12px 24px;text-align:left">ID</th>
+                    <th style="padding:12px 24px;text-align:left">Product</th>
+                    <th style="padding:12px 24px;text-align:left">Category</th>
+                    <th style="padding:12px 24px;text-align:left">Price</th>
+                    <th style="padding:12px 24px;text-align:left">PV Value</th>
+                    <th style="padding:12px 24px;text-align:left">Actions</th>
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($products as $p): ?>
-                <tr>
-                    <td><?php echo h($p['id']); ?></td>
-                    <td><?php echo h($p['name']); ?></td>
-                    <td><?php echo h($p['category_name']); ?></td>
-                    <td><?php echo h($p['price']); ?></td>
-                    <td><?php echo h($p['pv_value']); ?></td>
-                    <td>
-                        <a href="?edit=<?php echo h($p['id']); ?>" class="btn btn-sm btn-info">Edit</a>
-                        <form method="POST" style="display:inline-block">
-                            <?php csrf_field(); ?>
-                            <input type="hidden" name="action" value="delete">
-                            <input type="hidden" name="id" value="<?php echo h($p['id']); ?>">
-                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
-                        </form>
+                <?php foreach ($products_list as $p): ?>
+                <tr style="border-bottom:1px solid var(--sand)">
+                    <td style="padding:12px 24px"><?php echo h($p['id']); ?></td>
+                    <td style="padding:12px 24px;font-weight:700"><?php echo h($p['name']); ?></td>
+                    <td style="padding:12px 24px"><?php echo h($p['category_name']); ?></td>
+                    <td style="padding:12px 24px">₹<?php echo h($p['price']); ?></td>
+                    <td style="padding:12px 24px"><?php echo h($p['pv_value']); ?> PV</td>
+                    <td style="padding:12px 24px">
+                        <div style="display:flex;gap:8px">
+                            <a href="?edit=<?php echo h($p['id']); ?>" class="btn btn-ghost btn-sm" style="color:var(--sky)">Edit</a>
+                            <form method="POST" onsubmit="return confirm('Are you sure?')">
+                                <?php csrf_field(); ?>
+                                <input type="hidden" name="action" value="delete">
+                                <input type="hidden" name="id" value="<?php echo h($p['id']); ?>">
+                                <button type="submit" class="btn btn-ghost btn-sm" style="color:var(--terra)">Delete</button>
+                            </form>
+                        </div>
                     </td>
                 </tr>
                 <?php endforeach; ?>
             </tbody>
         </table>
     </div>
+</div>
 
-    <script>
-    function loadAttributes() {
-        const select = document.getElementById('category_id');
-        const selectedOption = select.options[select.selectedIndex];
-        const attrContainer = document.getElementById('dynamic-attributes');
-        if (selectedOption.dataset.attrs) {
-            const attrs = JSON.parse(selectedOption.dataset.attrs);
-            if (attrs && attrs.length > 0) {
-                let html = '<h5>Custom Attributes</h5><div class="row">';
-                attrs.forEach(attr => {
-                    html += `<div class="col-md-3 mb-2">
-                        <label class="form-label">${attr}</label>
-                        <input type="hidden" name="attr_key[]" value="${attr}">
-                        <input type="text" name="attr_val[]" class="form-control" placeholder="Value for ${attr}">
-                    </div>`;
-                });
-                html += '</div>';
-                attrContainer.innerHTML = html;
-            } else {
-                attrContainer.innerHTML = '';
-            }
+<script>
+function loadAttributes() {
+    const select = document.getElementById('category_id');
+    const selectedOption = select.options[select.selectedIndex];
+    const attrContainer = document.getElementById('dynamic-attributes');
+    if (selectedOption.dataset.attrs) {
+        const attrs = JSON.parse(selectedOption.dataset.attrs);
+        if (attrs && attrs.length > 0) {
+            let html = '<h5>Custom Attributes</h5><div style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-bottom:20px">';
+            attrs.forEach(attr => {
+                html += `<div class="form-field">
+                    <label class="form-label">${attr}</label>
+                    <input type="hidden" name="attr_key[]" value="${attr}">
+                    <input type="text" name="attr_val[]" class="form-input" placeholder="Value for ${attr}">
+                </div>`;
+            });
+            html += '</div>';
+            attrContainer.innerHTML = html;
         } else {
             attrContainer.innerHTML = '';
         }
+    } else {
+        attrContainer.innerHTML = '';
     }
-    </script>
-</body>
-</html>
+}
+</script>
+
+<?php require_once '../includes/footer.php'; ?>

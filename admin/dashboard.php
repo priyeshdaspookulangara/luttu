@@ -1,59 +1,40 @@
 <?php
-require_once '../includes/db_connect.php';
-require_once '../classes/Database.php';
-require_once '../classes/User.php';
-
-$database = new Database($conn);
-$user = new User($database);
+$page_title = 'Admin Dashboard — ShopPV';
+require_once '../includes/header.php';
 
 if (!$user->isLoggedIn() || !$user->isAdmin()) {
     header('Location: ../login.php');
     exit;
 }
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard - PV Wallet</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand" href="#">Admin Panel</a>
-            <div class="navbar-nav">
-                <a class="nav-link" href="categories.php">Categories</a>
-                <a class="nav-link" href="products.php">Products</a>
-                <a class="nav-link" href="pv_settings.php">PV Settings</a>
-                <a class="nav-link" href="withdrawals.php">Withdrawals</a>
-                <a class="nav-link" href="../logout.php">Logout</a>
-            </div>
+
+<div class="pg-hero">
+    <div class="pg-hero-eyebrow">Admin Panel</div>
+    <div class="pg-hero-title">Admin <em>Dashboard</em></div>
+</div>
+
+<div class="section">
+    <div class="prod-grid" style="grid-template-columns:repeat(4,1fr);margin-bottom:40px">
+        <div style="background:var(--ink);color:var(--white);padding:30px;border-radius:var(--r-lg)">
+            <div style="font-size:.62rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--terra);margin-bottom:10px">Quick Nav</div>
+            <a href="categories.php" class="btn btn-ghost btn-sm" style="width:100%;margin-bottom:8px">Categories</a>
+            <a href="products.php" class="btn btn-ghost btn-sm" style="width:100%;margin-bottom:8px">Products</a>
+            <a href="pv_settings.php" class="btn btn-ghost btn-sm" style="width:100%;margin-bottom:8px">PV Settings</a>
+            <a href="withdrawals.php" class="btn btn-ghost btn-sm" style="width:100%">Withdrawals</a>
         </div>
-    </nav>
-    <div class="container mt-4">
-        <h2>Dashboard</h2>
-        <div class="row mt-4">
-            <div class="col-md-3">
-                <div class="card bg-primary text-white p-3">
-                    <h5>Total Orders</h5>
-                    <h3>0</h3>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card bg-success text-white p-3">
-                    <h5>Total PV Issued</h5>
-                    <h3>0</h3>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card bg-warning text-dark p-3">
-                    <h5>Pending Withdrawals</h5>
-                    <h3>0</h3>
-                </div>
-            </div>
+        <div style="background:var(--white);padding:30px;border-radius:var(--r-lg);border:1px solid var(--sand)">
+            <div style="font-size:.62rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#888;margin-bottom:10px">Total PV Issued</div>
+            <h1 style="font-family:var(--display);font-size:3rem;color:var(--ink)">0 PV</h1>
+        </div>
+        <div style="background:var(--white);padding:30px;border-radius:var(--r-lg);border:1px solid var(--sand)">
+            <div style="font-size:.62rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#888;margin-bottom:10px">Pending Withdrawals</div>
+            <h1 style="font-family:var(--display);font-size:3rem;color:var(--terra)">0</h1>
+        </div>
+        <div style="background:var(--white);padding:30px;border-radius:var(--r-lg);border:1px solid var(--sand)">
+            <div style="font-size:.62rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#888;margin-bottom:10px">Active Users</div>
+            <h1 style="font-family:var(--display);font-size:3rem;color:var(--ink)">0</h1>
         </div>
     </div>
-</body>
-</html>
+</div>
+
+<?php require_once '../includes/footer.php'; ?>

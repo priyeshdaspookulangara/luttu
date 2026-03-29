@@ -29,57 +29,56 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 }
+
+$page_title = 'Register - ShopPV';
+require_once 'includes/header.php';
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register - PV Wallet E-Commerce</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body class="bg-light">
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-4">
-                <div class="card shadow">
-                    <div class="card-header bg-success text-white">
-                        <h4 class="mb-0 text-center">Register</h4>
-                    </div>
-                    <div class="card-body">
-                        <?php if ($error): ?>
-                            <div class="alert alert-danger"><?php echo h($error); ?></div>
-                        <?php endif; ?>
-                        <?php if ($success): ?>
-                            <div class="alert alert-success"><?php echo $success; ?></div>
-                        <?php endif; ?>
-                        <form method="POST">
-                            <div class="mb-3">
-                                <label for="username" class="form-label">Username</label>
-                                <input type="text" class="form-control" id="username" name="username" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="email" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="email" name="email" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="password" class="form-label">Password</label>
-                                <input type="password" class="form-control" id="password" name="password" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="confirm_password" class="form-label">Confirm Password</label>
-                                <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
-                            </div>
-                            <button type="submit" class="btn btn-success w-100">Register</button>
-                        </form>
-                        <div class="mt-3 text-center">
-                            Already have an account? <a href="login.php">Login here</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<!-- ════════════════════════ LOGIN ═════════════════════════════ -->
+<div class="page active" id="register">
+  <div class="login-outer">
+    <div class="login-visual">
+      <img src="https://images.unsplash.com/photo-1599490659213-e2b9527bd087?auto=format&fit=crop&q=80&w=800" class="abs-img" alt="Register Background" style="opacity: 0.2;">
+      <div>
+        <div class="login-visual-quote">"Start your<br><em>reward journey.</em>"</div>
+        <p class="login-visual-sub">Create your account and start earning Reward Points (PV) on every order. It's time to shop smart.</p>
+      </div>
     </div>
-</body>
-</html>
+    <div class="login-form-wrap">
+      <div class="login-form-inner">
+        <div class="login-form-title">Join<br>ShopPV</div>
+        <p class="login-form-sub">Create your free account today</p>
+
+        <?php if ($error): ?>
+            <div style="background:var(--terra);color:var(--white);padding:10px;margin-bottom:20px;border-radius:var(--r);font-size:.85rem"><?php echo h($error); ?></div>
+        <?php endif; ?>
+        <?php if ($success): ?>
+            <div style="background:var(--sage);color:var(--white);padding:10px;margin-bottom:20px;border-radius:var(--r);font-size:.85rem"><?php echo $success; ?></div>
+        <?php endif; ?>
+
+        <form method="POST">
+            <div class="form-field">
+                <label class="form-label">Username</label>
+                <input type="text" name="username" class="form-input" placeholder="Choose a username" required>
+            </div>
+            <div class="form-field">
+                <label class="form-label">Email</label>
+                <input type="email" name="email" class="form-input" placeholder="you@example.com" required>
+            </div>
+            <div class="form-field">
+                <label class="form-label">Password</label>
+                <input type="password" name="password" class="form-input" placeholder="••••••••" required>
+            </div>
+            <div class="form-field">
+                <label class="form-label">Confirm Password</label>
+                <input type="password" name="confirm_password" class="form-input" placeholder="••••••••" required>
+            </div>
+            <button type="submit" class="btn btn-fill" style="width:100%;justify-content:center">Register Now</button>
+        </form>
+        <p style="font-size:.82rem;color:#999;text-align:center;margin-top:20px">Already have an account? <a href="login.php" style="color:var(--terra);font-weight:600">Sign in here →</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<?php require_once 'includes/footer.php'; ?>

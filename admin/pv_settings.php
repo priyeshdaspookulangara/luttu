@@ -1,10 +1,6 @@
 <?php
-require_once '../includes/db_connect.php';
-require_once '../classes/Database.php';
-require_once '../classes/User.php';
-
-$database = new Database($conn);
-$user = new User($database);
+$page_title = 'PV Settings — Admin';
+require_once '../includes/header.php';
 
 if (!$user->isLoggedIn() || !$user->isAdmin()) {
     header('Location: ../login.php');
@@ -31,82 +27,63 @@ $sql = "SELECT * FROM pv_settings ORDER BY effective_from DESC";
 $all_settings = $database->query($sql);
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PV Settings - Admin</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand" href="dashboard.php">Admin Panel</a>
-            <div class="navbar-nav">
-                <a class="nav-link" href="categories.php">Categories</a>
-                <a class="nav-link" href="products.php">Products</a>
-                <a class="nav-link active" href="pv_settings.php">PV Settings</a>
-                <a class="nav-link" href="withdrawals.php">Withdrawals</a>
-                <a class="nav-link" href="../logout.php">Logout</a>
-            </div>
-        </div>
-    </nav>
-    <div class="container mt-4">
-        <h2>PV Conversion Settings</h2>
-        <?php if ($message): ?>
-            <div class="alert alert-success mt-3"><?php echo h($message); ?></div>
-        <?php endif; ?>
+<div class="pg-hero">
+    <div class="pg-hero-eyebrow">Admin Panel</div>
+    <div class="pg-hero-title">PV Conversion <em>Settings</em></div>
+</div>
 
-        <div class="card mt-4">
-            <div class="card-header">Set New PV Rate</div>
-            <div class="card-body">
-                <form method="POST">
-                    <?php csrf_field(); ?>
-                    <div class="row">
-                        <div class="col-md-3">
-                            <label class="form-label">Cash per 1 PV</label>
-                            <input type="number" step="0.01" name="cash_per_pv" class="form-control" required>
-                        </div>
-                        <div class="col-md-3">
-                            <label class="form-label">Min Withdrawal (PV)</label>
-                            <input type="number" step="0.01" name="min_withdrawal" class="form-control" required>
-                        </div>
-                        <div class="col-md-3">
-                            <label class="form-label">Effective From</label>
-                            <input type="date" name="effective_from" class="form-control" value="<?php echo date('Y-m-d'); ?>" required>
-                        </div>
-                        <div class="col-md-3 d-flex align-items-end">
-                            <button type="submit" class="btn btn-primary w-100">Update</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
+<div class="section">
+    <?php if ($message): ?>
+        <div style="background:var(--sage);color:var(--white);padding:15px;margin-bottom:20px;border-radius:var(--r);font-size:.9rem"><?php echo h($message); ?></div>
+    <?php endif; ?>
 
-        <h4 class="mt-5">Settings History</h4>
-        <table class="table table-striped mt-3">
-            <thead>
+    <div style="background:var(--white);padding:30px;border-radius:var(--r-lg);border:1px solid var(--sand);margin-bottom:40px">
+        <div style="font-size:.62rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#888;margin-bottom:20px">Set New PV Rate</div>
+        <form method="POST">
+            <?php csrf_field(); ?>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:20px">
+                <div class="form-field">
+                    <label class="form-label">Cash per 1 PV (₹)</label>
+                    <input type="number" step="0.01" name="cash_per_pv" class="form-input" required>
+                </div>
+                <div class="form-field">
+                    <label class="form-label">Min Withdrawal (PV)</label>
+                    <input type="number" step="0.01" name="min_withdrawal" class="form-input" required>
+                </div>
+                <div class="form-field">
+                    <label class="form-label">Effective From</label>
+                    <input type="date" name="effective_from" class="form-input" value="<?php echo date('Y-m-d'); ?>" required>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-terra">Update Settings</button>
+        </form>
+    </div>
+
+    <div style="background:var(--white);border-radius:var(--r-lg);border:1px solid var(--sand);overflow:hidden">
+        <div style="background:var(--cream);padding:16px 24px;border-bottom:1px solid var(--sand);font-weight:700;font-size:.8rem;text-transform:uppercase;letter-spacing:1px">Settings History</div>
+        <table style="width:100%;border-collapse:collapse;font-size:.85rem">
+            <thead style="background:var(--cream);color:#888;font-size:.72rem;text-transform:uppercase;letter-spacing:1px">
                 <tr>
-                    <th>ID</th>
-                    <th>Cash per PV</th>
-                    <th>Min Withdrawal</th>
-                    <th>Effective From</th>
-                    <th>Created At</th>
+                    <th style="padding:12px 24px;text-align:left">ID</th>
+                    <th style="padding:12px 24px;text-align:left">Cash per PV</th>
+                    <th style="padding:12px 24px;text-align:left">Min Withdrawal</th>
+                    <th style="padding:12px 24px;text-align:left">Effective From</th>
+                    <th style="padding:12px 24px;text-align:left">Created At</th>
                 </tr>
             </thead>
             <tbody>
                 <?php foreach ($all_settings as $s): ?>
-                <tr>
-                    <td><?php echo h($s['id']); ?></td>
-                    <td><?php echo h($s['cash_per_pv']); ?></td>
-                    <td><?php echo h($s['min_withdrawal']); ?></td>
-                    <td><?php echo h($s['effective_from']); ?></td>
-                    <td><?php echo h($s['created_at']); ?></td>
+                <tr style="border-bottom:1px solid var(--sand)">
+                    <td style="padding:12px 24px"><?php echo h($s['id']); ?></td>
+                    <td style="padding:12px 24px;font-weight:700">₹<?php echo h($s['cash_per_pv']); ?></td>
+                    <td style="padding:12px 24px"><?php echo h($s['min_withdrawal']); ?> PV</td>
+                    <td style="padding:12px 24px"><?php echo h($s['effective_from']); ?></td>
+                    <td style="padding:12px 24px;color:#888"><?php echo h($s['created_at']); ?></td>
                 </tr>
                 <?php endforeach; ?>
             </tbody>
         </table>
     </div>
-</body>
-</html>
+</div>
+
+<?php require_once '../includes/footer.php'; ?>

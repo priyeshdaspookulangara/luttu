@@ -43,41 +43,38 @@ if ($res->num_rows === 0) {
     // Already processed
     $success = true;
 }
+
+$page_title = 'Checkout Success - ShopPV';
+require_once 'includes/header.php';
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkout Success - PV Wallet</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body class="bg-light text-center py-5">
-    <div class="container">
+<!-- ════════════════════════ SUCCESS ═════════════════════════════ -->
+<div class="page active" id="success" style="padding:100px 0; text-align:center;">
+    <div style="max-width:600px;margin:0 auto;background:var(--white);padding:60px;border-radius:var(--r-lg);box-shadow:0 10px 40px rgba(0,0,0,0.05);border:1px solid var(--sand);">
         <?php if ($success): ?>
-            <div class="card shadow p-5">
-                <div class="mb-4">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" class="bi bi-check-circle-fill text-success" viewBox="0 0 16 16">
-                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
-                    </svg>
-                </div>
-                <h1 class="mb-3">Payment Successful!</h1>
-                <p class="lead mb-4">Your order <strong><?php echo h($order_id); ?></strong> has been placed.</p>
-                <div class="alert alert-info">
-                    <h4 class="mb-0">You earned <strong><?php echo h($pv_value); ?> PV</strong> rewards!</h4>
-                </div>
-                <div class="mt-4">
-                    <a href="index.php" class="btn btn-primary me-3">Back to Shop</a>
-                    <a href="user/dashboard.php" class="btn btn-outline-primary">View Wallet</a>
-                </div>
+            <div style="margin-bottom:30px">
+                <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="currentColor" class="bi bi-check-circle-fill text-success" viewBox="0 0 16 16" style="color:var(--sage)">
+                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                </svg>
+            </div>
+            <h1 class="pdp-title" style="font-size:3rem">Payment Successful!</h1>
+            <p style="font-size:1.1rem;color:#777;margin-bottom:30px">Your order <strong><?php echo h($order_id); ?></strong> has been placed securely.</p>
+
+            <div style="background:var(--cream);padding:30px;border-radius:var(--r-lg);margin-bottom:40px;border:1.5px solid var(--sand)">
+                <div style="font-size:.65rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--terra);margin-bottom:10px">Your Rewards</div>
+                <h2 style="font-family:var(--display);font-size:2.5rem;color:var(--ink)">Earned <strong><?php echo h($pv_value); ?> PV</strong> Rewards!</h2>
+            </div>
+
+            <div style="display:flex;gap:16px;justify-content:center">
+                <a href="index.php" class="btn btn-fill">Back to Shop</a>
+                <a href="user/dashboard.php" class="btn btn-outline">View Wallet</a>
             </div>
         <?php else: ?>
-            <div class="alert alert-danger">
-                <h4>Payment Failed. Please try again.</h4>
-                <a href="index.php" class="btn btn-secondary mt-3">Back to Shop</a>
-            </div>
+            <h1 class="pdp-title">Payment Failed.</h1>
+            <p>Please try again or contact support.</p>
+            <a href="index.php" class="btn btn-terra mt-4">Back to Shop</a>
         <?php endif; ?>
     </div>
-</body>
-</html>
+</div>
+
+<?php require_once 'includes/footer.php'; ?>
