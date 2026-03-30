@@ -421,3 +421,15 @@ footer{background:var(--ink);color:var(--white)}
 }
 .pg-hero-title{font-family:var(--display);font-size:clamp(2.5rem,5vw,4rem);color:var(--white);letter-spacing:1px}
 .pg-hero-title em{color:var(--terra);font-style:italic;font-family:var(--serif)}
+
+/* MODAL FIXES */
+.mega-wrap.open {
+    display: block !important;
+    opacity: 1 !important;
+    pointer-events: all !important;
+    transform: translateY(0) !important;
+}
+
+.nav-item.open::after {
+    transform: scaleX(1);
+}

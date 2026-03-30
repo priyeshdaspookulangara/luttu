@@ -3,30 +3,39 @@ function nav(url){
   window.location.href = url;
 }
 
-// MEGA MENU
-const trigger=document.getElementById('menuTrigger');
-const mega=document.getElementById('megaMenu');
-if (trigger && mega) {
-    trigger.addEventListener('mouseenter',()=>{trigger.classList.add('open');mega.classList.add('open')});
-    const navBar = document.querySelector('nav');
-    if (navBar) {
-        navBar.addEventListener('mouseleave',()=>{trigger.classList.remove('open');mega.classList.remove('open')});
-    }
-    mega.addEventListener('mouseenter',()=>{trigger.classList.add('open');mega.classList.add('open')});
-    mega.addEventListener('mouseleave',()=>{trigger.classList.remove('open');mega.classList.remove('open')});
-}
+// MEGA MENU - Robust Implementation
+document.addEventListener('DOMContentLoaded', () => {
+    const trigger = document.getElementById('menuTrigger');
+    const mega = document.getElementById('megaMenu');
+    let timeout;
 
-function closeMega(){
     if (trigger && mega) {
-        trigger.classList.remove('open');mega.classList.remove('open')
+        const show = () => {
+            clearTimeout(timeout);
+            trigger.classList.add('open');
+            mega.classList.add('open');
+        };
+
+        const hide = () => {
+            timeout = setTimeout(() => {
+                trigger.classList.remove('open');
+                mega.classList.remove('open');
+            }, 150);
+        };
+
+        trigger.addEventListener('mouseenter', show);
+        trigger.addEventListener('mouseleave', hide);
+        mega.addEventListener('mouseenter', show);
+        mega.addEventListener('mouseleave', hide);
     }
-}
+});
 
 // CART TOAST
 function showToast(message = "Added to cart"){
   const t=document.getElementById('toast');
   if (t) {
-      t.querySelector('.toast-text').textContent = message;
+      const textEl = t.querySelector('.toast-text');
+      if (textEl) textEl.textContent = message;
       t.classList.add('show');
       setTimeout(()=>t.classList.remove('show'),2400);
   }
@@ -54,9 +63,9 @@ function setThumb(el,imgUrl){
 }
 
 // SIZE CHIPS
-document.querySelectorAll('.size-chip').forEach(chip=>{
-  chip.addEventListener('click',()=>{
-    document.querySelectorAll('.size-chip').forEach(c=>c.classList.remove('active'));
-    chip.classList.add('active');
-  });
+document.addEventListener('click', (e) => {
+    if (e.target.classList.contains('size-chip')) {
+        document.querySelectorAll('.size-chip').forEach(c => c.classList.remove('active'));
+        e.target.classList.add('active');
+    }
 });
