@@ -12,12 +12,16 @@
         </div>
       </div>
       <div class="footer-links">
+        <?php
+        $current_dir = basename(getcwd());
+        $rel_path = ($current_dir == 'admin' || $current_dir == 'user') ? '../' : './';
+        ?>
         <div class="footer-col">
           <div class="footer-col-title">Shop</div>
           <ul>
-            <li><a href="<?php echo $base_url; ?>index.php">All Products</a></li>
-            <li><a href="<?php echo $base_url; ?>user/dashboard.php">My Wallet</a></li>
-            <li><a href="<?php echo $base_url; ?>admin/dashboard.php">Admin Panel</a></li>
+            <li><a href="<?php echo $rel_path; ?>index.php">All Products</a></li>
+            <li><a href="<?php echo $rel_path; ?>user/dashboard.php">My Wallet</a></li>
+            <li><a href="<?php echo $rel_path; ?>admin/dashboard.php">Admin Panel</a></li>
           </ul>
         </div>
         <div class="footer-col">
@@ -39,6 +43,6 @@
     </div>
   </footer>
 
-<script src="<?php echo $base_url; ?>assets/js/scripts.js"></script>
+<script src="<?php echo $rel_path; ?>assets/js/scripts.js"></script>
 </body>
 </html>
