@@ -8,7 +8,12 @@ $database = new Database($conn);
 $prod = new Product($database);
 $user = new User($database);
 
-$id = $_GET['id'] ?? null;
+$id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+if ($id <= 0) {
+    header('Location: index.php');
+    exit;
+}
+
 $p = $prod->getById($id);
 
 if (!$p) {
@@ -16,7 +21,14 @@ if (!$p) {
     exit;
 }
 
-$images = $prod->getImages($p['id']);
+$images_res = $prod->getImages($p['id']);
+$images = [];
+if ($images_res) {
+    while ($img = $images_res->fetch_assoc()) {
+        $images[] = $img;
+    }
+}
+
 $attributes = json_decode($p['attributes'], true);
 
 $page_title = h($p['name']);
@@ -34,26 +46,29 @@ require_once 'includes/header.php';
       <div class="pdp-gallery">
         <div class="pdp-main">
           <?php
-            $primary_image = 'https://via.placeholder.com/500';
+            $primary_image = 'https://via.placeholder.com/500x500';
             foreach ($images as $img) {
                 if ($img['is_primary']) {
                     $primary_image = $img['image_path'];
                     break;
                 }
             }
+            if ($primary_image == 'https://via.placeholder.com/500x500' && !empty($images)) {
+                $primary_image = $images[0]['image_path'];
+            }
           ?>
           <img src="<?php echo h($primary_image); ?>" class="abs-img" id="pdpMainImg" alt="Product Image">
         </div>
         <div class="pdp-thumbs">
           <?php foreach ($images as $img): ?>
-            <div class="pdp-thumb <?php echo $img['is_primary'] ? 'active' : ''; ?>" onclick="setThumb(this,'<?php echo h($img['image_path']); ?>')">
+            <div class="pdp-thumb <?php echo ($img['image_path'] == $primary_image) ? 'active' : ''; ?>" onclick="setThumb(this,'<?php echo h($img['image_path']); ?>')">
               <img src="<?php echo h($img['image_path']); ?>" class="img-cover" alt="Thumb">
             </div>
           <?php endforeach; ?>
         </div>
       </div>
       <div class="pdp-info">
-        <div class="pdp-breadcrumb"><a onclick="nav('index.php')">Home</a> · <a><?php echo h($p['category_name']); ?></a> · <?php echo h($p['name']); ?></div>
+        <div class="pdp-breadcrumb"><a href="index.php">Home</a> · <a><?php echo h($p['category_name'] ?? 'General'); ?></a> · <?php echo h($p['name']); ?></div>
         <div class="pdp-tag">🔥 Earn <?php echo h($p['pv_value']); ?> PV</div>
         <h1 class="pdp-title"><?php echo h($p['name']); ?></h1>
         <p class="pdp-sub"><?php echo nl2br(h($p['description'])); ?></p>
@@ -80,7 +95,6 @@ require_once 'includes/header.php';
 
         <form action="checkout.php" method="POST">
           <input type="hidden" name="product_id" value="<?php echo h($p['id']); ?>">
-          <input type="hidden" name="order_id" value="<?php echo 'ORD-' . strtoupper(uniqid()); ?>">
           <div class="qty-row">
             <span class="qty-label">Qty</span>
             <div class="qty-ctrl">
