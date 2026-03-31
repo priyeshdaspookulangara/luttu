@@ -12,14 +12,26 @@ class Product {
         return $this->db->insert($sql, [$category_id, $name, $description, $price, $margin_amount, $pv_value, $brand, $manufacturer, $supplier, json_encode($attributes)], "issdddssss");
     }
 
-    public function getAll() {
+    public function getAll($category_id = null) {
+        $params = [];
+        $types = "";
         $sql = "SELECT p.*, c.name as category_name FROM products p LEFT JOIN categories c ON p.category_id = c.id";
-        return $this->db->query($sql);
+
+        if ($category_id) {
+            $sql .= " WHERE p.category_id = ?";
+            $params[] = $category_id;
+            $types = "i";
+        }
+
+        $sql .= " ORDER BY p.created_at DESC";
+
+        return $this->db->query($sql, $params, $types);
     }
 
     public function getById($id) {
         $sql = "SELECT p.*, c.name as category_name FROM products p LEFT JOIN categories c ON p.category_id = c.id WHERE p.id = ?";
-        return $this->db->query($sql, [$id], "i")->fetch_assoc();
+        $result = $this->db->query($sql, [$id], "i");
+        return $result ? $result->fetch_assoc() : null;
     }
 
     public function addImage($product_id, $image_path, $is_primary = 0) {

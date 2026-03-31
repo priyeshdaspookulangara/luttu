@@ -8,15 +8,10 @@ $database = new Database($conn);
 $prod = new Product($database);
 $user = new User($database);
 
-$category_filter = $_GET['category'] ?? null;
-if ($category_filter) {
-    // Basic filtering logic if needed, but for now getAll returns all
-    $products = $prod->getAll(); // In a real app, I'd filter this
-} else {
-    $products = $prod->getAll();
-}
+$category_filter = !empty($_GET['category']) ? (int)$_GET['category'] : null;
+$products_result = $prod->getAll($category_filter);
 
-$page_title = 'ShopPV — Snack Different';
+$page_title = 'ShopPV — Reward Your Crunch';
 require_once 'includes/header.php';
 ?>
 
@@ -73,18 +68,22 @@ require_once 'includes/header.php';
   <div class="section" id="featured">
     <div class="section-header">
       <h2 class="section-title">The Full <em>Lineup</em></h2>
-      <a class="section-link">View All</a>
+      <a class="section-link" href="index.php">View All</a>
     </div>
     <div class="prod-grid">
-      <?php foreach ($products as $p):
-          $images = $prod->getImages($p['id']);
-          $primary_image = 'https://via.placeholder.com/200';
-          foreach ($images as $img) {
-              if ($img['is_primary']) {
-                  $primary_image = $img['image_path'];
-                  break;
+      <?php
+      if ($products_result && $products_result->num_rows > 0):
+          while ($p = $products_result->fetch_assoc()):
+              $images = $prod->getImages($p['id']);
+              $primary_image = 'https://via.placeholder.com/400x500';
+              if ($images) {
+                  foreach ($images as $img) {
+                      if ($img['is_primary']) {
+                          $primary_image = $img['image_path'];
+                          break;
+                      }
+                  }
               }
-          }
       ?>
       <div class="prod-card" onclick="window.location.href='product_detail.php?id=<?php echo h($p['id']); ?>'">
         <div class="prod-card-img">
@@ -100,7 +99,16 @@ require_once 'includes/header.php';
             </div>
         </div>
       </div>
-      <?php endforeach; ?>
+      <?php
+          endwhile;
+      else:
+      ?>
+          <div style="grid-column: 1 / -1; text-align:center; padding:100px 0; background:var(--white); border-radius:var(--r-lg); border:1px solid var(--sand)">
+              <h3 style="font-family:var(--display); font-size:2rem; margin-bottom:10px">No products found</h3>
+              <p style="color:#999">We are restocking our inventory. Check back soon!</p>
+              <a href="index.php" class="btn btn-terra mt-4">View All Products</a>
+          </div>
+      <?php endif; ?>
     </div>
   </div>
 
