@@ -20,75 +20,80 @@ $base_url = $protocol . $_SERVER['HTTP_HOST'] . rtrim(str_replace(['/admin', '/u
 <html lang="en" dir="ltr">
 <head>
     <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title><?php echo isset($page_title) ? h($page_title) : 'ShopPV Admin'; ?></title>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <meta name="robots" content="noindex">
+
+    <!-- App CSS (Hospital Template) -->
+    <link type="text/css" href="css/simplebar.min.css" rel="stylesheet">
+    <link type="text/css" href="css/app.css" rel="stylesheet">
+    <link type="text/css" href="css/vendor-material-icons.css" rel="stylesheet">
+    <link type="text/css" href="css/vendor-fontawesome-free.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link type="text/css" href="css/vendor-flatpickr.css" rel="stylesheet">
+    <link type="text/css" href="css/vendor-flatpickr-airbnb.css" rel="stylesheet">
+
+    <!-- ShopPV Admin Custom Styles -->
     <link rel="stylesheet" href="<?php echo $base_url; ?>assets/css/admin.css">
+
     <style>
-        .mdk-drawer-layout { display: flex; min-height: 100vh; }
-        .mdk-drawer { width: 260px; flex-shrink: 0; }
-        .mdk-drawer-layout__content { flex-grow: 1; padding: 20px; }
-        .navbar { background: #212529; color: #fff; padding: 10px 20px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 1000; }
-        .navbar-brand { color: #fff; text-decoration: none; font-weight: 700; font-size: 1.25rem; display: flex; align-items: center; gap: 10px; }
+        /* Alignment with hospital layout */
+        .mdk-drawer-layout__content { padding-bottom: 60px; }
+        .navbar-main { border-bottom: 1px solid rgba(255,255,255,.1); }
     </style>
 </head>
 <body class="layout-default">
 
-    <div class="navbar">
-        <a href="<?php echo $base_url; ?>admin/dashboard.php" class="navbar-brand">
-            <i class="fas fa-user-shield"></i>
-            <span>ShopPV Admin</span>
-        </a>
-        <div style="display:flex; align-items:center; gap:20px">
-            <span style="font-size:.85rem; color:rgba(255,255,255,.6)">Logged in as <strong><?php echo h($_SESSION['username']); ?></strong></span>
-            <a href="<?php echo $base_url; ?>logout.php" style="color:#fff; text-decoration:none; font-size:.85rem"><i class="fas fa-sign-out-alt"></i> Logout</a>
-        </div>
-    </div>
+    <div class="preloader"></div>
 
-    <div class="mdk-drawer-layout">
-        <!-- Sidebar -->
-        <div class="mdk-drawer sidebar-light" id="default-drawer">
-            <div class="sidebar-heading" style="padding: 24px; font-size: .65rem; text-transform: uppercase; color: #aaa; letter-spacing: 1.5px;">Menu</div>
-            <ul class="sidebar-menu" style="list-style:none; padding:0">
-                <li class="sidebar-menu-item <?php echo strpos($_SERVER['PHP_SELF'], 'dashboard.php') !== false ? 'active' : ''; ?>">
-                    <a class="sidebar-menu-button" href="dashboard.php">
-                        <i class="sidebar-menu-icon fas fa-chart-pie"></i>
-                        <span class="sidebar-menu-text">Dashboard</span>
-                    </a>
-                </li>
-                <li class="sidebar-menu-item <?php echo strpos($_SERVER['PHP_SELF'], 'categories.php') !== false ? 'active' : ''; ?>">
-                    <a class="sidebar-menu-button" href="categories.php">
-                        <i class="sidebar-menu-icon fas fa-folder"></i>
-                        <span class="sidebar-menu-text">Categories</span>
-                    </a>
-                </li>
-                <li class="sidebar-menu-item <?php echo strpos($_SERVER['PHP_SELF'], 'products.php') !== false ? 'active' : ''; ?>">
-                    <a class="sidebar-menu-button" href="products.php">
-                        <i class="sidebar-menu-icon fas fa-box"></i>
-                        <span class="sidebar-menu-text">Products</span>
-                    </a>
-                </li>
-                <li class="sidebar-menu-item <?php echo strpos($_SERVER['PHP_SELF'], 'pv_settings.php') !== false ? 'active' : ''; ?>">
-                    <a class="sidebar-menu-button" href="pv_settings.php">
-                        <i class="sidebar-menu-icon fas fa-cog"></i>
-                        <span class="sidebar-menu-text">PV Settings</span>
-                    </a>
-                </li>
-                <li class="sidebar-menu-item <?php echo strpos($_SERVER['PHP_SELF'], 'withdrawals.php') !== false ? 'active' : ''; ?>">
-                    <a class="sidebar-menu-button" href="withdrawals.php">
-                        <i class="sidebar-menu-icon fas fa-money-bill-wave"></i>
-                        <span class="sidebar-menu-text">Withdrawals</span>
-                    </a>
-                </li>
-                <li class="sidebar-menu-item">
-                    <a class="sidebar-menu-button" href="<?php echo $base_url; ?>index.php">
-                        <i class="sidebar-menu-icon fas fa-external-link-alt"></i>
-                        <span class="sidebar-menu-text">View Frontend</span>
-                    </a>
-                </li>
-            </ul>
+    <div class="mdk-header-layout js-mdk-header-layout">
+        <!-- Header -->
+        <div id="header" class="mdk-header js-mdk-header m-0" data-fixed="">
+            <div class="mdk-header__content">
+                <div class="navbar navbar-expand-sm navbar-main navbar-dark bg-dark pr-0" id="navbar" data-primary="">
+                    <div class="container-fluid p-0">
+                        <button class="navbar-toggler navbar-toggler-right d-block d-md-none" type="button" data-toggle="sidebar">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <a href="dashboard.php" class="navbar-brand">
+                            <i class="fas fa-user-shield mr-2"></i>
+                            <span>ShopPV Admin</span>
+                        </a>
+
+                        <ul class="nav navbar-nav ml-auto d-none d-md-flex">
+                            <li class="nav-item">
+                                <a href="<?php echo $base_url; ?>index.php" class="nav-link" title="View Storefront">
+                                    <i class="material-icons">store</i>
+                                </a>
+                            </li>
+                        </ul>
+
+                        <ul class="nav navbar-nav d-none d-sm-flex border-left navbar-height align-items-center">
+                            <li class="nav-item dropdown">
+                                <a href="#account_menu" class="nav-link dropdown-toggle" data-toggle="dropdown" data-caret="false">
+                                    <span class="ml-1 d-flex-inline">
+                                        <span class="text-light"><?php echo h($_SESSION['username']); ?></span>
+                                    </span>
+                                </a>
+                                <div id="account_menu" class="dropdown-menu dropdown-menu-right">
+                                    <div class="dropdown-item-text dropdown-item-text--lh">
+                                        <div><strong>Admin User</strong></div>
+                                    </div>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item active" href="dashboard.php">Dashboard</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="<?php echo $base_url; ?>logout.php">Logout</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <div class="mdk-drawer-layout__content page">
-            <div class="container-fluid page__container">
+        <div class="mdk-header-layout__content">
+            <div class="mdk-drawer-layout js-mdk-drawer-layout" data-push="" data-responsive-width="992px">
+                <div class="mdk-drawer-layout__content page">
+                    <div class="container-fluid page__container">
