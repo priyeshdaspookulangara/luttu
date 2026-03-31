@@ -9,12 +9,17 @@ class Database {
     public function query($sql, $params = [], $types = "") {
         $stmt = $this->conn->prepare($sql);
         if ($stmt === false) {
-            throw new Exception("Error preparing statement: " . $this->conn->error);
+            throw new Exception("Error preparing statement: " . $this->conn->error . " SQL: " . $sql);
         }
 
         if ($params) {
             if (empty($types)) {
-                $types = str_repeat('s', count($params));
+                $types = "";
+                foreach ($params as $param) {
+                    if (is_int($param)) $types .= "i";
+                    elseif (is_double($param)) $types .= "d";
+                    else $types .= "s";
+                }
             }
             $stmt->bind_param($types, ...$params);
         }
@@ -24,8 +29,17 @@ class Database {
         }
 
         $result = $stmt->get_result();
+
+        $data = [];
+        if ($result) {
+            while ($row = $result->fetch_assoc()) {
+                $data[] = $row;
+            }
+            $result->free();
+        }
+
         $stmt->close();
-        return $result;
+        return $data; // Now always returns an ARRAY
     }
 
     public function insert($sql, $params = [], $types = "") {
@@ -69,7 +83,7 @@ class Database {
 
         $affected_rows = $stmt->affected_rows;
         $stmt->close();
-        return $affected_rows >= 0; // Return true if query executed successfully
+        return $affected_rows >= 0;
     }
 }
 ?>

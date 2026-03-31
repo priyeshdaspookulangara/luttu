@@ -13,12 +13,13 @@ class Category {
 
     public function getAll() {
         $sql = "SELECT * FROM categories ORDER BY name ASC";
-        return $this->db->query($sql);
+        return $this->db->query($sql); // Returns array
     }
 
     public function getById($id) {
         $sql = "SELECT * FROM categories WHERE id = ?";
-        return $this->db->query($sql, [$id], "i")->fetch_assoc();
+        $res = $this->db->query($sql, [$id], "i");
+        return !empty($res) ? $res[0] : null;
     }
 
     public function update($id, $name, $parent_id = null, $custom_attributes = null) {

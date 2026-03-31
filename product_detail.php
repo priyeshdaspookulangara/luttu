@@ -1,8 +1,4 @@
 <?php
-// Report all errors for debugging
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
 require_once 'includes/db_connect.php';
 require_once 'classes/Database.php';
 require_once 'classes/Product.php';
@@ -13,32 +9,19 @@ $prod = new Product($database);
 $user = new User($database);
 
 $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
-echo "<!-- Debug: Product ID = $id -->";
-
 if ($id <= 0) {
-    echo "<h1>Invalid Product ID</h1>";
+    header('Location: index.php');
     exit;
 }
 
-try {
-    $p = $prod->getById($id);
-} catch (Exception $e) {
-    die("Database error: " . $e->getMessage());
-}
+$p = $prod->getById($id);
 
 if (!$p) {
-    echo "<h1>Product not found (ID: $id)</h1>";
+    header('Location: index.php');
     exit;
 }
 
-$images_res = $prod->getImages($p['id']);
-$images = [];
-if ($images_res) {
-    while ($img = $images_res->fetch_assoc()) {
-        $images[] = $img;
-    }
-}
-
+$images = $prod->getImages($p['id']);
 $attributes = json_decode($p['attributes'], true);
 
 $page_title = h($p['name']);
@@ -57,24 +40,28 @@ require_once 'includes/header.php';
         <div class="pdp-main">
           <?php
             $primary_image = 'https://via.placeholder.com/500x500';
-            foreach ($images as $img) {
-                if ($img['is_primary']) {
-                    $primary_image = $img['image_path'];
-                    break;
+            if (!empty($images)) {
+                foreach ($images as $img) {
+                    if ($img['is_primary']) {
+                        $primary_image = $img['image_path'];
+                        break;
+                    }
                 }
-            }
-            if ($primary_image == 'https://via.placeholder.com/500x500' && !empty($images)) {
-                $primary_image = $images[0]['image_path'];
+                if ($primary_image == 'https://via.placeholder.com/500x500') {
+                    $primary_image = $images[0]['image_path'];
+                }
             }
           ?>
           <img src="<?php echo h($primary_image); ?>" class="abs-img" id="pdpMainImg" alt="Product Image">
         </div>
         <div class="pdp-thumbs">
-          <?php foreach ($images as $img): ?>
-            <div class="pdp-thumb <?php echo ($img['image_path'] == $primary_image) ? 'active' : ''; ?>" onclick="setThumb(this,'<?php echo h($img['image_path']); ?>')">
-              <img src="<?php echo h($img['image_path']); ?>" class="img-cover" alt="Thumb">
-            </div>
-          <?php endforeach; ?>
+          <?php if (!empty($images)): ?>
+              <?php foreach ($images as $img): ?>
+                <div class="pdp-thumb <?php echo ($img['image_path'] == $primary_image) ? 'active' : ''; ?>" onclick="setThumb(this,'<?php echo h($img['image_path']); ?>')">
+                  <img src="<?php echo h($img['image_path']); ?>" class="img-cover" alt="Thumb">
+                </div>
+              <?php endforeach; ?>
+          <?php endif; ?>
         </div>
       </div>
       <div class="pdp-info">

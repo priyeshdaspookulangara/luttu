@@ -24,14 +24,13 @@ class Product {
         }
 
         $sql .= " ORDER BY p.created_at DESC";
-
         return $this->db->query($sql, $params, $types);
     }
 
     public function getById($id) {
         $sql = "SELECT p.*, c.name as category_name FROM products p LEFT JOIN categories c ON p.category_id = c.id WHERE p.id = ?";
-        $result = $this->db->query($sql, [$id], "i");
-        return $result ? $result->fetch_assoc() : null;
+        $res = $this->db->query($sql, [$id], "i");
+        return !empty($res) ? $res[0] : null;
     }
 
     public function addImage($product_id, $image_path, $is_primary = 0) {
