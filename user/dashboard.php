@@ -1,8 +1,8 @@
 <?php
-require_once '../includes/db_connect.php';
-require_once '../classes/Database.php';
-require_once '../classes/User.php';
-require_once '../classes/Wallet.php';
+require_once __DIR__ . '/../includes/db_connect.php';
+require_once __DIR__ . '/../classes/Database.php';
+require_once __DIR__ . '/../classes/User.php';
+require_once __DIR__ . '/../classes/Wallet.php';
 
 $database = new Database($conn);
 $user = new User($database);
@@ -19,7 +19,7 @@ $error = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $amount_pv = $_POST['amount_pv'] ?? 0;
-    if ($wallet->createWithdrawalRequest($user_id, $amount_pv)) {
+    if ($wallet->createWithdrawalRequest($user_id, (float)$amount_pv)) {
         $message = "Withdrawal request submitted successfully!";
     } else {
         $error = "Failed to submit request. Check your balance and threshold.";
@@ -31,11 +31,11 @@ $settings = $wallet->getCurrentPVSettings();
 $cash_per_pv = $settings['cash_per_pv'] ?? 0;
 $min_threshold = $settings['min_withdrawal'] ?? 0;
 $balance_cash = $balance_pv * $cash_per_pv;
-$transactions = $wallet->getTransactions($user_id);
-$withdrawals = $wallet->getWithdrawalRequests($user_id);
+$transactions = $wallet->getTransactions($user_id); // Returns Array
+$withdrawals = $wallet->getWithdrawalRequests($user_id); // Returns Array
 
 $page_title = 'User Dashboard — My PV Wallet';
-require_once '../includes/header.php';
+require_once __DIR__ . '/../includes/header.php';
 ?>
 
 <div class="pg-hero">
@@ -85,18 +85,22 @@ require_once '../includes/header.php';
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($transactions as $t): ?>
-                        <tr style="border-bottom:1px solid var(--sand)">
-                            <td style="padding:12px 24px"><?php echo date('Y-m-d H:i', strtotime($t['created_at'])); ?></td>
-                            <td style="padding:12px 24px">
-                                <span style="background:<?php echo $t['transaction_type'] === 'credit' ? 'var(--sage)' : 'var(--terra)'; ?>;color:var(--white);padding:2px 8px;border-radius:50px;font-size:.65rem;font-weight:700;text-transform:uppercase">
-                                    <?php echo h($t['transaction_type']); ?>
-                                </span>
-                            </td>
-                            <td style="padding:12px 24px;font-weight:700"><?php echo ($t['transaction_type'] === 'credit' ? '+' : '-') . h($t['amount_pv']); ?></td>
-                            <td style="padding:12px 24px"><?php echo h($t['description']); ?></td>
-                        </tr>
-                        <?php endforeach; ?>
+                        <?php if (!empty($transactions)): ?>
+                            <?php foreach ($transactions as $t): ?>
+                            <tr style="border-bottom:1px solid var(--sand)">
+                                <td style="padding:12px 24px"><?php echo date('Y-m-d H:i', strtotime($t['created_at'])); ?></td>
+                                <td style="padding:12px 24px">
+                                    <span style="background:<?php echo $t['transaction_type'] === 'credit' ? 'var(--sage)' : 'var(--terra)'; ?>;color:var(--white);padding:2px 8px;border-radius:50px;font-size:.65rem;font-weight:700;text-transform:uppercase">
+                                        <?php echo h($t['transaction_type']); ?>
+                                    </span>
+                                </td>
+                                <td style="padding:12px 24px;font-weight:700"><?php echo ($t['transaction_type'] === 'credit' ? '+' : '-') . h($t['amount_pv']); ?></td>
+                                <td style="padding:12px 24px"><?php echo h($t['description']); ?></td>
+                            </tr>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <tr><td colspan="4" style="text-align:center; padding:20px; color:#aaa">No transactions yet.</td></tr>
+                        <?php endif; ?>
                     </tbody>
                 </table>
             </div>
@@ -114,19 +118,23 @@ require_once '../includes/header.php';
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($withdrawals as $w): ?>
-                        <tr style="border-bottom:1px solid var(--sand)">
-                            <td style="padding:12px 24px"><?php echo date('Y-m-d', strtotime($w['requested_at'])); ?></td>
-                            <td style="padding:12px 24px;font-weight:700"><?php echo h($w['amount_pv']); ?></td>
-                            <td style="padding:12px 24px">
-                                <span style="background:<?php
-                                    echo $w['status'] === 'pending' ? '#f59e0b' : ($w['status'] === 'approved' ? 'var(--sage)' : 'var(--terra)');
-                                ?>;color:var(--white);padding:2px 8px;border-radius:50px;font-size:.65rem;font-weight:700;text-transform:uppercase">
-                                    <?php echo h($w['status']); ?>
-                                </span>
-                            </td>
-                        </tr>
-                        <?php endforeach; ?>
+                        <?php if (!empty($withdrawals)): ?>
+                            <?php foreach ($withdrawals as $w): ?>
+                            <tr style="border-bottom:1px solid var(--sand)">
+                                <td style="padding:12px 24px"><?php echo date('Y-m-d', strtotime($w['requested_at'])); ?></td>
+                                <td style="padding:12px 24px;font-weight:700"><?php echo h($w['amount_pv']); ?></td>
+                                <td style="padding:12px 24px">
+                                    <span style="background:<?php
+                                        echo $w['status'] === 'pending' ? '#f59e0b' : ($w['status'] === 'approved' ? 'var(--sage)' : 'var(--terra)');
+                                    ?>;color:var(--white);padding:2px 8px;border-radius:50px;font-size:.65rem;font-weight:700;text-transform:uppercase">
+                                        <?php echo h($w['status']); ?>
+                                    </span>
+                                </td>
+                            </tr>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <tr><td colspan="3" style="text-align:center; padding:20px; color:#aaa">No withdrawal requests.</td></tr>
+                        <?php endif; ?>
                     </tbody>
                 </table>
             </div>
@@ -134,4 +142,4 @@ require_once '../includes/header.php';
     </div>
 </div>
 
-<?php require_once '../includes/footer.php'; ?>
+<?php require_once __DIR__ . '/../includes/footer.php'; ?>

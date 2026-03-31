@@ -1,18 +1,18 @@
 <?php
-require_once 'includes/db_connect.php';
-require_once 'classes/Database.php';
-require_once 'classes/Product.php';
-require_once 'classes/User.php';
+require_once __DIR__ . '/includes/db_connect.php';
+require_once __DIR__ . '/classes/Database.php';
+require_once __DIR__ . '/classes/Product.php';
+require_once __DIR__ . '/classes/User.php';
 
 $database = new Database($conn);
 $prod = new Product($database);
 $user = new User($database);
 
 $category_filter = !empty($_GET['category']) ? (int)$_GET['category'] : null;
-$products_list = $prod->getAll($category_filter);
+$products_list = $prod->getAll($category_filter); // Returns Array
 
 $page_title = 'ShopPV — Reward Your Crunch';
-require_once 'includes/header.php';
+require_once __DIR__ . '/includes/header.php';
 ?>
 
 <!-- ═══════════════════════════ HOME ═══════════════════════════ -->
@@ -77,7 +77,7 @@ require_once 'includes/header.php';
               $primary_image = 'https://via.placeholder.com/400x500';
               if (!empty($images)) {
                   foreach ($images as $img) {
-                      if ($img['is_primary']) {
+                      if (isset($img['is_primary']) && $img['is_primary']) {
                           $primary_image = $img['image_path'];
                           break;
                       }
@@ -110,4 +110,4 @@ require_once 'includes/header.php';
   </div>
 
 </div>
-<?php require_once 'includes/footer.php'; ?>
+<?php require_once __DIR__ . '/includes/footer.php'; ?>

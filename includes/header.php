@@ -1,9 +1,9 @@
 <?php
-require_once __DIR__ . '/db_connect.php';
-require_once __DIR__ . '/../classes/Database.php';
-require_once __DIR__ . '/../classes/User.php';
-require_once __DIR__ . '/../classes/Category.php';
-require_once __DIR__ . '/../classes/Wallet.php';
+require_once __DIR__ . '/includes/db_connect.php';
+require_once __DIR__ . '/classes/Database.php';
+require_once __DIR__ . '/classes/User.php';
+require_once __DIR__ . '/classes/Category.php';
+require_once __DIR__ . '/classes/Wallet.php';
 
 $database = new Database($conn);
 $user = new User($database);
@@ -19,7 +19,7 @@ $script_path = dirname($_SERVER['SCRIPT_NAME']);
 $project_root = str_replace(['/admin', '/user'], '', $script_path);
 $base_url = $protocol . $host . rtrim($project_root, '/') . '/';
 
-$categories_nav = $cat->getAll();
+$categories_nav = $cat->getAll(); // Returns Array
 ?>
 <!DOCTYPE html>
 <html lang="en">

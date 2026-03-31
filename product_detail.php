@@ -1,8 +1,8 @@
 <?php
-require_once 'includes/db_connect.php';
-require_once 'classes/Database.php';
-require_once 'classes/Product.php';
-require_once 'classes/User.php';
+require_once __DIR__ . '/includes/db_connect.php';
+require_once __DIR__ . '/classes/Database.php';
+require_once __DIR__ . '/classes/Product.php';
+require_once __DIR__ . '/classes/User.php';
 
 $database = new Database($conn);
 $prod = new Product($database);
@@ -21,11 +21,12 @@ if (!$p) {
     exit;
 }
 
+// Fixed: Database::query now returns an array, so getImages() returns an array.
 $images = $prod->getImages($p['id']);
-$attributes = json_decode($p['attributes'], true);
+$attributes = json_decode($p['attributes'] ?? '', true);
 
 $page_title = h($p['name']);
-require_once 'includes/header.php';
+require_once __DIR__ . '/includes/header.php';
 ?>
 
 <!-- ═══════════════════════════ PDP ════════════════════════════ -->
@@ -42,12 +43,12 @@ require_once 'includes/header.php';
             $primary_image = 'https://via.placeholder.com/500x500';
             if (!empty($images)) {
                 foreach ($images as $img) {
-                    if ($img['is_primary']) {
+                    if (isset($img['is_primary']) && $img['is_primary']) {
                         $primary_image = $img['image_path'];
                         break;
                     }
                 }
-                if ($primary_image == 'https://via.placeholder.com/500x500') {
+                if ($primary_image == 'https://via.placeholder.com/500x500' && isset($images[0]['image_path'])) {
                     $primary_image = $images[0]['image_path'];
                 }
             }
@@ -76,7 +77,7 @@ require_once 'includes/header.php';
         </div>
         <div class="pdp-stock">In Stock — Reward Points: <?php echo h($p['pv_value']); ?> PV</div>
 
-        <?php if (!empty($attributes)): ?>
+        <?php if (!empty($attributes) && is_array($attributes)): ?>
         <div style="font-size:.72rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#888;margin-bottom:10px">Specifications</div>
         <div style="margin-bottom:24px">
             <table class="table table-sm" style="width:100%;font-size:.85rem;border-collapse:collapse">
@@ -114,4 +115,4 @@ require_once 'includes/header.php';
   </div>
 </div>
 
-<?php require_once 'includes/footer.php'; ?>
+<?php require_once __DIR__ . '/includes/footer.php'; ?>
