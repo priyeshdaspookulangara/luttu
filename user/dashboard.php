@@ -1,6 +1,12 @@
 <?php
-$page_title = 'User Dashboard — My PV Wallet';
-require_once '../includes/header.php';
+require_once '../includes/db_connect.php';
+require_once '../classes/Database.php';
+require_once '../classes/User.php';
+require_once '../classes/Wallet.php';
+
+$database = new Database($conn);
+$user = new User($database);
+$wallet = new Wallet($database);
 
 if (!$user->isLoggedIn()) {
     header('Location: ../login.php');
@@ -27,6 +33,9 @@ $min_threshold = $settings['min_withdrawal'] ?? 0;
 $balance_cash = $balance_pv * $cash_per_pv;
 $transactions = $wallet->getTransactions($user_id);
 $withdrawals = $wallet->getWithdrawalRequests($user_id);
+
+$page_title = 'User Dashboard — My PV Wallet';
+require_once '../includes/header.php';
 ?>
 
 <div class="pg-hero">

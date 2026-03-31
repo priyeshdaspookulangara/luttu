@@ -1,11 +1,18 @@
 <?php
-$page_title = 'Admin Dashboard — ShopPV';
-require_once '../includes/header.php';
+require_once '../includes/db_connect.php';
+require_once '../classes/Database.php';
+require_once '../classes/User.php';
+
+$database = new Database($conn);
+$user = new User($database);
 
 if (!$user->isLoggedIn() || !$user->isAdmin()) {
     header('Location: ../login.php');
     exit;
 }
+
+$page_title = 'Admin Dashboard — ShopPV';
+require_once '../includes/header.php';
 ?>
 
 <div class="pg-hero">
