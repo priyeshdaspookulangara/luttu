@@ -56,22 +56,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $message = 'Product updated successfully!';
             }
 
-            // Image Upload Logic
+            // Image Upload
             if (!empty($_FILES['product_images']['name'][0])) {
                 $upload_dir = '../assets/uploads/';
                 if (!is_dir($upload_dir)) mkdir($upload_dir, 0777, true);
-
                 foreach ($_FILES['product_images']['name'] as $i => $filename) {
                     if ($_FILES['product_images']['error'][$i] === 0) {
                         $tmp_name = $_FILES['product_images']['tmp_name'][$i];
                         $size = $_FILES['product_images']['size'][$i];
                         if ($size > 2 * 1024 * 1024) continue;
-
                         $mime_type = mime_content_type($tmp_name);
                         $allowed = ['image/jpeg' => 'jpg', 'image/png' => 'png', 'image/gif' => 'gif', 'image/webp' => 'webp'];
                         if (array_key_exists($mime_type, $allowed)) {
-                            $ext = $allowed[$mime_type];
-                            $new_fn = uniqid() . '.' . $ext;
+                            $new_fn = uniqid() . '.' . $allowed[$mime_type];
                             if (move_uploaded_file($tmp_name, $upload_dir . $new_fn)) {
                                 $prod->addImage($product_id, 'assets/uploads/' . $new_fn, $i === 0);
                             }
@@ -104,11 +101,11 @@ require_once __DIR__ . '/includes/header.php';
     <div class="flex">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
-                <li class="breadcrumb-item"><a href="dashboard.php">Admin</a></li>
+                <li class="breadcrumb-item"><a href="dashboard.php">Home</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Products</li>
             </ol>
         </nav>
-        <h1 class="m-0">Manage Products</h1>
+        <h1 class="m-0">Inventory Management</h1>
     </div>
 </div>
 
@@ -120,7 +117,7 @@ require_once __DIR__ . '/includes/header.php';
 <?php endif; ?>
 
 <div class="card">
-    <div class="card-header bg-white">
+    <div class="card-header card-header-large bg-white">
         <h4 class="card-header__title"><?php echo $editing_prod ? 'Edit Product' : 'Register New Product'; ?></h4>
     </div>
     <div class="card-body form-card">
@@ -133,7 +130,7 @@ require_once __DIR__ . '/includes/header.php';
 
             <div class="form-group">
                 <label>Product Name</label>
-                <input type="text" name="name" class="form-control-admin" value="<?php echo $editing_prod ? h($editing_prod['name']) : ''; ?>" required placeholder="e.g. Fiery Chilli Crisps">
+                <input type="text" name="name" class="form-control-admin" value="<?php echo $editing_prod ? h($editing_prod['name']) : ''; ?>" required placeholder="Product name">
             </div>
 
             <div class="form-group">
@@ -154,32 +151,32 @@ require_once __DIR__ . '/includes/header.php';
             </div>
 
             <div class="form-group">
-                <label>Internal Margin (₹)</label>
+                <label>Margin (₹)</label>
                 <input type="number" step="0.01" name="margin_amount" class="form-control-admin" value="<?php echo $editing_prod ? h($editing_prod['margin_amount']) : ''; ?>" required>
             </div>
 
             <div class="form-group">
-                <label>PV Reward Value</label>
+                <label>PV Value</label>
                 <input type="number" step="0.01" name="pv_value" class="form-control-admin" value="<?php echo $editing_prod ? h($editing_prod['pv_value']) : ''; ?>" required>
             </div>
 
             <div class="form-group">
                 <label>Brand</label>
-                <input type="text" name="brand" class="form-control-admin" value="<?php echo $editing_prod ? h($editing_prod['brand']) : ''; ?>" placeholder="e.g. Luttu">
+                <input type="text" name="brand" class="form-control-admin" value="<?php echo $editing_prod ? h($editing_prod['brand']) : ''; ?>" placeholder="Brand">
             </div>
 
             <div class="form-group">
                 <label>Manufacturer</label>
-                <input type="text" name="manufacturer" class="form-control-admin" value="<?php echo $editing_prod ? h($editing_prod['manufacturer']) : ''; ?>" placeholder="e.g. Luttu Kitchens">
+                <input type="text" name="manufacturer" class="form-control-admin" value="<?php echo $editing_prod ? h($editing_prod['manufacturer']) : ''; ?>" placeholder="Manufacturer">
             </div>
 
             <div class="form-group">
                 <label>Supplier</label>
-                <input type="text" name="supplier" class="form-control-admin" value="<?php echo $editing_prod ? h($editing_prod['supplier']) : ''; ?>" placeholder="e.g. Direct Sourcing">
+                <input type="text" name="supplier" class="form-control-admin" value="<?php echo $editing_prod ? h($editing_prod['supplier']) : ''; ?>" placeholder="Supplier">
             </div>
 
             <div class="form-group">
-                <label>Product Images (Max 2MB)</label>
+                <label>Images (Max 2MB)</label>
                 <input type="file" name="product_images[]" class="form-control-admin" multiple style="padding:7px">
             </div>
 
@@ -200,13 +197,13 @@ require_once __DIR__ . '/includes/header.php';
 
             <div class="form-group" style="grid-column: 1 / -1">
                 <label>Description</label>
-                <textarea name="description" class="form-control-admin" rows="3" placeholder="Describe the product..."><?php echo $editing_prod ? h($editing_prod['description']) : ''; ?></textarea>
+                <textarea name="description" class="form-control-admin" rows="3" placeholder="Description"><?php echo $editing_prod ? h($editing_prod['description']) : ''; ?></textarea>
             </div>
 
             <div style="grid-column: 1 / -1; display:flex; gap:10px">
-                <button type="submit" style="width:auto; padding: 12px 40px"><?php echo $editing_prod ? 'Update Product' : 'Register Product'; ?></button>
+                <button type="submit" style="width:auto; padding: 10px 40px"><?php echo $editing_prod ? 'Update Product' : 'Register Product'; ?></button>
                 <?php if ($editing_prod): ?>
-                    <a href="products.php" class="btn" style="background:#6c757d; color:#fff; padding:12px 30px; border-radius:5px; text-decoration:none; font-size:1rem">Cancel</a>
+                    <a href="products.php" class="btn" style="background:#6c757d; color:#fff; padding:10px 30px; border-radius:5px; text-decoration:none">Cancel</a>
                 <?php endif; ?>
             </div>
         </form>
@@ -214,7 +211,7 @@ require_once __DIR__ . '/includes/header.php';
 </div>
 
 <div class="card">
-    <div class="card-header bg-white">
+    <div class="card-header card-header-large bg-white">
         <h4 class="card-header__title">Active Inventory</h4>
     </div>
     <div class="card-body" style="padding:0">
@@ -253,7 +250,7 @@ require_once __DIR__ . '/includes/header.php';
                         </tr>
                         <?php endforeach; ?>
                     <?php else: ?>
-                        <tr><td colspan="6" style="text-align:center; padding:30px; color:#aaa">No products found in inventory.</td></tr>
+                        <tr><td colspan="6" style="text-align:center; padding:30px; color:#aaa">No products found.</td></tr>
                     <?php endif; ?>
                 </tbody>
             </table>
@@ -267,7 +264,6 @@ function loadAttributes() {
     const selectedOption = select.options[select.selectedIndex];
     const attrContainer = document.getElementById('dynamic-attributes');
     attrContainer.innerHTML = '';
-
     const attrData = selectedOption.getAttribute('data-attrs');
     if (attrData && attrData !== 'null' && attrData !== '') {
         try {
@@ -280,9 +276,7 @@ function loadAttributes() {
                     attrContainer.appendChild(div);
                 });
             }
-        } catch (e) {
-            console.error("Error parsing attributes:", e);
-        }
+        } catch (e) {}
     }
 }
 </script>

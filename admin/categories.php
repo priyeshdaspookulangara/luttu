@@ -56,11 +56,11 @@ require_once __DIR__ . '/includes/header.php';
     <div class="flex">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
-                <li class="breadcrumb-item"><a href="dashboard.php">Admin</a></li>
+                <li class="breadcrumb-item"><a href="dashboard.php">Home</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Categories</li>
             </ol>
         </nav>
-        <h1 class="m-0">Manage Categories</h1>
+        <h1 class="m-0">Category Management</h1>
     </div>
 </div>
 
@@ -69,8 +69,8 @@ require_once __DIR__ . '/includes/header.php';
 <?php endif; ?>
 
 <div class="card">
-    <div class="card-header bg-white">
-        <h4 class="card-header__title"><?php echo $editing_cat ? 'Edit Category' : 'Add New Category'; ?></h4>
+    <div class="card-header card-header-large bg-white">
+        <h4 class="card-header__title"><?php echo $editing_cat ? 'Edit Category' : 'Register New Category'; ?></h4>
     </div>
     <div class="card-body form-card">
         <form method="POST">
@@ -81,7 +81,7 @@ require_once __DIR__ . '/includes/header.php';
             <?php endif; ?>
             <div class="form-group">
                 <label>Category Name</label>
-                <input type="text" name="name" class="form-control-admin" value="<?php echo $editing_cat ? h($editing_cat['name']) : ''; ?>" required placeholder="e.g. Snacks">
+                <input type="text" name="name" class="form-control-admin" value="<?php echo $editing_cat ? h($editing_cat['name']) : ''; ?>" required placeholder="e.g. Spicy Snacks">
             </div>
             <div class="form-group">
                 <label>Parent Category</label>
@@ -96,7 +96,7 @@ require_once __DIR__ . '/includes/header.php';
             </div>
             <div class="form-group">
                 <label>Custom Attributes (comma separated)</label>
-                <input type="text" name="custom_attributes" class="form-control-admin" placeholder="e.g. Spice Level, Pack Weight" value="<?php
+                <input type="text" name="custom_attributes" class="form-control-admin" placeholder="e.g. Spice Level, Weight" value="<?php
                     if ($editing_cat) {
                         $attrs = json_decode($editing_cat['custom_attributes'], true);
                         echo !empty($attrs) ? h(implode(', ', $attrs)) : '';
@@ -104,7 +104,7 @@ require_once __DIR__ . '/includes/header.php';
                 ?>">
             </div>
             <div style="grid-column: 1 / -1; display:flex; gap:10px">
-                <button type="submit" style="width:auto; padding: 10px 30px"><?php echo $editing_cat ? 'Update Category' : 'Register Category'; ?></button>
+                <button type="submit" style="width:auto; padding: 10px 30px"><?php echo $editing_cat ? 'Update Category' : 'Save Category'; ?></button>
                 <?php if ($editing_cat): ?>
                     <a href="categories.php" class="btn" style="background:#6c757d; color:#fff; padding:10px 30px; border-radius:5px; text-decoration:none">Cancel</a>
                 <?php endif; ?>
@@ -114,7 +114,7 @@ require_once __DIR__ . '/includes/header.php';
 </div>
 
 <div class="card">
-    <div class="card-header bg-white">
+    <div class="card-header card-header-large bg-white">
         <h4 class="card-header__title">Existing Categories</h4>
     </div>
     <div class="card-body" style="padding:0">
@@ -123,35 +123,39 @@ require_once __DIR__ . '/includes/header.php';
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Category Name</th>
+                        <th>Name</th>
                         <th>Parent</th>
                         <th>Attributes</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($categories_list as $c): ?>
-                    <tr>
-                        <td><?php echo h($c['id']); ?></td>
-                        <td><strong><?php echo h($c['name']); ?></strong></td>
-                        <td><?php echo h($c['parent_id'] ?? '-'); ?></td>
-                        <td><span style="font-size:.8rem; color:#888"><?php
-                            $attrs = json_decode($c['custom_attributes'], true);
-                            echo !empty($attrs) ? h(implode(', ', $attrs)) : 'None';
-                        ?></span></td>
-                        <td>
-                            <div style="display:flex; gap:15px">
-                                <a href="?edit=<?php echo h($c['id']); ?>" style="color:var(--primary-color); text-decoration:none"><i class="fas fa-edit"></i> Edit</a>
-                                <form method="POST" onsubmit="return confirm('Delete this category?')" style="display:inline">
-                                    <?php csrf_field(); ?>
-                                    <input type="hidden" name="action" value="delete">
-                                    <input type="hidden" name="id" value="<?php echo h($c['id']); ?>">
-                                    <button type="submit" style="background:none; border:none; color:var(--danger-color); padding:0; font-size:inherit; cursor:pointer"><i class="fas fa-trash"></i> Delete</button>
-                                </form>
-                            </div>
-                        </td>
-                    </tr>
-                    <?php endforeach; ?>
+                    <?php if ($categories_list && $categories_list->num_rows > 0): ?>
+                        <?php foreach ($categories_list as $c): ?>
+                        <tr>
+                            <td><?php echo h($c['id']); ?></td>
+                            <td><strong><?php echo h($c['name']); ?></strong></td>
+                            <td><?php echo h($c['parent_id'] ?? '-'); ?></td>
+                            <td><span style="font-size:.8rem; color:#888"><?php
+                                $attrs = json_decode($c['custom_attributes'], true);
+                                echo !empty($attrs) ? h(implode(', ', $attrs)) : 'None';
+                            ?></span></td>
+                            <td>
+                                <div style="display:flex; gap:15px">
+                                    <a href="?edit=<?php echo h($c['id']); ?>" style="color:var(--primary-color); text-decoration:none"><i class="fas fa-edit"></i> Edit</a>
+                                    <form method="POST" onsubmit="return confirm('Delete this category?')" style="display:inline">
+                                        <?php csrf_field(); ?>
+                                        <input type="hidden" name="action" value="delete">
+                                        <input type="hidden" name="id" value="<?php echo h($c['id']); ?>">
+                                        <button type="submit" style="background:none; border:none; color:var(--danger-color); padding:0; font-size:inherit; cursor:pointer"><i class="fas fa-trash"></i> Delete</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <tr><td colspan="5" style="text-align:center; padding:30px; color:#aaa">No categories found.</td></tr>
+                    <?php endif; ?>
                 </tbody>
             </table>
         </div>
