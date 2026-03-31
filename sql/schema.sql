@@ -74,4 +74,5 @@ CREATE TABLE IF NOT EXISTS withdrawal_requests (
 );
 
 -- Default Admin (password: admin123)
-INSERT INTO users (username, password, email, role) VALUES ('admin', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin@example.com', 'admin');
+-- Hash generated via password_hash('admin123', PASSWORD_DEFAULT)
+INSERT INTO users (username, password, email, role) VALUES ('admin', '$2y$10$apOMo.zY6iJ7Sw0nAUoc4Ob0ye8OJmnNGgG0CgoHzNNL408LeUpPm', 'admin@example.com', 'admin');
