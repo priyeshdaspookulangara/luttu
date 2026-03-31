@@ -1,4 +1,8 @@
 <?php
+// Report all errors for debugging
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 require_once 'includes/db_connect.php';
 require_once 'classes/Database.php';
 require_once 'classes/Product.php';
@@ -9,15 +13,21 @@ $prod = new Product($database);
 $user = new User($database);
 
 $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+echo "<!-- Debug: Product ID = $id -->";
+
 if ($id <= 0) {
-    header('Location: index.php');
+    echo "<h1>Invalid Product ID</h1>";
     exit;
 }
 
-$p = $prod->getById($id);
+try {
+    $p = $prod->getById($id);
+} catch (Exception $e) {
+    die("Database error: " . $e->getMessage());
+}
 
 if (!$p) {
-    header('Location: index.php');
+    echo "<h1>Product not found (ID: $id)</h1>";
     exit;
 }
 
