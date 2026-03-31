@@ -1,9 +1,9 @@
 <?php
-require_once __DIR__ . '/includes/db_connect.php';
-require_once __DIR__ . '/classes/Database.php';
-require_once __DIR__ . '/classes/User.php';
-require_once __DIR__ . '/classes/Category.php';
-require_once __DIR__ . '/classes/Wallet.php';
+require_once __DIR__ . '/db_connect.php';
+require_once __DIR__ . '/../classes/Database.php';
+require_once __DIR__ . '/../classes/User.php';
+require_once __DIR__ . '/../classes/Category.php';
+require_once __DIR__ . '/../classes/Wallet.php';
 
 $database = new Database($conn);
 $user = new User($database);
@@ -13,13 +13,15 @@ $wallet = new Wallet($database);
 $is_logged_in = $user->isLoggedIn();
 $is_admin = $user->isAdmin();
 
+// Detect protocol, host and root path
 $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? "https://" : "http://";
 $host = $_SERVER['HTTP_HOST'];
 $script_path = dirname($_SERVER['SCRIPT_NAME']);
+// Standardize to project root
 $project_root = str_replace(['/admin', '/user'], '', $script_path);
 $base_url = $protocol . $host . rtrim($project_root, '/') . '/';
 
-$categories_nav = $cat->getAll(); // Returns Array
+$categories_nav = $cat->getAll(); // Returns an array
 ?>
 <!DOCTYPE html>
 <html lang="en">
