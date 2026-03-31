@@ -1,8 +1,11 @@
 <?php
-$page_title = 'Manage Withdrawals — Admin';
-require_once '../includes/header.php';
-require_once '../classes/Wallet.php';
+require_once __DIR__ . '/../includes/db_connect.php';
+require_once __DIR__ . '/../classes/Database.php';
+require_once __DIR__ . '/../classes/User.php';
+require_once __DIR__ . '/../classes/Wallet.php';
 
+$database = new Database($conn);
+$user = new User($database);
 $wallet = new Wallet($database);
 
 if (!$user->isLoggedIn() || !$user->isAdmin()) {
@@ -26,71 +29,86 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 $requests_list = $wallet->getWithdrawalRequests();
+
+$page_title = 'Withdrawal Management — ShopPV Admin';
+require_once __DIR__ . '/includes/header.php';
 ?>
 
-<div class="pg-hero">
-    <div class="pg-hero-eyebrow">Admin Panel</div>
-    <div class="pg-hero-title">Withdrawal <em>Requests</em></div>
-</div>
-
-<div class="section">
-    <?php if ($message): ?>
-        <div style="background:var(--sage);color:var(--white);padding:15px;margin-bottom:20px;border-radius:var(--r);font-size:.9rem"><?php echo h($message); ?></div>
-    <?php endif; ?>
-
-    <div style="background:var(--white);border-radius:var(--r-lg);border:1px solid var(--sand);overflow:hidden">
-        <table style="width:100%;border-collapse:collapse;font-size:.85rem">
-            <thead style="background:var(--cream);color:#888;font-size:.72rem;text-transform:uppercase;letter-spacing:1px">
-                <tr>
-                    <th style="padding:12px 24px;text-align:left">ID</th>
-                    <th style="padding:12px 24px;text-align:left">User</th>
-                    <th style="padding:12px 24px;text-align:left">PV Amount</th>
-                    <th style="padding:12px 24px;text-align:left">Cash Amount</th>
-                    <th style="padding:12px 24px;text-align:left">Requested At</th>
-                    <th style="padding:12px 24px;text-align:left">Status</th>
-                    <th style="padding:12px 24px;text-align:left">Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($requests_list as $r): ?>
-                <tr style="border-bottom:1px solid var(--sand)">
-                    <td style="padding:12px 24px"><?php echo h($r['id']); ?></td>
-                    <td style="padding:12px 24px;font-weight:700"><?php echo h($r['username']); ?></td>
-                    <td style="padding:12px 24px"><?php echo h($r['amount_pv']); ?> PV</td>
-                    <td style="padding:12px 24px">₹<?php echo h($r['amount_cash']); ?></td>
-                    <td style="padding:12px 24px;color:#888"><?php echo h($r['requested_at']); ?></td>
-                    <td style="padding:12px 24px">
-                        <span style="background:<?php
-                            echo $r['status'] === 'pending' ? '#f59e0b' : ($r['status'] === 'approved' ? 'var(--sage)' : 'var(--terra)');
-                        ?>;color:var(--white);padding:2px 8px;border-radius:50px;font-size:.65rem;font-weight:700;text-transform:uppercase">
-                            <?php echo ucfirst(h($r['status'])); ?>
-                        </span>
-                    </td>
-                    <td style="padding:12px 24px">
-                        <?php if ($r['status'] === 'pending'): ?>
-                        <div style="display:flex;gap:8px">
-                            <form method="POST">
-                                <?php csrf_field(); ?>
-                                <input type="hidden" name="id" value="<?php echo h($r['id']); ?>">
-                                <input type="hidden" name="status" value="approved">
-                                <button type="submit" class="btn btn-ghost btn-sm" style="color:var(--sage);border:1px solid var(--sage);padding:4px 10px">Approve</button>
-                            </form>
-                            <form method="POST">
-                                <?php csrf_field(); ?>
-                                <input type="hidden" name="id" value="<?php echo h($r['id']); ?>">
-                                <input type="hidden" name="status" value="rejected">
-                                <button type="submit" class="btn btn-ghost btn-sm" style="color:var(--terra);border:1px solid var(--terra);padding:4px 10px">Reject</button>
-                            </form>
-                        </div>
-                        <?php else: ?>
-                            -
-                        <?php endif; ?>
-                    </td>
-                </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
+<div class="page__heading d-flex align-items-center">
+    <div class="flex">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item"><a href="dashboard.php">Admin</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Withdrawals</li>
+            </ol>
+        </nav>
+        <h1 class="m-0">Withdrawal Requests</h1>
     </div>
 </div>
 
-<?php require_once '../includes/footer.php'; ?>
+<?php if ($message): ?>
+    <div style="background:var(--success-color); color:#fff; padding:15px; border-radius:5px; margin-bottom:20px"><?php echo h($message); ?></div>
+<?php endif; ?>
+
+<div class="card">
+    <div class="card-header bg-white">
+        <h4 class="card-header__title">Pending and Processed Payouts</h4>
+    </div>
+    <div class="card-body" style="padding:0">
+        <div class="table-responsive">
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>User</th>
+                        <th>PV Amount</th>
+                        <th>Cash Amount</th>
+                        <th>Requested</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($requests_list as $r): ?>
+                    <tr>
+                        <td>#<?php echo h($r['id']); ?></td>
+                        <td><strong><?php echo h($r['username']); ?></strong></td>
+                        <td><?php echo h($r['amount_pv']); ?> PV</td>
+                        <td><span style="color:var(--success-color); font-weight:600">₹<?php echo h($r['amount_cash']); ?></span></td>
+                        <td><span style="font-size:.8rem; color:#888"><?php echo h($r['requested_at']); ?></span></td>
+                        <td>
+                            <span style="padding: 5px 12px; border-radius: 50px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: #fff; background: <?php
+                                echo $r['status'] === 'pending' ? 'var(--warning-color)' : ($r['status'] === 'approved' ? 'var(--success-color)' : 'var(--danger-color)');
+                            ?>">
+                                <?php echo h($r['status']); ?>
+                            </span>
+                        </td>
+                        <td>
+                            <?php if ($r['status'] === 'pending'): ?>
+                            <div style="display:flex; gap:10px">
+                                <form method="POST">
+                                    <?php csrf_field(); ?>
+                                    <input type="hidden" name="id" value="<?php echo h($r['id']); ?>">
+                                    <input type="hidden" name="status" value="approved">
+                                    <button type="submit" style="background:var(--success-color); border:none; color:#fff; padding:4px 12px; border-radius:4px; font-size:.75rem; cursor:pointer">Approve</button>
+                                </form>
+                                <form method="POST">
+                                    <?php csrf_field(); ?>
+                                    <input type="hidden" name="id" value="<?php echo h($r['id']); ?>">
+                                    <input type="hidden" name="status" value="rejected">
+                                    <button type="submit" style="background:var(--danger-color); border:none; color:#fff; padding:4px 12px; border-radius:4px; font-size:.75rem; cursor:pointer">Reject</button>
+                                </form>
+                            </div>
+                            <?php else: ?>
+                                <span style="font-size:.75rem; color:#aaa">Processed</span>
+                            <?php endif; ?>
+                        </td>
+                    </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<?php require_once __DIR__ . '/includes/footer.php'; ?>

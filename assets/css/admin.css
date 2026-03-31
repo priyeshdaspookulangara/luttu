@@ -1,0 +1,161 @@
+:root {
+    --primary-color: #007BFF;
+    --success-color: #28a745;
+    --danger-color: #dc3545;
+    --warning-color: #ffc107;
+    --border-color: #e9ecef;
+}
+
+/* Base styles for the Hospital Admin Aesthetic */
+body.layout-default {
+    background-color: #f8f9fa;
+    font-family: 'DM Sans', sans-serif;
+}
+
+.mdk-header {
+    background: #343a40;
+}
+
+.sidebar-light {
+    background: #fff;
+    border-right: 1px solid var(--border-color);
+    min-height: 100vh;
+}
+
+.sidebar-menu-button {
+    display: flex;
+    align-items: center;
+    padding: 12px 24px;
+    color: #495057;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.sidebar-menu-item.active .sidebar-menu-button {
+    background: #f1f3f5;
+    color: var(--primary-color);
+    border-left: 3px solid var(--primary-color);
+}
+
+.sidebar-menu-icon {
+    margin-right: 12px;
+    width: 20px;
+    text-align: center;
+}
+
+.page__heading {
+    padding: 24px 0;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 30px;
+}
+
+.breadcrumb {
+    background: transparent;
+    padding: 0;
+    margin-bottom: 8px;
+    font-size: 0.85rem;
+}
+
+.card {
+    border: none;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    margin-bottom: 24px;
+    border-radius: 8px;
+}
+
+.card-header {
+    background: #fff;
+    border-bottom: 1px solid var(--border-color);
+    padding: 16px 24px;
+    font-weight: 600;
+}
+
+/* Appointments-style table */
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.admin-table th {
+    background: #f8f9fa;
+    padding: 12px 24px;
+    text-align: left;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #888;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.admin-table td {
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--border-color);
+    vertical-align: middle;
+}
+
+.admin-table tr:hover {
+    background-color: #fcfcfc;
+}
+
+/* Form layout */
+.form-card-body {
+    padding: 24px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-weight: 500;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+}
+
+.form-control-admin {
+    padding: 10px 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    outline: none;
+}
+
+.form-control-admin:focus {
+    border-color: var(--primary-color);
+}
+
+/* Stats */
+.card-icon-custom {
+    font-size: 2rem;
+    margin-right: 20px;
+    color: var(--primary-color);
+    background: rgba(0, 123, 255, 0.1);
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.card-content-custom h3 {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #6c757d;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.card-content-custom p {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin: 5px 0 0 0;
+    color: #333;
+}

@@ -1,6 +1,12 @@
 <?php
-$page_title = 'Manage Categories — Admin';
-require_once '../includes/header.php';
+require_once __DIR__ . '/../includes/db_connect.php';
+require_once __DIR__ . '/../classes/Database.php';
+require_once __DIR__ . '/../classes/User.php';
+require_once __DIR__ . '/../classes/Category.php';
+
+$database = new Database($conn);
+$user = new User($database);
+$cat = new Category($database);
 
 if (!$user->isLoggedIn() || !$user->isAdmin()) {
     header('Location: ../login.php');
@@ -41,98 +47,115 @@ if (isset($_GET['edit'])) {
 }
 
 $categories_list = $cat->getAll();
+
+$page_title = 'Manage Categories — ShopPV Admin';
+require_once __DIR__ . '/includes/header.php';
 ?>
 
-<div class="pg-hero">
-    <div class="pg-hero-eyebrow">Admin Panel</div>
-    <div class="pg-hero-title">Manage <em>Categories</em></div>
+<div class="page__heading d-flex align-items-center">
+    <div class="flex">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item"><a href="dashboard.php">Admin</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Categories</li>
+            </ol>
+        </nav>
+        <h1 class="m-0">Manage Categories</h1>
+    </div>
 </div>
 
-<div class="section">
-    <?php if ($message): ?>
-        <div style="background:var(--sage);color:var(--white);padding:15px;margin-bottom:20px;border-radius:var(--r);font-size:.9rem"><?php echo h($message); ?></div>
-    <?php endif; ?>
+<?php if ($message): ?>
+    <div style="background:var(--success-color); color:#fff; padding:15px; border-radius:5px; margin-bottom:20px"><?php echo h($message); ?></div>
+<?php endif; ?>
 
-    <div style="background:var(--white);padding:30px;border-radius:var(--r-lg);border:1px solid var(--sand);margin-bottom:40px">
-        <div style="font-size:.62rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#888;margin-bottom:20px"><?php echo $editing_cat ? 'Edit Category' : 'Add New Category'; ?></div>
+<div class="card">
+    <div class="card-header bg-white">
+        <h4 class="card-header__title"><?php echo $editing_cat ? 'Edit Category' : 'Add New Category'; ?></h4>
+    </div>
+    <div class="card-body form-card">
         <form method="POST">
             <?php csrf_field(); ?>
             <input type="hidden" name="action" value="<?php echo $editing_cat ? 'update' : 'create'; ?>">
             <?php if ($editing_cat): ?>
                 <input type="hidden" name="id" value="<?php echo h($editing_cat['id']); ?>">
             <?php endif; ?>
-            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:20px">
-                <div class="form-field">
-                    <label class="form-label">Category Name</label>
-                    <input type="text" name="name" class="form-input" value="<?php echo $editing_cat ? h($editing_cat['name']) : ''; ?>" required>
-                </div>
-                <div class="form-field">
-                    <label class="form-label">Parent Category</label>
-                    <select name="parent_id" class="form-input" style="appearance:auto">
-                        <option value="">None</option>
-                        <?php foreach ($categories_list as $c): ?>
-                            <option value="<?php echo h($c['id']); ?>" <?php echo ($editing_cat && $editing_cat['parent_id'] == $c['id']) ? 'selected' : ''; ?>>
-                                <?php echo h($c['name']); ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
-                <div class="form-field">
-                    <label class="form-label">Custom Attributes (comma separated)</label>
-                    <input type="text" name="custom_attributes" class="form-input" placeholder="e.g. Color, Size" value="<?php
-                        if ($editing_cat) {
-                            $attrs = json_decode($editing_cat['custom_attributes'], true);
-                            echo !empty($attrs) ? h(implode(', ', $attrs)) : '';
-                        }
-                    ?>">
-                </div>
+            <div class="form-group">
+                <label>Category Name</label>
+                <input type="text" name="name" class="form-control-admin" value="<?php echo $editing_cat ? h($editing_cat['name']) : ''; ?>" required placeholder="e.g. Snacks">
             </div>
-            <div style="display:flex;gap:10px">
-                <button type="submit" class="btn btn-terra"><?php echo $editing_cat ? 'Update' : 'Add'; ?></button>
+            <div class="form-group">
+                <label>Parent Category</label>
+                <select name="parent_id" class="form-control-admin" style="appearance:auto">
+                    <option value="">None (Top Level)</option>
+                    <?php foreach ($categories_list as $c): ?>
+                        <option value="<?php echo h($c['id']); ?>" <?php echo ($editing_cat && $editing_cat['parent_id'] == $c['id']) ? 'selected' : ''; ?>>
+                            <?php echo h($c['name']); ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Custom Attributes (comma separated)</label>
+                <input type="text" name="custom_attributes" class="form-control-admin" placeholder="e.g. Spice Level, Pack Weight" value="<?php
+                    if ($editing_cat) {
+                        $attrs = json_decode($editing_cat['custom_attributes'], true);
+                        echo !empty($attrs) ? h(implode(', ', $attrs)) : '';
+                    }
+                ?>">
+            </div>
+            <div style="grid-column: 1 / -1; display:flex; gap:10px">
+                <button type="submit" style="width:auto; padding: 10px 30px"><?php echo $editing_cat ? 'Update Category' : 'Register Category'; ?></button>
                 <?php if ($editing_cat): ?>
-                    <a href="categories.php" class="btn btn-outline">Cancel</a>
+                    <a href="categories.php" class="btn" style="background:#6c757d; color:#fff; padding:10px 30px; border-radius:5px; text-decoration:none">Cancel</a>
                 <?php endif; ?>
             </div>
         </form>
     </div>
+</div>
 
-    <div style="background:var(--white);border-radius:var(--r-lg);border:1px solid var(--sand);overflow:hidden">
-        <table style="width:100%;border-collapse:collapse;font-size:.85rem">
-            <thead style="background:var(--cream);color:#888;font-size:.72rem;text-transform:uppercase;letter-spacing:1px">
-                <tr>
-                    <th style="padding:12px 24px;text-align:left">ID</th>
-                    <th style="padding:12px 24px;text-align:left">Name</th>
-                    <th style="padding:12px 24px;text-align:left">Parent</th>
-                    <th style="padding:12px 24px;text-align:left">Attributes</th>
-                    <th style="padding:12px 24px;text-align:left">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($categories_list as $c): ?>
-                <tr style="border-bottom:1px solid var(--sand)">
-                    <td style="padding:12px 24px"><?php echo h($c['id']); ?></td>
-                    <td style="padding:12px 24px;font-weight:700"><?php echo h($c['name']); ?></td>
-                    <td style="padding:12px 24px"><?php echo h($c['parent_id'] ?? '-'); ?></td>
-                    <td style="padding:12px 24px;font-size:.75rem;color:#888"><?php
-                        $attrs = json_decode($c['custom_attributes'], true);
-                        echo !empty($attrs) ? h(implode(', ', $attrs)) : '-';
-                    ?></td>
-                    <td style="padding:12px 24px">
-                        <div style="display:flex;gap:8px">
-                            <a href="?edit=<?php echo h($c['id']); ?>" class="btn btn-ghost btn-sm" style="color:var(--sky)">Edit</a>
-                            <form method="POST" onsubmit="return confirm('Are you sure?')">
-                                <?php csrf_field(); ?>
-                                <input type="hidden" name="action" value="delete">
-                                <input type="hidden" name="id" value="<?php echo h($c['id']); ?>">
-                                <button type="submit" class="btn btn-ghost btn-sm" style="color:var(--terra)">Delete</button>
-                            </form>
-                        </div>
-                    </td>
-                </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
+<div class="card">
+    <div class="card-header bg-white">
+        <h4 class="card-header__title">Existing Categories</h4>
+    </div>
+    <div class="card-body" style="padding:0">
+        <div class="table-responsive">
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Category Name</th>
+                        <th>Parent</th>
+                        <th>Attributes</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($categories_list as $c): ?>
+                    <tr>
+                        <td><?php echo h($c['id']); ?></td>
+                        <td><strong><?php echo h($c['name']); ?></strong></td>
+                        <td><?php echo h($c['parent_id'] ?? '-'); ?></td>
+                        <td><span style="font-size:.8rem; color:#888"><?php
+                            $attrs = json_decode($c['custom_attributes'], true);
+                            echo !empty($attrs) ? h(implode(', ', $attrs)) : 'None';
+                        ?></span></td>
+                        <td>
+                            <div style="display:flex; gap:15px">
+                                <a href="?edit=<?php echo h($c['id']); ?>" style="color:var(--primary-color); text-decoration:none"><i class="fas fa-edit"></i> Edit</a>
+                                <form method="POST" onsubmit="return confirm('Delete this category?')" style="display:inline">
+                                    <?php csrf_field(); ?>
+                                    <input type="hidden" name="action" value="delete">
+                                    <input type="hidden" name="id" value="<?php echo h($c['id']); ?>">
+                                    <button type="submit" style="background:none; border:none; color:var(--danger-color); padding:0; font-size:inherit; cursor:pointer"><i class="fas fa-trash"></i> Delete</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 
-<?php require_once '../includes/footer.php'; ?>
+<?php require_once __DIR__ . '/includes/footer.php'; ?>
