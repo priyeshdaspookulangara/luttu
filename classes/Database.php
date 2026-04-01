@@ -9,15 +9,15 @@ class Database {
     public function query($sql, $params = [], $types = "") {
         $stmt = $this->conn->prepare($sql);
         if ($stmt === false) {
-            throw new Exception("Error preparing statement: " . $this->conn->error);
+            throw new Exception("Error preparing statement: " . $this->conn->error . " SQL: " . $sql);
         }
 
-        if ($params) {
+        if (!empty($params)) {
             if (empty($types)) {
                 $types = "";
                 foreach ($params as $param) {
                     if (is_int($param)) $types .= "i";
-                    elseif (is_double($param)) $types .= "d";
+                    elseif (is_float($param) || is_double($param)) $types .= "d";
                     else $types .= "s";
                 }
             }
@@ -29,10 +29,17 @@ class Database {
         }
 
         $result = $stmt->get_result();
-        // NOT closing stmt here if we want to keep the result object valid in some drivers,
-        // but mysqli_result is independent. Closing it is generally safer for resources.
-        // $stmt->close();
-        return $result; // Returns mysqli_result object
+
+        $data = [];
+        if ($result && is_object($result)) {
+            while ($row = $result->fetch_assoc()) {
+                $data[] = $row;
+            }
+            $result->free();
+        }
+
+        $stmt->close();
+        return $data; // Always returns an array for SELECT queries
     }
 
     public function insert($sql, $params = [], $types = "") {
@@ -41,7 +48,7 @@ class Database {
             throw new Exception("Error preparing statement: " . $this->conn->error);
         }
 
-        if ($params) {
+        if (!empty($params)) {
             if (empty($types)) {
                 $types = str_repeat('s', count($params));
             }
@@ -63,7 +70,7 @@ class Database {
             throw new Exception("Error preparing statement: " . $this->conn->error);
         }
 
-        if ($params) {
+        if (!empty($params)) {
             if (empty($types)) {
                 $types = str_repeat('s', count($params));
             }

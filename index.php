@@ -9,7 +9,7 @@ $prod = new Product($database);
 $user = new User($database);
 
 $category_filter = !empty($_GET['category']) ? (int)$_GET['category'] : null;
-$products_list = $prod->getAll($category_filter); // Returns Array
+$products_list = $prod->getAll($category_filter);
 
 $page_title = 'ShopPV — Reward Your Crunch';
 require_once __DIR__ . '/includes/header.php';
@@ -82,15 +82,18 @@ require_once __DIR__ . '/includes/header.php';
                           break;
                       }
                   }
+                  if ($primary_image == 'https://via.placeholder.com/400x500' && isset($images[0]['image_path'])) {
+                      $primary_image = $images[0]['image_path'];
+                  }
               }
           ?>
-          <div class="prod-card" onclick="window.location.href='product_detail.php?id=<?php echo h($p['id']); ?>'">
+          <div class="prod-card" onclick="window.location.href='product_detail.php?id=<?php echo (int)$p['id']; ?>'">
             <div class="prod-card-img">
               <img src="<?php echo h($primary_image); ?>" class="abs-img" alt="<?php echo h($p['name']); ?>">
               <span class="prod-card-label hot">Earn <?php echo h($p['pv_value']); ?> PV</span>
             </div>
             <div class="prod-card-body">
-                <div class="prod-card-brand"><?php echo h($p['brand']); ?></div>
+                <div class="prod-card-brand"><?php echo h($p['brand'] ?? 'Luttu'); ?></div>
                 <div class="prod-card-name"><?php echo h($p['name']); ?></div>
                 <div class="prod-card-meta">
                     <span class="prod-card-price">₹<?php echo h($p['price']); ?></span>
