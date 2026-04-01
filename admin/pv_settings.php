@@ -2,9 +2,11 @@
 require_once __DIR__ . '/../includes/db_connect.php';
 require_once __DIR__ . '/../classes/Database.php';
 require_once __DIR__ . '/../classes/User.php';
+require_once __DIR__ . '/../classes/Wallet.php';
 
 $database = new Database($conn);
 $user = new User($database);
+$wallet = new Wallet($database);
 
 if (!$user->isLoggedIn() || !$user->isAdmin()) {
     header('Location: ../login.php');
@@ -26,6 +28,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $database->insert($sql, [$cash_per_pv, $min_withdrawal, $effective_from], "dds");
     $message = 'PV Settings updated successfully!';
 }
+
+// Fetch current active settings
+$current_settings = $wallet->getCurrentPVSettings();
 
 $sql = "SELECT * FROM pv_settings ORDER BY effective_from DESC";
 $all_settings = $database->query($sql);
@@ -52,22 +57,29 @@ require_once __DIR__ . '/includes/header.php';
 
 <div class="card">
     <div class="card-header card-header-large bg-white">
-        <h4 class="card-header__title">Set New PV Conversion Rate</h4>
+        <h4 class="card-header__title">Configure PV Reward Rules</h4>
     </div>
     <div class="card-body form-card">
         <form method="POST">
             <?php csrf_field(); ?>
             <div class="form-group">
                 <label>Cash per 1 PV (₹)</label>
-                <input type="number" step="0.01" name="cash_per_pv" class="form-control-admin" required placeholder="e.g. 10.00">
+                <input type="number" step="0.01" name="cash_per_pv" class="form-control-admin" required
+                       value="<?php echo $current_settings ? h($current_settings['cash_per_pv']) : ''; ?>"
+                       placeholder="e.g. 10.00">
+                <small class="text-muted mt-1">Current rate: ₹<?php echo $current_settings ? h($current_settings['cash_per_pv']) : 'Not set'; ?></small>
             </div>
             <div class="form-group">
                 <label>Min Withdrawal Threshold (PV)</label>
-                <input type="number" step="0.01" name="min_withdrawal" class="form-control-admin" required placeholder="e.g. 100.00">
+                <input type="number" step="0.01" name="min_withdrawal" class="form-control-admin" required
+                       value="<?php echo $current_settings ? h($current_settings['min_withdrawal']) : ''; ?>"
+                       placeholder="e.g. 100.00">
+                <small class="text-muted mt-1">Current threshold: <?php echo $current_settings ? h($current_settings['min_withdrawal']) : 'Not set'; ?> PV</small>
             </div>
             <div class="form-group">
                 <label>Effective Date</label>
                 <input type="date" name="effective_from" class="form-control-admin" value="<?php echo date('Y-m-d'); ?>" required>
+                <small class="text-muted mt-1">Active since: <?php echo $current_settings ? h($current_settings['effective_from']) : 'N/A'; ?></small>
             </div>
             <div style="grid-column: 1 / -1">
                 <button type="submit" style="width:auto; padding: 10px 40px">Apply New Settings</button>
@@ -93,13 +105,18 @@ require_once __DIR__ . '/includes/header.php';
                     </tr>
                 </thead>
                 <tbody>
-                    <?php if ($all_settings && $all_settings->num_rows > 0): ?>
+                    <?php if (!empty($all_settings)): ?>
                         <?php foreach ($all_settings as $s): ?>
-                        <tr>
+                        <tr <?php echo ($current_settings && $s['id'] == $current_settings['id']) ? 'style="background-color:rgba(40, 167, 69, 0.05)"' : ''; ?>>
                             <td>#<?php echo h($s['id']); ?></td>
                             <td><strong>₹<?php echo h($s['cash_per_pv']); ?></strong></td>
                             <td><?php echo h($s['min_withdrawal']); ?> PV</td>
-                            <td><span style="background:var(--primary-color); color:#fff; padding:3px 10px; border-radius:4px; font-size:.75rem"><?php echo h($s['effective_from']); ?></span></td>
+                            <td>
+                                <span style="background:<?php echo ($current_settings && $s['id'] == $current_settings['id']) ? 'var(--success-color)' : 'var(--primary-color)'; ?>; color:#fff; padding:3px 10px; border-radius:4px; font-size:.75rem">
+                                    <?php echo h($s['effective_from']); ?>
+                                </span>
+                                <?php echo ($current_settings && $s['id'] == $current_settings['id']) ? ' <small class="text-success fw-bold">(Active)</small>' : ''; ?>
+                            </td>
                             <td><span style="font-size:.8rem; color:#888"><?php echo h($s['created_at']); ?></span></td>
                         </tr>
                         <?php endforeach; ?>

@@ -4,11 +4,13 @@ require_once __DIR__ . '/../classes/Database.php';
 require_once __DIR__ . '/../classes/User.php';
 require_once __DIR__ . '/../classes/Product.php';
 require_once __DIR__ . '/../classes/Category.php';
+require_once __DIR__ . '/../classes/Wallet.php';
 
 $database = new Database($conn);
 $user = new User($database);
 $prod = new Product($database);
 $cat = new Category($database);
+$wallet = new Wallet($database);
 
 if (!$user->isLoggedIn() || !$user->isAdmin()) {
     header('Location: ../login.php');
@@ -93,6 +95,10 @@ if (isset($_GET['edit'])) {
 $products_list = $prod->getAll();
 $categories_list = $cat->getAll();
 
+// Get current PV settings for auto-calculation
+$pv_settings = $wallet->getCurrentPVSettings();
+$cash_per_pv = $pv_settings ? (float)$pv_settings['cash_per_pv'] : 0;
+
 $page_title = 'Manage Products — ShopPV Admin';
 require_once __DIR__ . '/includes/header.php';
 ?>
@@ -151,13 +157,15 @@ require_once __DIR__ . '/includes/header.php';
             </div>
 
             <div class="form-group">
-                <label>Margin (₹)</label>
-                <input type="number" step="0.01" name="margin_amount" class="form-control-admin" value="<?php echo $editing_prod ? h($editing_prod['margin_amount']) : ''; ?>" required>
+                <label>Internal Margin (₹)</label>
+                <input type="number" step="0.01" id="margin_amount" name="margin_amount" class="form-control-admin" value="<?php echo $editing_prod ? h($editing_prod['margin_amount']) : ''; ?>" required oninput="calculatePV()">
+                <small class="text-muted">Used to auto-calculate PV based on current rate (₹<?php echo $cash_per_pv; ?>/PV)</small>
             </div>
 
             <div class="form-group">
                 <label>PV Value</label>
-                <input type="number" step="0.01" name="pv_value" class="form-control-admin" value="<?php echo $editing_prod ? h($editing_prod['pv_value']) : ''; ?>" required>
+                <input type="number" step="0.01" id="pv_value" name="pv_value" class="form-control-admin" value="<?php echo $editing_prod ? h($editing_prod['pv_value']) : ''; ?>" required>
+                <small class="text-info" id="pv_calc_hint"></small>
             </div>
 
             <div class="form-group">
@@ -228,7 +236,7 @@ require_once __DIR__ . '/includes/header.php';
                     </tr>
                 </thead>
                 <tbody>
-                    <?php if ($products_list && $products_list->num_rows > 0): ?>
+                    <?php if (!empty($products_list)): ?>
                         <?php foreach ($products_list as $p): ?>
                         <tr>
                             <td>#<?php echo h($p['id']); ?></td>
@@ -259,6 +267,22 @@ require_once __DIR__ . '/includes/header.php';
 </div>
 
 <script>
+const cashPerPv = <?php echo $cash_per_pv; ?>;
+
+function calculatePV() {
+    const margin = parseFloat(document.getElementById('margin_amount').value);
+    const pvInput = document.getElementById('pv_value');
+    const hint = document.getElementById('pv_calc_hint');
+
+    if (!isNaN(margin) && cashPerPv > 0) {
+        const calculatedPv = (margin / cashPerPv).toFixed(2);
+        pvInput.value = calculatedPv;
+        hint.textContent = `Auto-calculated: ${margin} / ${cashPerPv} = ${calculatedPv} PV`;
+    } else {
+        hint.textContent = "";
+    }
+}
+
 function loadAttributes() {
     const select = document.getElementById('category_id');
     const selectedOption = select.options[select.selectedIndex];
