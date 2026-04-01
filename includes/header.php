@@ -2,15 +2,17 @@
 require_once __DIR__ . '/db_connect.php';
 require_once __DIR__ . '/../classes/Database.php';
 require_once __DIR__ . '/../classes/User.php';
+require_once __DIR__ . '/../classes/Customer.php';
 require_once __DIR__ . '/../classes/Category.php';
 require_once __DIR__ . '/../classes/Wallet.php';
 
 $database = new Database($conn);
 $user = new User($database);
+$customer = new Customer($database);
 $cat = new Category($database);
 $wallet = new Wallet($database);
 
-$is_logged_in = $user->isLoggedIn();
+$is_logged_in = $customer->isLoggedIn();
 $is_admin = $user->isAdmin();
 
 // Protocol and host detection for absolute URLs
@@ -51,7 +53,7 @@ $categories_nav = $cat->getAll();
   </div>
   <div class="nav-right">
     <?php if ($is_logged_in): ?>
-        <div class="nav-action" onclick="window.location.href='<?php echo $base_url; ?>logout.php'">⊙ Logout (<?php echo h($_SESSION['username']); ?>)</div>
+        <div class="nav-action" onclick="window.location.href='<?php echo $base_url; ?>logout.php'">⊙ Logout (<?php echo h($customer->getSessionUsername()); ?>)</div>
     <?php else: ?>
         <div class="nav-action" onclick="window.location.href='<?php echo $base_url; ?>login.php'">⊙ Login</div>
     <?php endif; ?>

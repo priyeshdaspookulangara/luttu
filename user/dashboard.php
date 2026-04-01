@@ -1,21 +1,21 @@
 <?php
 require_once __DIR__ . '/../includes/db_connect.php';
 require_once __DIR__ . '/../classes/Database.php';
-require_once __DIR__ . '/../classes/User.php';
+require_once __DIR__ . '/../classes/Customer.php';
 require_once __DIR__ . '/../classes/Wallet.php';
 require_once __DIR__ . '/../classes/Order.php';
 
 $database = new Database($conn);
-$user = new User($database);
+$customer = new Customer($database);
 $wallet = new Wallet($database);
 $order_system = new Order($database);
 
-if (!$user->isLoggedIn()) {
+if (!$customer->isLoggedIn()) {
     header('Location: ../login.php');
     exit;
 }
 
-$user_id = $_SESSION['user_id'];
+$user_id = $customer->getSessionId();
 $message = '';
 $error = '';
 
@@ -38,13 +38,13 @@ $transactions = $wallet->getTransactions($user_id);
 $withdrawals = $wallet->getWithdrawalRequests($user_id);
 $customer_orders = $order_system->getByUserId($user_id);
 
-$page_title = 'Customer Dashboard — My Rewards & Orders';
+$page_title = 'My Rewards — ShopPV';
 require_once __DIR__ . '/../includes/header.php';
 ?>
 
 <div class="pg-hero">
-    <div class="pg-hero-eyebrow">Customer Center</div>
-    <div class="pg-hero-title">My <em>Wallet & Orders</em></div>
+    <div class="pg-hero-eyebrow">Customer Dashboard</div>
+    <div class="pg-hero-title">Welcome, <em><?php echo h($customer->getSessionUsername()); ?></em></div>
 </div>
 
 <div class="section">

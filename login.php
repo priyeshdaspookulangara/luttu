@@ -1,10 +1,10 @@
 <?php
 require_once __DIR__ . '/includes/db_connect.php';
 require_once __DIR__ . '/classes/Database.php';
-require_once __DIR__ . '/classes/User.php';
+require_once __DIR__ . '/classes/Customer.php';
 
 $database = new Database($conn);
-$user = new User($database);
+$customer = new Customer($database);
 
 $error = '';
 
@@ -12,13 +12,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST['username'] ?? '';
     $password = $_POST['password'] ?? '';
 
-    if ($user->login($username, $password)) {
-        if ($user->isAdmin()) {
-            // Admin logging in via frontend should still go to their dashboard
-            header('Location: admin/dashboard.php');
-        } else {
-            header('Location: user/dashboard.php');
-        }
+    if ($customer->login($username, $password)) {
+        header('Location: user/dashboard.php');
         exit;
     } else {
         $error = 'Invalid username or password.';

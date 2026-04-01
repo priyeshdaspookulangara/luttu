@@ -1,18 +1,18 @@
 <?php
 require_once __DIR__ . '/includes/db_connect.php';
 require_once __DIR__ . '/classes/Database.php';
-require_once __DIR__ . '/classes/User.php';
+require_once __DIR__ . '/classes/Customer.php';
 require_once __DIR__ . '/classes/Product.php';
 require_once __DIR__ . '/classes/Wallet.php';
 require_once __DIR__ . '/classes/Order.php';
 
 $database = new Database($conn);
 $prod = new Product($database);
-$user = new User($database);
+$customer = new Customer($database);
 $wallet = new Wallet($database);
 $order = new Order($database);
 
-if (!$user->isLoggedIn()) {
+if (!$customer->isLoggedIn()) {
     header('Location: login.php');
     exit;
 }
@@ -27,19 +27,16 @@ if (!$p) {
 
 $order_id = 'ORD-' . strtoupper(uniqid());
 $pv_value = (float)$p['pv_value'];
-$user_id = (int)$_SESSION['user_id'];
+$user_id = (int)$customer->getSessionId();
 
 $success = false;
 
-// Idempotency check: Has this specific logic already run?
-// (In a simulated checkout, we use the session or a unique order ID check)
+// Idempotency check
 $check_sql = "SELECT id FROM wallet_transactions WHERE reference_id = ? AND user_id = ?";
 $res = $database->query($check_sql, [$order_id, $user_id], "si");
 
 if (empty($res)) {
-    // 1. Record the order for the customer
     if ($order->create($user_id, (int)$p['id'], $order_id, (float)$p['price'], $pv_value)) {
-        // 2. Credit the PV to the ledger
         if ($wallet->addTransaction($user_id, $pv_value, 'credit', "Earned PV from order $order_id", $order_id)) {
             $success = true;
         }
@@ -61,22 +58,22 @@ require_once __DIR__ . '/includes/header.php';
                     <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
                 </svg>
             </div>
-            <h1 class="pdp-title" style="font-size:3rem">Payment Successful!</h1>
-            <p style="font-size:1.1rem;color:#777;margin-bottom:30px">Your order <strong><?php echo h($order_id); ?></strong> has been placed securely.</p>
+            <h1 class="pdp-title" style="font-size:3rem">Order Placed!</h1>
+            <p style="font-size:1.1rem;color:#777;margin-bottom:30px">Your order <strong><?php echo h($order_id); ?></strong> has been confirmed.</p>
 
             <div style="background:var(--cream);padding:30px;border-radius:var(--r-lg);margin-bottom:40px;border:1.5px solid var(--sand)">
-                <div style="font-size:.65rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--terra);margin-bottom:10px">Your Rewards</div>
-                <h2 style="font-family:var(--display);font-size:2.5rem;color:var(--ink)">Earned <strong><?php echo h($pv_value); ?> PV</strong> Rewards!</h2>
+                <div style="font-size:.65rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--terra);margin-bottom:10px">Rewards Credited</div>
+                <h2 style="font-family:var(--display);font-size:2.5rem;color:var(--ink)">You earned <strong><?php echo h($pv_value); ?> PV</strong>!</h2>
             </div>
 
             <div style="display:flex;gap:16px;justify-content:center">
-                <a href="index.php" class="btn btn-fill">Back to Shop</a>
-                <a href="user/dashboard.php" class="btn btn-outline">View Wallet & History</a>
+                <a href="index.php" class="btn btn-fill">Continue Shopping</a>
+                <a href="user/dashboard.php" class="btn btn-outline">My Dashboard</a>
             </div>
         <?php else: ?>
-            <h1 class="pdp-title">Payment Failed.</h1>
-            <p>Please try again or contact support.</p>
-            <a href="index.php" class="btn btn-terra mt-4">Back to Shop</a>
+            <h1 class="pdp-title">Oops!</h1>
+            <p>Something went wrong with your transaction.</p>
+            <a href="index.php" class="btn btn-terra mt-4">Return to Shop</a>
         <?php endif; ?>
     </div>
 </div>

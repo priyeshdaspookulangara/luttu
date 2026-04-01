@@ -1,10 +1,10 @@
 <?php
-require_once 'includes/db_connect.php';
-require_once 'classes/Database.php';
-require_once 'classes/User.php';
+require_once __DIR__ . '/includes/db_connect.php';
+require_once __DIR__ . '/classes/Database.php';
+require_once __DIR__ . '/classes/Customer.php';
 
 $database = new Database($conn);
-$user = new User($database);
+$customer = new Customer($database);
 
 $error = '';
 $success = '';
@@ -19,8 +19,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = 'Passwords do not match.';
     } else {
         try {
-            if ($user->register($username, $password, $email)) {
-                $success = 'Registration successful! <a href="login.php">Login here</a>';
+            if ($customer->register($username, $password, $email)) {
+                $success = 'Registration successful! <a href="login.php" style="color:white;text-decoration:underline">Login here</a>';
             } else {
                 $error = 'Registration failed. Username or email may already be taken.';
             }
@@ -31,10 +31,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 $page_title = 'Register - ShopPV';
-require_once 'includes/header.php';
+require_once __DIR__ . '/includes/header.php';
 ?>
 
-<!-- ════════════════════════ LOGIN ═════════════════════════════ -->
+<!-- ════════════════════════ REGISTER ═════════════════════════════ -->
 <div class="page active" id="register">
   <div class="login-outer">
     <div class="login-visual">
@@ -47,13 +47,13 @@ require_once 'includes/header.php';
     <div class="login-form-wrap">
       <div class="login-form-inner">
         <div class="login-form-title">Join<br>ShopPV</div>
-        <p class="login-form-sub">Create your free account today</p>
+        <p class="login-form-sub">Create your free customer account today</p>
 
         <?php if ($error): ?>
             <div style="background:var(--terra);color:var(--white);padding:10px;margin-bottom:20px;border-radius:var(--r);font-size:.85rem"><?php echo h($error); ?></div>
         <?php endif; ?>
         <?php if ($success): ?>
-            <div style="background:var(--sage);color:var(--white);padding:10px;margin-bottom:20px;border-radius:var(--r);font-size:.85rem"><?php echo $success; ?></div>
+            <div style="background:var(--sage);color:var(--white);padding:15px;margin-bottom:20px;border-radius:var(--r);font-size:.85rem"><?php echo $success; ?></div>
         <?php endif; ?>
 
         <form method="POST">
@@ -81,4 +81,4 @@ require_once 'includes/header.php';
   </div>
 </div>
 
-<?php require_once 'includes/footer.php'; ?>
+<?php require_once __DIR__ . '/includes/footer.php'; ?>
