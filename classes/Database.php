@@ -9,7 +9,7 @@ class Database {
     public function query($sql, $params = [], $types = "") {
         $stmt = $this->conn->prepare($sql);
         if ($stmt === false) {
-            throw new Exception("Error preparing statement: " . $this->conn->error . " SQL: " . $sql);
+            throw new Exception("Error preparing statement: " . $this->conn->error);
         }
 
         if ($params) {
@@ -29,17 +29,10 @@ class Database {
         }
 
         $result = $stmt->get_result();
-
-        $data = [];
-        if ($result) {
-            while ($row = $result->fetch_assoc()) {
-                $data[] = $row;
-            }
-            $result->free();
-        }
-
-        $stmt->close();
-        return $data; // Now always returns an ARRAY
+        // NOT closing stmt here if we want to keep the result object valid in some drivers,
+        // but mysqli_result is independent. Closing it is generally safer for resources.
+        // $stmt->close();
+        return $result; // Returns mysqli_result object
     }
 
     public function insert($sql, $params = [], $types = "") {
