@@ -13,13 +13,23 @@ class Category {
 
     public function getAll() {
         $sql = "SELECT * FROM categories ORDER BY name ASC";
-        return $this->db->query($sql); // Returns array
+        $result = $this->db->query($sql);
+        $data = [];
+        if ($result && is_object($result)) {
+            while ($row = $result->fetch_assoc()) {
+                $data[] = $row;
+            }
+        }
+        return $data;
     }
 
     public function getById($id) {
         $sql = "SELECT * FROM categories WHERE id = ?";
-        $res = $this->db->query($sql, [$id], "i");
-        return !empty($res) ? $res[0] : null;
+        $result = $this->db->query($sql, [$id], "i");
+        if ($result && is_object($result)) {
+            return $result->fetch_assoc();
+        }
+        return null;
     }
 
     public function update($id, $name, $parent_id = null, $custom_attributes = null) {

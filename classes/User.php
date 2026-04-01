@@ -8,11 +8,11 @@ class User {
 
     public function login($username, $password) {
         $sql = "SELECT id, username, password, role FROM users WHERE username = ?";
-        $res = $this->db->query($sql, [$username], "s");
+        $result = $this->db->query($sql, [$username], "s");
 
-        if (!empty($res)) {
-            $user = $res[0];
-            if (password_verify($password, $user['password'])) {
+        if ($result && is_object($result)) {
+            $user = $result->fetch_assoc();
+            if ($user && password_verify($password, $user['password'])) {
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['username'] = $user['username'];
                 $_SESSION['role'] = $user['role'];

@@ -18,23 +18,37 @@ class Product {
 
     public function getAll($category_id = null) {
         $sql = "SELECT p.*, c.name as category_name FROM products p LEFT JOIN categories c ON p.category_id = c.id";
-        $params = [];
-        $types = "";
 
         if ($category_id) {
             $sql .= " WHERE p.category_id = ?";
-            $params[] = (int)$category_id;
-            $types = "i";
+            $result = $this->db->query($sql, [(int)$category_id], "i");
+        } else {
+            $sql .= " ORDER BY p.created_at DESC";
+            $result = $this->db->query($sql);
         }
 
-        $sql .= " ORDER BY p.created_at DESC";
-        return $this->db->query($sql, $params, $types); // Returns Array
+        $data = [];
+        if ($result && is_object($result)) {
+            while ($row = $result->fetch_assoc()) {
+                $data[] = $row;
+            }
+        }
+        return $data;
     }
 
     public function getById($id) {
-        $sql = "SELECT p.*, c.name as category_name FROM products p LEFT JOIN categories c ON p.category_id = c.id WHERE p.id = ?";
-        $res = $this->db->query($sql, [(int)$id], "i");
-        return !empty($res) ? $res[0] : null;
+        $sql = "SELECT p.*, c.name as category_name
+                FROM products p
+                LEFT JOIN categories c ON p.category_id = c.id
+                WHERE p.id = ?";
+
+        $result = $this->db->query($sql, [(int)$id], "i");
+
+        if ($result && is_object($result)) {
+            return $result->fetch_assoc();
+        }
+
+        return null;
     }
 
     public function addImage($product_id, $image_path, $is_primary = 0) {
@@ -44,17 +58,32 @@ class Product {
 
     public function getImages($product_id) {
         $sql = "SELECT * FROM product_images WHERE product_id = ?";
-        return $this->db->query($sql, [(int)$product_id], "i"); // Returns Array
+        $result = $this->db->query($sql, [$product_id], "i");
+
+        $data = [];
+        if ($result && is_object($result)) {
+            while ($row = $result->fetch_assoc()) {
+                $data[] = $row;
+            }
+        }
+        return $data;
     }
 
     public function update($id, $category_id, $name, $description, $price, $margin_amount, $pv_value, $brand, $manufacturer, $supplier, $attributes = null) {
-        $sql = "UPDATE products SET category_id = ?, name = ?, description = ?, price = ?, margin_amount = ?, pv_value = ?, brand = ?, manufacturer = ?, supplier = ?, attributes = ? WHERE id = ?";
-        return $this->db->update($sql, [$category_id, $name, $description, $price, $margin_amount, $pv_value, $brand, $manufacturer, $supplier, json_encode($attributes), $id], "issdddssssi");
+        $sql = "UPDATE products
+                SET category_id = ?, name = ?, description = ?, price = ?, margin_amount = ?, pv_value = ?, brand = ?, manufacturer = ?, supplier = ?, attributes = ?
+                WHERE id = ?";
+
+        return $this->db->update(
+            $sql,
+            [$category_id, $name, $description, $price, $margin_amount, $pv_value, $brand, $manufacturer, $supplier, json_encode($attributes), $id],
+            "issdddssssi"
+        );
     }
 
     public function delete($id) {
         $sql = "DELETE FROM products WHERE id = ?";
-        return $this->db->update($sql, [(int)$id], "i");
+        return $this->db->update($sql, [$id], "i");
     }
 }
 ?>
