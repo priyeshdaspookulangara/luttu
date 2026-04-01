@@ -13,15 +13,14 @@ $wallet = new Wallet($database);
 $is_logged_in = $user->isLoggedIn();
 $is_admin = $user->isAdmin();
 
-// Detect protocol, host and root path
+// Protocol and host detection for absolute URLs
 $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? "https://" : "http://";
 $host = $_SERVER['HTTP_HOST'];
 $script_path = dirname($_SERVER['SCRIPT_NAME']);
-// Standardize to project root
 $project_root = str_replace(['/admin', '/user'], '', $script_path);
 $base_url = $protocol . $host . rtrim($project_root, '/') . '/';
 
-$categories_nav = $cat->getAll(); // Returns an array
+$categories_nav = $cat->getAll();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -47,10 +46,7 @@ $categories_nav = $cat->getAll(); // Returns an array
       Products <span class="chevron">▾</span>
     </div>
     <?php if ($is_logged_in): ?>
-        <a class="nav-item" href="<?php echo $base_url; ?>user/dashboard.php">My Wallet</a>
-        <?php if ($is_admin): ?>
-            <a class="nav-item" href="<?php echo $base_url; ?>admin/dashboard.php">Admin Panel</a>
-        <?php endif; ?>
+        <a class="nav-item" href="<?php echo $base_url; ?>user/dashboard.php">My Wallet & Orders</a>
     <?php endif; ?>
   </div>
   <div class="nav-right">
@@ -61,7 +57,7 @@ $categories_nav = $cat->getAll(); // Returns an array
     <?php endif; ?>
     <div class="nav-action">⌕ Search</div>
     <div class="nav-action cart" onclick="window.location.href='<?php echo $base_url; ?>user/dashboard.php'">
-      Wallet <span class="cart-count">PV</span>
+      Rewards <span class="cart-count">PV</span>
     </div>
   </div>
 </nav>
@@ -77,8 +73,6 @@ $categories_nav = $cat->getAll(); // Returns an array
                 <?php echo h($c['name']); ?>
             </a>
           <?php endforeach; ?>
-      <?php else: ?>
-          <div style="padding:10px 14px; font-size:.8rem; color:rgba(255,255,255,.4)">No categories defined</div>
       <?php endif; ?>
     </div>
     <div class="mega-body">
@@ -90,11 +84,11 @@ $categories_nav = $cat->getAll(); // Returns an array
     </div>
     <div class="mega-promo">
       <div>
-        <div class="mega-promo-tag">Reward System</div>
+        <div class="mega-promo-tag">Customer Benefits</div>
         <div class="mega-promo-title">EARN<br>PV<br>NOW</div>
-        <div class="mega-promo-body">Every purchase credits PV to your wallet. Convert to cash easily.</div>
+        <div class="mega-promo-body">Every purchase credits PV to your wallet. Shop smart, earn big.</div>
       </div>
-      <button class="mega-promo-btn" onclick="window.location.href='<?php echo $base_url; ?>user/dashboard.php'">View Wallet →</button>
+      <button class="mega-promo-btn" onclick="window.location.href='<?php echo $base_url; ?>user/dashboard.php'">My Dashboard →</button>
     </div>
   </div>
 </div>
@@ -102,7 +96,7 @@ $categories_nav = $cat->getAll(); // Returns an array
 <!-- TICKER -->
 <div class="ticker">
   <div class="ticker-inner">
-    EARN 100% PV ON SELECTED ITEMS &nbsp;·&nbsp; CONVERT PV TO CASH &nbsp;·&nbsp; SECURE WITHDRAWALS &nbsp;·&nbsp; NEW ARRIVALS EVERY WEEK &nbsp;·&nbsp;
-    EARN 100% PV ON SELECTED ITEMS &nbsp;·&nbsp; CONVERT PV TO CASH &nbsp;·&nbsp; SECURE WITHDRAWALS &nbsp;·&nbsp; NEW ARRIVALS EVERY WEEK &nbsp;·&nbsp;
+    SECURE CUSTOMER CHECKOUT &nbsp;·&nbsp; EARN PV REWARDS &nbsp;·&nbsp; CONVERT POINTS TO CASH &nbsp;·&nbsp;
+    SECURE CUSTOMER CHECKOUT &nbsp;·&nbsp; EARN PV REWARDS &nbsp;·&nbsp; CONVERT POINTS TO CASH &nbsp;·&nbsp;
   </div>
 </div>

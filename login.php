@@ -1,7 +1,7 @@
 <?php
-require_once 'includes/db_connect.php';
-require_once 'classes/Database.php';
-require_once 'classes/User.php';
+require_once __DIR__ . '/includes/db_connect.php';
+require_once __DIR__ . '/classes/Database.php';
+require_once __DIR__ . '/classes/User.php';
 
 $database = new Database($conn);
 $user = new User($database);
@@ -14,6 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($user->login($username, $password)) {
         if ($user->isAdmin()) {
+            // Admin logging in via frontend should still go to their dashboard
             header('Location: admin/dashboard.php');
         } else {
             header('Location: user/dashboard.php');
@@ -24,8 +25,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-$page_title = 'Login - ShopPV';
-require_once 'includes/header.php';
+$page_title = 'Customer Login - ShopPV';
+require_once __DIR__ . '/includes/header.php';
 ?>
 
 <!-- ════════════════════════ LOGIN ═════════════════════════════ -->
@@ -40,7 +41,7 @@ require_once 'includes/header.php';
     </div>
     <div class="login-form-wrap">
       <div class="login-form-inner">
-        <div class="login-form-title">Welcome<br>Back</div>
+        <div class="login-form-title">Customer<br>Login</div>
         <p class="login-form-sub">Sign in to your ShopPV account</p>
 
         <?php if ($error): ?>
@@ -68,4 +69,4 @@ require_once 'includes/header.php';
   </div>
 </div>
 
-<?php require_once 'includes/footer.php'; ?>
+<?php require_once __DIR__ . '/includes/footer.php'; ?>

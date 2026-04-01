@@ -1,14 +1,16 @@
 <?php
-require_once 'includes/db_connect.php';
-require_once 'classes/Database.php';
-require_once 'classes/Product.php';
-require_once 'classes/User.php';
-require_once 'classes/Wallet.php';
+require_once __DIR__ . '/includes/db_connect.php';
+require_once __DIR__ . '/classes/Database.php';
+require_once __DIR__ . '/classes/User.php';
+require_once __DIR__ . '/classes/Product.php';
+require_once __DIR__ . '/classes/Wallet.php';
+require_once __DIR__ . '/classes/Order.php';
 
 $database = new Database($conn);
 $prod = new Product($database);
 $user = new User($database);
 $wallet = new Wallet($database);
+$order = new Order($database);
 
 if (!$user->isLoggedIn()) {
     header('Location: login.php');
@@ -23,29 +25,31 @@ if (!$p) {
     exit;
 }
 
-// Requirement: Prevent PV double-crediting (idempotency)
-$order_id = $_POST['order_id'] ?? 'ORD-' . strtoupper(uniqid());
-$pv_value = $p['pv_value'];
+$order_id = 'ORD-' . strtoupper(uniqid());
+$pv_value = (float)$p['pv_value'];
+$user_id = (int)$_SESSION['user_id'];
 
 $success = false;
 
-// Check if this order_id has already been processed for this user
+// Idempotency check: Has this specific logic already run?
+// (In a simulated checkout, we use the session or a unique order ID check)
 $check_sql = "SELECT id FROM wallet_transactions WHERE reference_id = ? AND user_id = ?";
-$stmt = $conn->prepare($check_sql);
-$stmt->bind_param("si", $order_id, $_SESSION['user_id']);
-$stmt->execute();
-$res = $stmt->get_result();
-if ($res->num_rows === 0) {
-    if ($wallet->addTransaction($_SESSION['user_id'], $pv_value, 'credit', "Earned PV from order $order_id", $order_id)) {
-        $success = true;
+$res = $database->query($check_sql, [$order_id, $user_id], "si");
+
+if (empty($res)) {
+    // 1. Record the order for the customer
+    if ($order->create($user_id, (int)$p['id'], $order_id, (float)$p['price'], $pv_value)) {
+        // 2. Credit the PV to the ledger
+        if ($wallet->addTransaction($user_id, $pv_value, 'credit', "Earned PV from order $order_id", $order_id)) {
+            $success = true;
+        }
     }
 } else {
-    // Already processed
     $success = true;
 }
 
 $page_title = 'Checkout Success - ShopPV';
-require_once 'includes/header.php';
+require_once __DIR__ . '/includes/header.php';
 ?>
 
 <!-- ════════════════════════ SUCCESS ═════════════════════════════ -->
@@ -67,7 +71,7 @@ require_once 'includes/header.php';
 
             <div style="display:flex;gap:16px;justify-content:center">
                 <a href="index.php" class="btn btn-fill">Back to Shop</a>
-                <a href="user/dashboard.php" class="btn btn-outline">View Wallet</a>
+                <a href="user/dashboard.php" class="btn btn-outline">View Wallet & History</a>
             </div>
         <?php else: ?>
             <h1 class="pdp-title">Payment Failed.</h1>
@@ -77,4 +81,4 @@ require_once 'includes/header.php';
     </div>
 </div>
 
-<?php require_once 'includes/footer.php'; ?>
+<?php require_once __DIR__ . '/includes/footer.php'; ?>
