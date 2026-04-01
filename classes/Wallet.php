@@ -9,8 +9,11 @@ class Wallet {
     public function getBalance($user_id) {
         $sql = "SELECT SUM(CASE WHEN transaction_type = 'credit' THEN amount_pv ELSE -amount_pv END) as balance
                 FROM wallet_transactions WHERE user_id = ?";
-        $res = $this->db->query($sql, [$user_id], "i");
-        return !empty($res) ? ($res[0]['balance'] ?? 0) : 0;
+        $result = $this->db->query($sql, [$user_id], "i");
+        if (is_array($result) && !empty($result)) {
+            return $result[0]['balance'] ?? 0;
+        }
+        return 0;
     }
 
     public function addTransaction($user_id, $amount_pv, $type, $description, $reference_id = null) {
@@ -21,13 +24,16 @@ class Wallet {
 
     public function getTransactions($user_id) {
         $sql = "SELECT * FROM wallet_transactions WHERE user_id = ? ORDER BY created_at DESC";
-        return $this->db->query($sql, [$user_id], "i"); // Returns array
+        return $this->db->query($sql, [$user_id], "i");
     }
 
     public function getCurrentPVSettings() {
         $sql = "SELECT * FROM pv_settings WHERE effective_from <= CURRENT_DATE ORDER BY effective_from DESC LIMIT 1";
-        $res = $this->db->query($sql);
-        return !empty($res) ? $res[0] : null;
+        $result = $this->db->query($sql);
+        if (is_array($result) && !empty($result)) {
+            return $result[0];
+        }
+        return null;
     }
 
     public function createWithdrawalRequest($user_id, $amount_pv) {
@@ -44,6 +50,7 @@ class Wallet {
         $withdrawal_id = $this->db->insert($sql, [$user_id, $amount_pv, $amount_cash], "idd");
 
         if ($withdrawal_id) {
+            // Debit PV from wallet
             $this->addTransaction($user_id, $amount_pv, 'debit', 'Withdrawal Request', $withdrawal_id);
             return $withdrawal_id;
         }
@@ -65,9 +72,10 @@ class Wallet {
         $result = $this->db->update($sql, [$status, $id], "si");
 
         if ($status === 'rejected') {
+            // Refund PV if rejected
             $sql = "SELECT user_id, amount_pv FROM withdrawal_requests WHERE id = ?";
             $res = $this->db->query($sql, [$id], "i");
-            if (!empty($res)) {
+            if (is_array($res) && !empty($res)) {
                 $req = $res[0];
                 $this->addTransaction($req['user_id'], $req['amount_pv'], 'credit', 'Withdrawal Refunded', $id);
             }

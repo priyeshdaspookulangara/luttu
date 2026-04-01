@@ -8,10 +8,10 @@ class User {
 
     public function login($username, $password) {
         $sql = "SELECT id, username, password, role FROM users WHERE username = ?";
-        $res = $this->db->query($sql, [$username], "s");
+        $result = $this->db->query($sql, [$username], "s");
 
-        if (!empty($res)) {
-            $user = $res[0];
+        if (is_array($result) && !empty($result)) {
+            $user = $result[0];
             if (password_verify($password, $user['password'])) {
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['username'] = $user['username'];
@@ -37,7 +37,9 @@ class User {
     }
 
     public function logout() {
-        session_destroy();
+        unset($_SESSION['user_id']);
+        unset($_SESSION['username']);
+        unset($_SESSION['role']);
     }
 }
 ?>

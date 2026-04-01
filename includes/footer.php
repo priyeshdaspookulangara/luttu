@@ -21,7 +21,6 @@
           <ul>
             <li><a href="<?php echo $rel_path; ?>index.php">All Products</a></li>
             <li><a href="<?php echo $rel_path; ?>user/dashboard.php">My Wallet</a></li>
-            <li><a href="<?php echo $rel_path; ?>admin/dashboard.php">Admin Panel</a></li>
           </ul>
         </div>
         <div class="footer-col">
