@@ -6,13 +6,13 @@ class Product {
         $this->db = $db;
     }
 
-    public function create($category_id, $name, $description, $price, $margin_amount, $pv_value, $brand, $manufacturer, $supplier, $attributes = null) {
-        $sql = "INSERT INTO products (category_id, name, description, price, margin_amount, pv_value, brand, manufacturer, supplier, attributes)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    public function create($category_id, $name, $description, $price, $list_price, $margin_amount, $pv_value, $brand, $manufacturer, $supplier, $attributes = null) {
+        $sql = "INSERT INTO products (category_id, name, description, price, list_price, margin_amount, pv_value, brand, manufacturer, supplier, attributes)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         return $this->db->insert(
             $sql,
-            [$category_id, $name, $description, $price, $margin_amount, $pv_value, $brand, $manufacturer, $supplier, json_encode($attributes)],
-            "issdddssss"
+            [$category_id, $name, $description, $price, $list_price, $margin_amount, $pv_value, $brand, $manufacturer, $supplier, json_encode($attributes)],
+            "issddddssss"
         );
     }
 
@@ -53,15 +53,15 @@ class Product {
         return $this->db->query($sql, [$product_id], "i");
     }
 
-    public function update($id, $category_id, $name, $description, $price, $margin_amount, $pv_value, $brand, $manufacturer, $supplier, $attributes = null) {
+    public function update($id, $category_id, $name, $description, $price, $list_price, $margin_amount, $pv_value, $brand, $manufacturer, $supplier, $attributes = null) {
         $sql = "UPDATE products
-                SET category_id = ?, name = ?, description = ?, price = ?, margin_amount = ?, pv_value = ?, brand = ?, manufacturer = ?, supplier = ?, attributes = ?
+                SET category_id = ?, name = ?, description = ?, price = ?, list_price = ?, margin_amount = ?, pv_value = ?, brand = ?, manufacturer = ?, supplier = ?, attributes = ?
                 WHERE id = ?";
 
         return $this->db->update(
             $sql,
-            [$category_id, $name, $description, $price, $margin_amount, $pv_value, $brand, $manufacturer, $supplier, json_encode($attributes), $id],
-            "issdddssssi"
+            [$category_id, $name, $description, $price, $list_price, $margin_amount, $pv_value, $brand, $manufacturer, $supplier, json_encode($attributes), $id],
+            "issddddssssi"
         );
     }
 

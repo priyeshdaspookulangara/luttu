@@ -23,11 +23,42 @@ class Customer {
         return false;
     }
 
-    public function register($username, $password, $email) {
+    public function register($username, $password, $email, $sponsor_code = null) {
+        $sponsor_id = null;
+        if ($sponsor_code) {
+            $sql = "SELECT id FROM users WHERE member_code = ?";
+            $res = $this->db->query($sql, [$sponsor_code], "s");
+            if (empty($res)) {
+                throw new Exception("Invalid Sponsor Code.");
+            }
+            $sponsor_id = $res[0]['id'];
+        }
+
+        $member_code = $this->generateMemberCode();
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-        // Default role is 'user' for customers
-        $sql = "INSERT INTO users (username, password, email, role) VALUES (?, ?, ?, 'user')";
-        return $this->db->insert($sql, [$username, $hashed_password, $email], "sss");
+
+        $sql = "INSERT INTO users (member_code, sponsor_id, username, password, email, role) VALUES (?, ?, ?, ?, ?, 'user')";
+        return $this->db->insert($sql, [$member_code, $sponsor_id, $username, $hashed_password, $email], "sisss");
+    }
+
+    private function generateMemberCode() {
+        $exists = true;
+        $code = '';
+        while ($exists) {
+            $code = 'MB' . mt_rand(100000, 999999);
+            $sql = "SELECT id FROM users WHERE member_code = ?";
+            $res = $this->db->query($sql, [$code], "s");
+            if (empty($res)) {
+                $exists = false;
+            }
+        }
+        return $code;
+    }
+
+    public function getByMemberCode($code) {
+        $sql = "SELECT * FROM users WHERE member_code = ?";
+        $res = $this->db->query($sql, [$code], "s");
+        return !empty($res) ? $res[0] : null;
     }
 
     public function isLoggedIn() {

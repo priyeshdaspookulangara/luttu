@@ -72,10 +72,22 @@ require_once __DIR__ . '/includes/header.php';
         <p class="pdp-sub"><?php echo nl2br(h($p['description'])); ?></p>
 
         <div class="pdp-divider"></div>
-        <div class="pdp-price-row">
-          <span class="pdp-price">₹<?php echo h($p['price']); ?></span>
+        <div class="pdp-price-row" style="display: flex; flex-direction: column; gap: 4px; margin-bottom: 12px;">
+          <div style="font-size: 0.9rem; color: #888; text-transform: uppercase; font-weight: 700; letter-spacing: 1px;">
+            M.R.P.: <span style="text-decoration: line-through;">₹<?php echo h($p['list_price']); ?></span>
+          </div>
+          <div style="display: flex; align-items: baseline; gap: 12px;">
+            <span class="pdp-price">₹<?php echo h($p['price']); ?></span>
+            <span style="background: var(--terra); color: #fff; font-size: 0.72rem; padding: 4px 10px; border-radius: 50px; font-weight: 700;">
+                <?php
+                    $savings = $p['list_price'] - $p['price'];
+                    $perc = ($p['list_price'] > 0) ? round(($savings / $p['list_price']) * 100) : 0;
+                    echo "SAVE $perc%";
+                ?>
+            </span>
+          </div>
         </div>
-        <div class="pdp-stock">In Stock — Reward Points: <?php echo h($p['pv_value']); ?> PV</div>
+        <div class="pdp-stock" style="margin-bottom: 24px;">In Stock — Reward Points: <strong style="color: var(--terra);"><?php echo h($p['pv_value']); ?> PV</strong></div>
 
         <?php if (!empty($attributes) && is_array($attributes)): ?>
         <div style="font-size:.72rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#888;margin-bottom:10px">Specifications</div>
@@ -101,8 +113,9 @@ require_once __DIR__ . '/includes/header.php';
               <button type="button" class="qty-btn" onclick="qtyChange(1)">+</button>
             </div>
           </div>
-          <div class="pdp-cta">
-            <button type="submit" class="btn btn-terra">Buy Now & Earn PV</button>
+          <div class="pdp-cta" style="display:flex; gap:16px">
+            <button type="submit" class="btn btn-terra" style="flex:1; justify-content:center">Buy Now</button>
+            <button type="button" class="btn btn-outline" style="flex:1; justify-content:center" onclick="addToBag(<?php echo h($p['id']); ?>)">Add to Bag</button>
           </div>
         </form>
         <div class="pdp-trust">
@@ -115,4 +128,33 @@ require_once __DIR__ . '/includes/header.php';
   </div>
 </div>
 
+<script>
+function addToBag(productId) {
+    const qty = 1; // Simplification, could get from qtyNum
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = 'cart.php';
+
+    const actionInput = document.createElement('input');
+    actionInput.type = 'hidden';
+    actionInput.name = 'action';
+    actionInput.value = 'add';
+    form.appendChild(actionInput);
+
+    const idInput = document.createElement('input');
+    idInput.type = 'hidden';
+    idInput.name = 'product_id';
+    idInput.value = productId;
+    form.appendChild(idInput);
+
+    const qtyInput = document.createElement('input');
+    qtyInput.type = 'hidden';
+    qtyInput.name = 'quantity';
+    qtyInput.value = qty;
+    form.appendChild(qtyInput);
+
+    document.body.appendChild(form);
+    form.submit();
+}
+</script>
 <?php require_once __DIR__ . '/includes/footer.php'; ?>

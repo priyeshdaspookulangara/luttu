@@ -95,9 +95,22 @@ require_once __DIR__ . '/includes/header.php';
             <div class="prod-card-body">
                 <div class="prod-card-brand"><?php echo h($p['brand'] ?? 'Luttu'); ?></div>
                 <div class="prod-card-name"><?php echo h($p['name']); ?></div>
-                <div class="prod-card-meta">
-                    <span class="prod-card-price">₹<?php echo h($p['price']); ?></span>
-                    <button class="add-pill btn-sm">View Details</button>
+                <div style="display: flex; gap: 15px; margin-top: 10px; font-size: 0.85rem; border-top: 1px solid var(--sand); padding-top: 10px;">
+                    <div style="text-align: center; flex: 1; border-right: 1px solid var(--sand);">
+                        <div style="color: #999; font-size: 0.65rem; text-transform: uppercase; font-weight: 700;">M.R.P.</div>
+                        <div style="text-decoration: line-through; color: #666;">₹<?php echo h($p['list_price']); ?></div>
+                    </div>
+                    <div style="text-align: center; flex: 1; border-right: 1px solid var(--sand);">
+                        <div style="color: #999; font-size: 0.65rem; text-transform: uppercase; font-weight: 700;">S.P.</div>
+                        <div style="font-weight: 700; color: var(--ink);">₹<?php echo h($p['price']); ?></div>
+                    </div>
+                    <div style="text-align: center; flex: 1;">
+                        <div style="color: #999; font-size: 0.65rem; text-transform: uppercase; font-weight: 700;">P.V.</div>
+                        <div style="font-weight: 700; color: var(--terra);"><?php echo h($p['pv_value']); ?></div>
+                    </div>
+                </div>
+                <div class="prod-card-meta" style="margin-top: 15px;">
+                    <button class="add-pill btn-sm" style="width: 100%;">View Details</button>
                 </div>
             </div>
           </div>

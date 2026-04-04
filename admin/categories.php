@@ -130,7 +130,7 @@ require_once __DIR__ . '/includes/header.php';
                     </tr>
                 </thead>
                 <tbody>
-                    <?php if ($categories_list && $categories_list->num_rows > 0): ?>
+                    <?php if (!empty($categories_list)): ?>
                         <?php foreach ($categories_list as $c): ?>
                         <tr>
                             <td><?php echo h($c['id']); ?></td>

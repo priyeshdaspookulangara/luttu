@@ -36,6 +36,12 @@
                                         <span class="sidebar-menu-text">Withdrawals</span>
                                     </a>
                                 </li>
+                                <li class="sidebar-menu-item <?php echo strpos($_SERVER['PHP_SELF'], 'network.php') !== false ? 'active' : ''; ?>">
+                                    <a class="sidebar-menu-button" href="network.php">
+                                        <i class="sidebar-menu-icon sidebar-menu-icon--left fas fa-users"></i>
+                                        <span class="sidebar-menu-text">Member Network</span>
+                                    </a>
+                                </li>
                                 <li class="sidebar-menu-item">
                                     <a class="sidebar-menu-button" href="<?php echo $base_url; ?>index.php">
                                         <i class="sidebar-menu-icon sidebar-menu-icon--left fas fa-external-link-alt"></i>

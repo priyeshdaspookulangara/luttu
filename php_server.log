@@ -1,0 +1,986 @@
+[Sat Apr  4 17:45:18 2026] PHP 8.3.6 Development Server (http://localhost:8000) started
+[Sat Apr  4 17:45:31 2026] [::1]:59024 Accepted
+[Sat Apr  4 17:45:31 2026] PHP Fatal error:  Uncaught mysqli_sql_exception: No such file or directory in /app/includes/db_connect.php:8
+Stack trace:
+#0 /app/includes/db_connect.php(8): mysqli->__construct()
+#1 /app/index.php(2): require_once('...')
+#2 {main}
+  thrown in /app/includes/db_connect.php on line 8
+[Sat Apr  4 17:45:31 2026] [::1]:59024 [500]: HEAD /index.php - Uncaught mysqli_sql_exception: No such file or directory in /app/includes/db_connect.php:8
+Stack trace:
+#0 /app/includes/db_connect.php(8): mysqli->__construct()
+#1 /app/index.php(2): require_once('...')
+#2 {main}
+  thrown in /app/includes/db_connect.php on line 8
+[Sat Apr  4 17:45:31 2026] [::1]:59024 Closing
+[Sat Apr  4 18:14:51 2026] [::1]:56670 Accepted
+[Sat Apr  4 18:14:51 2026] [::1]:56670 [200]: GET /register.php
+[Sat Apr  4 18:14:51 2026] [::1]:56670 Closing
+[Sat Apr  4 18:14:51 2026] [::1]:56678 Accepted
+[Sat Apr  4 18:14:51 2026] [::1]:56682 Accepted
+[Sat Apr  4 18:14:51 2026] [::1]:56678 [200]: GET /assets/css/styles.css
+[Sat Apr  4 18:14:51 2026] [::1]:56682 [200]: GET /assets/js/scripts.js
+[Sat Apr  4 18:14:51 2026] [::1]:56678 Closing
+[Sat Apr  4 18:14:51 2026] [::1]:56682 Closing
+[Sat Apr  4 18:15:37 2026] [::1]:53566 Accepted
+[Sat Apr  4 18:15:37 2026] [::1]:53566 [200]: GET /register.php
+[Sat Apr  4 18:15:37 2026] [::1]:53566 Closing
+[Sat Apr  4 18:16:32 2026] [::1]:53504 Accepted
+[Sat Apr  4 18:16:32 2026] [::1]:53504 [200]: GET /register.php
+[Sat Apr  4 18:16:32 2026] [::1]:53504 Closing
+[Sat Apr  4 18:16:32 2026] [::1]:53508 Accepted
+[Sat Apr  4 18:16:32 2026] [::1]:53516 Accepted
+[Sat Apr  4 18:16:32 2026] [::1]:53508 [200]: GET /assets/css/styles.css
+[Sat Apr  4 18:16:32 2026] [::1]:53516 [200]: GET /assets/js/scripts.js
+[Sat Apr  4 18:16:32 2026] [::1]:53508 Closing
+[Sat Apr  4 18:16:32 2026] [::1]:53516 Closing
+[Sat Apr  4 18:16:36 2026] [::1]:53526 Accepted
+[Sat Apr  4 18:16:37 2026] [::1]:53526 [200]: POST /register.php
+[Sat Apr  4 18:16:37 2026] [::1]:53526 Closing
+[Sat Apr  4 18:16:37 2026] [::1]:53542 Accepted
+[Sat Apr  4 18:16:37 2026] [::1]:53546 Accepted
+[Sat Apr  4 18:16:37 2026] [::1]:53542 [200]: GET /assets/css/styles.css
+[Sat Apr  4 18:16:37 2026] [::1]:53546 [200]: GET /assets/js/scripts.js
+[Sat Apr  4 18:16:37 2026] [::1]:53542 Closing
+[Sat Apr  4 18:16:37 2026] [::1]:53546 Closing
+[Sat Apr  4 18:16:39 2026] [::1]:53548 Accepted
+[Sat Apr  4 18:16:39 2026] [::1]:53548 [200]: GET /login.php
+[Sat Apr  4 18:16:39 2026] [::1]:53548 Closing
+[Sat Apr  4 18:16:39 2026] [::1]:53554 Accepted
+[Sat Apr  4 18:16:39 2026] [::1]:53558 Accepted
+[Sat Apr  4 18:16:39 2026] [::1]:53554 [200]: GET /assets/css/styles.css
+[Sat Apr  4 18:16:39 2026] [::1]:53558 [200]: GET /assets/js/scripts.js
+[Sat Apr  4 18:16:39 2026] [::1]:53554 Closing
+[Sat Apr  4 18:16:39 2026] [::1]:53558 Closing
+[Sat Apr  4 18:16:40 2026] [::1]:55420 Accepted
+[Sat Apr  4 18:16:40 2026] [::1]:55420 [302]: POST /login.php
+[Sat Apr  4 18:16:40 2026] [::1]:55420 Closing
+[Sat Apr  4 18:16:40 2026] [::1]:55422 Accepted
+[Sat Apr  4 18:16:40 2026] [::1]:55422 [200]: GET /user/dashboard.php
+[Sat Apr  4 18:16:40 2026] [::1]:55422 Closing
+[Sat Apr  4 18:16:40 2026] [::1]:55438 Accepted
+[Sat Apr  4 18:16:40 2026] [::1]:55444 Accepted
+[Sat Apr  4 18:16:40 2026] [::1]:55438 [200]: GET /assets/css/styles.css
+[Sat Apr  4 18:16:40 2026] [::1]:55444 [200]: GET /assets/js/scripts.js
+[Sat Apr  4 18:16:40 2026] [::1]:55438 Closing
+[Sat Apr  4 18:16:40 2026] [::1]:55444 Closing
+[Sat Apr  4 18:16:41 2026] [::1]:55458 Accepted
+[Sat Apr  4 18:16:41 2026] [::1]:55458 [200]: GET /product_detail.php?id=1
+[Sat Apr  4 18:16:41 2026] [::1]:55458 Closing
+[Sat Apr  4 18:16:41 2026] [::1]:55474 Accepted
+[Sat Apr  4 18:16:41 2026] [::1]:55486 Accepted
+[Sat Apr  4 18:16:41 2026] [::1]:55474 [200]: GET /assets/css/styles.css
+[Sat Apr  4 18:16:41 2026] [::1]:55486 [200]: GET /assets/js/scripts.js
+[Sat Apr  4 18:16:41 2026] [::1]:55474 Closing
+[Sat Apr  4 18:16:41 2026] [::1]:55486 Closing
+[Sat Apr  4 18:16:43 2026] [::1]:55490 Accepted
+[Sat Apr  4 18:16:43 2026] [::1]:55490 [200]: POST /checkout.php
+[Sat Apr  4 18:16:43 2026] [::1]:55490 Closing
+[Sat Apr  4 18:16:43 2026] [::1]:55502 Accepted
+[Sat Apr  4 18:16:43 2026] [::1]:55502 [200]: GET /assets/css/styles.css
+[Sat Apr  4 18:16:43 2026] [::1]:55502 Closing
+[Sat Apr  4 18:16:43 2026] [::1]:55516 Accepted
+[Sat Apr  4 18:16:43 2026] [::1]:55516 [200]: GET /assets/js/scripts.js
+[Sat Apr  4 18:16:43 2026] [::1]:55516 Closing
+[Sat Apr  4 18:16:45 2026] [::1]:55520 Accepted
+[Sat Apr  4 18:16:45 2026] PHP Fatal error:  Uncaught Error: Cannot use object of type User as array in /app/user/network.php:58
+Stack trace:
+#0 {main}
+  thrown in /app/user/network.php on line 58
+[Sat Apr  4 18:16:45 2026] [::1]:55520 [200]: GET /user/network.php - Uncaught Error: Cannot use object of type User as array in /app/user/network.php:58
+Stack trace:
+#0 {main}
+  thrown in /app/user/network.php on line 58
+[Sat Apr  4 18:16:45 2026] [::1]:55520 Closing
+[Sat Apr  4 18:16:45 2026] [::1]:55530 Accepted
+[Sat Apr  4 18:16:45 2026] [::1]:55530 [200]: GET /assets/css/styles.css
+[Sat Apr  4 18:16:45 2026] [::1]:55530 Closing
+[Sat Apr  4 18:16:46 2026] [::1]:55540 Accepted
+[Sat Apr  4 18:16:46 2026] [::1]:55540 [302]: GET /logout.php
+[Sat Apr  4 18:16:46 2026] [::1]:55540 Closing
+[Sat Apr  4 18:16:46 2026] [::1]:55550 Accepted
+[Sat Apr  4 18:16:46 2026] [::1]:55550 [200]: GET /login.php
+[Sat Apr  4 18:16:46 2026] [::1]:55550 Closing
+[Sat Apr  4 18:16:46 2026] [::1]:55562 Accepted
+[Sat Apr  4 18:16:46 2026] [::1]:55570 Accepted
+[Sat Apr  4 18:16:46 2026] [::1]:55562 [200]: GET /assets/css/styles.css
+[Sat Apr  4 18:16:46 2026] [::1]:55570 [200]: GET /assets/js/scripts.js
+[Sat Apr  4 18:16:46 2026] [::1]:55562 Closing
+[Sat Apr  4 18:16:46 2026] [::1]:55570 Closing
+[Sat Apr  4 18:16:46 2026] [::1]:55572 Accepted
+[Sat Apr  4 18:16:46 2026] [::1]:55572 [200]: GET /admin/login.php
+[Sat Apr  4 18:16:46 2026] [::1]:55572 Closing
+[Sat Apr  4 18:16:46 2026] [::1]:55586 Accepted
+[Sat Apr  4 18:16:46 2026] [::1]:55586 [200]: GET /assets/css/styles.css
+[Sat Apr  4 18:16:46 2026] [::1]:55586 Closing
+[Sat Apr  4 18:16:47 2026] [::1]:55590 Accepted
+[Sat Apr  4 18:16:48 2026] [::1]:55590 [302]: POST /admin/login.php
+[Sat Apr  4 18:16:48 2026] [::1]:55590 Closing
+[Sat Apr  4 18:16:48 2026] [::1]:55604 Accepted
+[Sat Apr  4 18:16:48 2026] [::1]:55604 [200]: GET /admin/dashboard.php
+[Sat Apr  4 18:16:48 2026] [::1]:55604 Closing
+[Sat Apr  4 18:16:48 2026] [::1]:55612 Accepted
+[Sat Apr  4 18:16:48 2026] [::1]:55612 [404]: GET /admin/css/simplebar.min.css - No such file or directory
+[Sat Apr  4 18:16:48 2026] [::1]:55612 Closing
+[Sat Apr  4 18:16:48 2026] [::1]:55620 Accepted
+[Sat Apr  4 18:16:48 2026] [::1]:55622 Accepted
+[Sat Apr  4 18:16:48 2026] [::1]:55634 Accepted
+[Sat Apr  4 18:16:48 2026] [::1]:55644 Accepted
+[Sat Apr  4 18:16:48 2026] [::1]:55656 Accepted
+[Sat Apr  4 18:16:48 2026] [::1]:55668 Accepted
+[Sat Apr  4 18:16:48 2026] [::1]:55620 [404]: GET /admin/css/app.css - No such file or directory
+[Sat Apr  4 18:16:48 2026] [::1]:55620 Closing
+[Sat Apr  4 18:16:48 2026] [::1]:55670 Accepted
+[Sat Apr  4 18:16:48 2026] [::1]:55622 [404]: GET /admin/css/vendor-material-icons.css - No such file or directory
+[Sat Apr  4 18:16:48 2026] [::1]:55622 Closing
+[Sat Apr  4 18:16:48 2026] [::1]:55676 Accepted
+[Sat Apr  4 18:16:48 2026] [::1]:55634 [404]: GET /admin/css/vendor-fontawesome-free.css - No such file or directory
+[Sat Apr  4 18:16:48 2026] [::1]:55634 Closing
+[Sat Apr  4 18:16:48 2026] [::1]:55686 Accepted
+[Sat Apr  4 18:16:48 2026] [::1]:55644 [404]: GET /admin/css/vendor-flatpickr.css - No such file or directory
+[Sat Apr  4 18:16:48 2026] [::1]:55644 Closing
+[Sat Apr  4 18:16:48 2026] [::1]:55696 Accepted
+[Sat Apr  4 18:16:48 2026] [::1]:55656 [404]: GET /admin/css/vendor-flatpickr-airbnb.css - No such file or directory
+[Sat Apr  4 18:16:48 2026] [::1]:55656 Closing
+[Sat Apr  4 18:16:48 2026] [::1]:55668 [200]: GET /assets/css/admin.css
+[Sat Apr  4 18:16:48 2026] [::1]:55670 [404]: GET /admin/js/jquery.min.js - No such file or directory
+[Sat Apr  4 18:16:48 2026] [::1]:55670 Closing
+[Sat Apr  4 18:16:48 2026] [::1]:55668 Closing
+[Sat Apr  4 18:16:48 2026] [::1]:55710 Accepted
+[Sat Apr  4 18:16:48 2026] [::1]:55724 Accepted
+[Sat Apr  4 18:16:48 2026] [::1]:55676 [404]: GET /admin/js/popper.min.js - No such file or directory
+[Sat Apr  4 18:16:48 2026] [::1]:55686 [404]: GET /admin/js/bootstrap.min.js - No such file or directory
+[Sat Apr  4 18:16:48 2026] [::1]:55696 [404]: GET /admin/js/simplebar.min.js - No such file or directory
+[Sat Apr  4 18:16:48 2026] [::1]:55728 Accepted
+[Sat Apr  4 18:16:48 2026] [::1]:55676 Closing
+[Sat Apr  4 18:16:48 2026] [::1]:55686 Closing
+[Sat Apr  4 18:16:48 2026] [::1]:55696 Closing
+[Sat Apr  4 18:16:48 2026] [::1]:55710 [404]: GET /admin/js/dom-factory.js - No such file or directory
+[Sat Apr  4 18:16:48 2026] [::1]:55710 Closing
+[Sat Apr  4 18:16:48 2026] [::1]:55724 [404]: GET /admin/js/material-design-kit.js - No such file or directory
+[Sat Apr  4 18:16:48 2026] [::1]:55728 [404]: GET /admin/js/app.js - No such file or directory
+[Sat Apr  4 18:16:48 2026] [::1]:55724 Closing
+[Sat Apr  4 18:16:48 2026] [::1]:55728 Closing
+[Sat Apr  4 18:16:49 2026] [::1]:55744 Accepted
+[Sat Apr  4 18:16:49 2026] [::1]:55744 [200]: GET /admin/network.php
+[Sat Apr  4 18:16:49 2026] [::1]:55744 Closing
+[Sat Apr  4 18:16:49 2026] [::1]:55756 Accepted
+[Sat Apr  4 18:16:49 2026] [::1]:55766 Accepted
+[Sat Apr  4 18:16:49 2026] [::1]:55768 Accepted
+[Sat Apr  4 18:16:49 2026] [::1]:55782 Accepted
+[Sat Apr  4 18:16:49 2026] [::1]:55796 Accepted
+[Sat Apr  4 18:16:49 2026] [::1]:55802 Accepted
+[Sat Apr  4 18:16:49 2026] [::1]:55756 [404]: GET /admin/css/simplebar.min.css - No such file or directory
+[Sat Apr  4 18:16:49 2026] [::1]:55756 Closing
+[Sat Apr  4 18:16:49 2026] [::1]:55814 Accepted
+[Sat Apr  4 18:16:49 2026] [::1]:55766 [404]: GET /admin/css/app.css - No such file or directory
+[Sat Apr  4 18:16:49 2026] [::1]:55768 [404]: GET /admin/css/vendor-material-icons.css - No such file or directory
+[Sat Apr  4 18:16:49 2026] [::1]:55766 Closing
+[Sat Apr  4 18:16:49 2026] [::1]:55768 Closing
+[Sat Apr  4 18:16:49 2026] [::1]:55782 [404]: GET /admin/css/vendor-fontawesome-free.css - No such file or directory
+[Sat Apr  4 18:16:49 2026] [::1]:55782 Closing
+[Sat Apr  4 18:16:49 2026] [::1]:55796 [404]: GET /admin/css/vendor-flatpickr.css - No such file or directory
+[Sat Apr  4 18:16:49 2026] [::1]:55796 Closing
+[Sat Apr  4 18:16:49 2026] [::1]:55822 Accepted
+[Sat Apr  4 18:16:49 2026] [::1]:55828 Accepted
+[Sat Apr  4 18:16:49 2026] [::1]:55832 Accepted
+[Sat Apr  4 18:16:49 2026] [::1]:55836 Accepted
+[Sat Apr  4 18:16:49 2026] [::1]:55802 [404]: GET /admin/css/vendor-flatpickr-airbnb.css - No such file or directory
+[Sat Apr  4 18:16:49 2026] [::1]:55802 Closing
+[Sat Apr  4 18:16:49 2026] [::1]:55814 [200]: GET /assets/css/admin.css
+[Sat Apr  4 18:16:49 2026] [::1]:55814 Closing
+[Sat Apr  4 18:16:49 2026] [::1]:55840 Accepted
+[Sat Apr  4 18:16:49 2026] [::1]:55848 Accepted
+[Sat Apr  4 18:16:49 2026] [::1]:55822 [404]: GET /admin/js/jquery.min.js - No such file or directory
+[Sat Apr  4 18:16:49 2026] [::1]:55822 Closing
+[Sat Apr  4 18:16:49 2026] [::1]:55828 [404]: GET /admin/js/popper.min.js - No such file or directory
+[Sat Apr  4 18:16:49 2026] [::1]:55828 Closing
+[Sat Apr  4 18:16:49 2026] [::1]:55832 [404]: GET /admin/js/bootstrap.min.js - No such file or directory
+[Sat Apr  4 18:16:49 2026] [::1]:55832 Closing
+[Sat Apr  4 18:16:49 2026] [::1]:55836 [404]: GET /admin/js/simplebar.min.js - No such file or directory
+[Sat Apr  4 18:16:49 2026] [::1]:55836 Closing
+[Sat Apr  4 18:16:49 2026] [::1]:55840 [404]: GET /admin/js/dom-factory.js - No such file or directory
+[Sat Apr  4 18:16:49 2026] [::1]:55848 [404]: GET /admin/js/material-design-kit.js - No such file or directory
+[Sat Apr  4 18:16:49 2026] [::1]:55840 Closing
+[Sat Apr  4 18:16:49 2026] [::1]:55848 Closing
+[Sat Apr  4 18:16:49 2026] [::1]:55858 Accepted
+[Sat Apr  4 18:16:49 2026] [::1]:55858 [404]: GET /admin/js/app.js - No such file or directory
+[Sat Apr  4 18:16:49 2026] [::1]:55858 Closing
+[Sat Apr  4 18:21:47 2026] [::1]:56566 Accepted
+[Sat Apr  4 18:21:47 2026] [::1]:56566 [200]: GET /register.php
+[Sat Apr  4 18:21:47 2026] [::1]:56566 Closing
+[Sat Apr  4 18:21:47 2026] [::1]:56570 Accepted
+[Sat Apr  4 18:21:47 2026] [::1]:56586 Accepted
+[Sat Apr  4 18:21:47 2026] [::1]:56570 [200]: GET /assets/css/styles.css
+[Sat Apr  4 18:21:47 2026] [::1]:56586 [200]: GET /assets/js/scripts.js
+[Sat Apr  4 18:21:47 2026] [::1]:56570 Closing
+[Sat Apr  4 18:21:47 2026] [::1]:56586 Closing
+[Sat Apr  4 18:21:51 2026] [::1]:49542 Accepted
+[Sat Apr  4 18:21:51 2026] [::1]:49542 [200]: POST /register.php
+[Sat Apr  4 18:21:51 2026] [::1]:49542 Closing
+[Sat Apr  4 18:21:51 2026] [::1]:49552 Accepted
+[Sat Apr  4 18:21:51 2026] [::1]:49558 Accepted
+[Sat Apr  4 18:21:51 2026] [::1]:49552 [200]: GET /assets/css/styles.css
+[Sat Apr  4 18:21:51 2026] [::1]:49558 [200]: GET /assets/js/scripts.js
+[Sat Apr  4 18:21:51 2026] [::1]:49552 Closing
+[Sat Apr  4 18:21:51 2026] [::1]:49558 Closing
+[Sat Apr  4 18:21:53 2026] [::1]:49564 Accepted
+[Sat Apr  4 18:21:53 2026] [::1]:49564 [200]: GET /login.php
+[Sat Apr  4 18:21:53 2026] [::1]:49564 Closing
+[Sat Apr  4 18:21:53 2026] [::1]:49578 Accepted
+[Sat Apr  4 18:21:53 2026] [::1]:49592 Accepted
+[Sat Apr  4 18:21:53 2026] [::1]:49578 [200]: GET /assets/css/styles.css
+[Sat Apr  4 18:21:53 2026] [::1]:49592 [200]: GET /assets/js/scripts.js
+[Sat Apr  4 18:21:53 2026] [::1]:49578 Closing
+[Sat Apr  4 18:21:53 2026] [::1]:49592 Closing
+[Sat Apr  4 18:21:54 2026] [::1]:49598 Accepted
+[Sat Apr  4 18:21:54 2026] [::1]:49598 [302]: POST /login.php
+[Sat Apr  4 18:21:54 2026] [::1]:49598 Closing
+[Sat Apr  4 18:21:54 2026] [::1]:49608 Accepted
+[Sat Apr  4 18:21:54 2026] [::1]:49608 [200]: GET /user/dashboard.php
+[Sat Apr  4 18:21:54 2026] [::1]:49608 Closing
+[Sat Apr  4 18:21:54 2026] [::1]:49610 Accepted
+[Sat Apr  4 18:21:54 2026] [::1]:49614 Accepted
+[Sat Apr  4 18:21:54 2026] [::1]:49610 [200]: GET /assets/css/styles.css
+[Sat Apr  4 18:21:54 2026] [::1]:49610 Closing
+[Sat Apr  4 18:21:54 2026] [::1]:49614 [200]: GET /assets/js/scripts.js
+[Sat Apr  4 18:21:54 2026] [::1]:49614 Closing
+[Sat Apr  4 18:21:55 2026] [::1]:49616 Accepted
+[Sat Apr  4 18:21:55 2026] [::1]:49616 [200]: GET /product_detail.php?id=1
+[Sat Apr  4 18:21:55 2026] [::1]:49616 Closing
+[Sat Apr  4 18:21:55 2026] [::1]:49628 Accepted
+[Sat Apr  4 18:21:55 2026] [::1]:49628 [200]: GET /assets/css/styles.css
+[Sat Apr  4 18:21:55 2026] [::1]:49628 Closing
+[Sat Apr  4 18:21:55 2026] [::1]:49630 Accepted
+[Sat Apr  4 18:21:55 2026] [::1]:49630 [200]: GET /assets/js/scripts.js
+[Sat Apr  4 18:21:55 2026] [::1]:49630 Closing
+[Sat Apr  4 18:21:57 2026] [::1]:49632 Accepted
+[Sat Apr  4 18:21:57 2026] [::1]:49632 [200]: POST /checkout.php
+[Sat Apr  4 18:21:57 2026] [::1]:49632 Closing
+[Sat Apr  4 18:21:57 2026] [::1]:49638 Accepted
+[Sat Apr  4 18:21:57 2026] [::1]:49644 Accepted
+[Sat Apr  4 18:21:57 2026] [::1]:49638 [200]: GET /assets/css/styles.css
+[Sat Apr  4 18:21:57 2026] [::1]:49644 [200]: GET /assets/js/scripts.js
+[Sat Apr  4 18:21:57 2026] [::1]:49638 Closing
+[Sat Apr  4 18:21:57 2026] [::1]:49644 Closing
+[Sat Apr  4 18:21:59 2026] [::1]:49646 Accepted
+[Sat Apr  4 18:21:59 2026] PHP Fatal error:  Uncaught Error: Cannot use object of type User as array in /app/user/network.php:58
+Stack trace:
+#0 {main}
+  thrown in /app/user/network.php on line 58
+[Sat Apr  4 18:21:59 2026] [::1]:49646 [200]: GET /user/network.php - Uncaught Error: Cannot use object of type User as array in /app/user/network.php:58
+Stack trace:
+#0 {main}
+  thrown in /app/user/network.php on line 58
+[Sat Apr  4 18:21:59 2026] [::1]:49646 Closing
+[Sat Apr  4 18:21:59 2026] [::1]:49652 Accepted
+[Sat Apr  4 18:21:59 2026] [::1]:49652 [200]: GET /assets/css/styles.css
+[Sat Apr  4 18:21:59 2026] [::1]:49652 Closing
+[Sat Apr  4 18:22:00 2026] [::1]:56188 Accepted
+[Sat Apr  4 18:22:00 2026] [::1]:56188 [302]: GET /logout.php
+[Sat Apr  4 18:22:00 2026] [::1]:56188 Closing
+[Sat Apr  4 18:22:00 2026] [::1]:56198 Accepted
+[Sat Apr  4 18:22:00 2026] [::1]:56198 [200]: GET /login.php
+[Sat Apr  4 18:22:00 2026] [::1]:56198 Closing
+[Sat Apr  4 18:22:00 2026] [::1]:56210 Accepted
+[Sat Apr  4 18:22:00 2026] [::1]:56224 Accepted
+[Sat Apr  4 18:22:00 2026] [::1]:56210 [200]: GET /assets/css/styles.css
+[Sat Apr  4 18:22:00 2026] [::1]:56224 [200]: GET /assets/js/scripts.js
+[Sat Apr  4 18:22:00 2026] [::1]:56210 Closing
+[Sat Apr  4 18:22:00 2026] [::1]:56224 Closing
+[Sat Apr  4 18:22:01 2026] [::1]:56234 Accepted
+[Sat Apr  4 18:22:01 2026] [::1]:56234 [200]: GET /admin/login.php
+[Sat Apr  4 18:22:01 2026] [::1]:56234 Closing
+[Sat Apr  4 18:22:01 2026] [::1]:56244 Accepted
+[Sat Apr  4 18:22:01 2026] [::1]:56244 [200]: GET /assets/css/styles.css
+[Sat Apr  4 18:22:01 2026] [::1]:56244 Closing
+[Sat Apr  4 18:22:02 2026] [::1]:56246 Accepted
+[Sat Apr  4 18:22:02 2026] [::1]:56246 [302]: POST /admin/login.php
+[Sat Apr  4 18:22:02 2026] [::1]:56246 Closing
+[Sat Apr  4 18:22:02 2026] [::1]:56258 Accepted
+[Sat Apr  4 18:22:02 2026] [::1]:56258 [200]: GET /admin/dashboard.php
+[Sat Apr  4 18:22:02 2026] [::1]:56258 Closing
+[Sat Apr  4 18:22:02 2026] [::1]:56270 Accepted
+[Sat Apr  4 18:22:02 2026] [::1]:56272 Accepted
+[Sat Apr  4 18:22:02 2026] [::1]:56280 Accepted
+[Sat Apr  4 18:22:02 2026] [::1]:56294 Accepted
+[Sat Apr  4 18:22:02 2026] [::1]:56308 Accepted
+[Sat Apr  4 18:22:02 2026] [::1]:56314 Accepted
+[Sat Apr  4 18:22:02 2026] [::1]:56270 [404]: GET /admin/css/simplebar.min.css - No such file or directory
+[Sat Apr  4 18:22:02 2026] [::1]:56270 Closing
+[Sat Apr  4 18:22:02 2026] [::1]:56326 Accepted
+[Sat Apr  4 18:22:02 2026] [::1]:56272 [404]: GET /admin/css/app.css - No such file or directory
+[Sat Apr  4 18:22:02 2026] [::1]:56280 [404]: GET /admin/css/vendor-material-icons.css - No such file or directory
+[Sat Apr  4 18:22:02 2026] [::1]:56294 [404]: GET /admin/css/vendor-fontawesome-free.css - No such file or directory
+[Sat Apr  4 18:22:02 2026] [::1]:56272 Closing
+[Sat Apr  4 18:22:02 2026] [::1]:56280 Closing
+[Sat Apr  4 18:22:02 2026] [::1]:56294 Closing
+[Sat Apr  4 18:22:02 2026] [::1]:56308 [404]: GET /admin/css/vendor-flatpickr.css - No such file or directory
+[Sat Apr  4 18:22:02 2026] [::1]:56314 [404]: GET /admin/css/vendor-flatpickr-airbnb.css - No such file or directory
+[Sat Apr  4 18:22:02 2026] [::1]:56326 [200]: GET /assets/css/admin.css
+[Sat Apr  4 18:22:02 2026] [::1]:56308 Closing
+[Sat Apr  4 18:22:02 2026] [::1]:56314 Closing
+[Sat Apr  4 18:22:02 2026] [::1]:56326 Closing
+[Sat Apr  4 18:22:02 2026] [::1]:56330 Accepted
+[Sat Apr  4 18:22:02 2026] [::1]:56336 Accepted
+[Sat Apr  4 18:22:02 2026] [::1]:56344 Accepted
+[Sat Apr  4 18:22:02 2026] [::1]:56346 Accepted
+[Sat Apr  4 18:22:02 2026] [::1]:56360 Accepted
+[Sat Apr  4 18:22:02 2026] [::1]:56362 Accepted
+[Sat Apr  4 18:22:02 2026] [::1]:56330 [404]: GET /admin/js/jquery.min.js - No such file or directory
+[Sat Apr  4 18:22:02 2026] [::1]:56330 Closing
+[Sat Apr  4 18:22:02 2026] [::1]:56336 [404]: GET /admin/js/popper.min.js - No such file or directory
+[Sat Apr  4 18:22:02 2026] [::1]:56336 Closing
+[Sat Apr  4 18:22:02 2026] [::1]:56344 [404]: GET /admin/js/bootstrap.min.js - No such file or directory
+[Sat Apr  4 18:22:02 2026] [::1]:56344 Closing
+[Sat Apr  4 18:22:02 2026] [::1]:56346 [404]: GET /admin/js/simplebar.min.js - No such file or directory
+[Sat Apr  4 18:22:02 2026] [::1]:56346 Closing
+[Sat Apr  4 18:22:02 2026] [::1]:56360 [404]: GET /admin/js/dom-factory.js - No such file or directory
+[Sat Apr  4 18:22:02 2026] [::1]:56360 Closing
+[Sat Apr  4 18:22:02 2026] [::1]:56362 [404]: GET /admin/js/material-design-kit.js - No such file or directory
+[Sat Apr  4 18:22:02 2026] [::1]:56362 Closing
+[Sat Apr  4 18:22:02 2026] [::1]:56364 Accepted
+[Sat Apr  4 18:22:02 2026] [::1]:56364 [404]: GET /admin/js/app.js - No such file or directory
+[Sat Apr  4 18:22:02 2026] [::1]:56364 Closing
+[Sat Apr  4 18:22:03 2026] [::1]:56376 Accepted
+[Sat Apr  4 18:22:03 2026] [::1]:56376 [200]: GET /admin/network.php
+[Sat Apr  4 18:22:03 2026] [::1]:56376 Closing
+[Sat Apr  4 18:22:03 2026] [::1]:56390 Accepted
+[Sat Apr  4 18:22:03 2026] [::1]:56404 Accepted
+[Sat Apr  4 18:22:03 2026] [::1]:56416 Accepted
+[Sat Apr  4 18:22:03 2026] [::1]:56430 Accepted
+[Sat Apr  4 18:22:03 2026] [::1]:56446 Accepted
+[Sat Apr  4 18:22:03 2026] [::1]:56460 Accepted
+[Sat Apr  4 18:22:03 2026] [::1]:56390 [404]: GET /admin/css/simplebar.min.css - No such file or directory
+[Sat Apr  4 18:22:03 2026] [::1]:56390 Closing
+[Sat Apr  4 18:22:03 2026] [::1]:56462 Accepted
+[Sat Apr  4 18:22:03 2026] [::1]:56404 [404]: GET /admin/css/vendor-material-icons.css - No such file or directory
+[Sat Apr  4 18:22:03 2026] [::1]:56416 [404]: GET /admin/css/vendor-fontawesome-free.css - No such file or directory
+[Sat Apr  4 18:22:03 2026] [::1]:56404 Closing
+[Sat Apr  4 18:22:03 2026] [::1]:56416 Closing
+[Sat Apr  4 18:22:03 2026] [::1]:56430 [404]: GET /admin/css/app.css - No such file or directory
+[Sat Apr  4 18:22:03 2026] [::1]:56430 Closing
+[Sat Apr  4 18:22:03 2026] [::1]:56476 Accepted
+[Sat Apr  4 18:22:03 2026] [::1]:56490 Accepted
+[Sat Apr  4 18:22:03 2026] [::1]:56502 Accepted
+[Sat Apr  4 18:22:03 2026] [::1]:56446 [404]: GET /admin/css/vendor-flatpickr.css - No such file or directory
+[Sat Apr  4 18:22:03 2026] [::1]:56460 [404]: GET /admin/css/vendor-flatpickr-airbnb.css - No such file or directory
+[Sat Apr  4 18:22:03 2026] [::1]:56462 [200]: GET /assets/css/admin.css
+[Sat Apr  4 18:22:03 2026] [::1]:56446 Closing
+[Sat Apr  4 18:22:03 2026] [::1]:56460 Closing
+[Sat Apr  4 18:22:03 2026] [::1]:56476 [404]: GET /admin/js/jquery.min.js - No such file or directory
+[Sat Apr  4 18:22:03 2026] [::1]:56476 Closing
+[Sat Apr  4 18:22:03 2026] [::1]:56462 Closing
+[Sat Apr  4 18:22:03 2026] [::1]:56516 Accepted
+[Sat Apr  4 18:22:03 2026] [::1]:56522 Accepted
+[Sat Apr  4 18:22:03 2026] [::1]:56528 Accepted
+[Sat Apr  4 18:22:03 2026] [::1]:56490 [404]: GET /admin/js/popper.min.js - No such file or directory
+[Sat Apr  4 18:22:03 2026] [::1]:56490 Closing
+[Sat Apr  4 18:22:03 2026] [::1]:56502 [404]: GET /admin/js/bootstrap.min.js - No such file or directory
+[Sat Apr  4 18:22:03 2026] [::1]:56502 Closing
+[Sat Apr  4 18:22:03 2026] [::1]:56530 Accepted
+[Sat Apr  4 18:22:03 2026] [::1]:56516 [404]: GET /admin/js/simplebar.min.js - No such file or directory
+[Sat Apr  4 18:22:03 2026] [::1]:56516 Closing
+[Sat Apr  4 18:22:03 2026] [::1]:56522 [404]: GET /admin/js/dom-factory.js - No such file or directory
+[Sat Apr  4 18:22:03 2026] [::1]:56522 Closing
+[Sat Apr  4 18:22:03 2026] [::1]:56528 [404]: GET /admin/js/material-design-kit.js - No such file or directory
+[Sat Apr  4 18:22:03 2026] [::1]:56528 Closing
+[Sat Apr  4 18:22:03 2026] [::1]:56530 [404]: GET /admin/js/app.js - No such file or directory
+[Sat Apr  4 18:22:03 2026] [::1]:56530 Closing
+[Sat Apr  4 18:24:21 2026] [::1]:39678 Accepted
+[Sat Apr  4 18:24:21 2026] [::1]:39678 [200]: GET /register.php
+[Sat Apr  4 18:24:21 2026] [::1]:39678 Closing
+[Sat Apr  4 18:24:21 2026] [::1]:39692 Accepted
+[Sat Apr  4 18:24:21 2026] [::1]:39702 Accepted
+[Sat Apr  4 18:24:21 2026] [::1]:39692 [200]: GET /assets/css/styles.css
+[Sat Apr  4 18:24:21 2026] [::1]:39702 [200]: GET /assets/js/scripts.js
+[Sat Apr  4 18:24:21 2026] [::1]:39692 Closing
+[Sat Apr  4 18:24:21 2026] [::1]:39702 Closing
+[Sat Apr  4 18:24:25 2026] [::1]:39718 Accepted
+[Sat Apr  4 18:24:25 2026] [::1]:39718 [200]: POST /register.php
+[Sat Apr  4 18:24:25 2026] [::1]:39718 Closing
+[Sat Apr  4 18:24:25 2026] [::1]:39724 Accepted
+[Sat Apr  4 18:24:25 2026] [::1]:39736 Accepted
+[Sat Apr  4 18:24:25 2026] [::1]:39724 [200]: GET /assets/css/styles.css
+[Sat Apr  4 18:24:25 2026] [::1]:39736 [200]: GET /assets/js/scripts.js
+[Sat Apr  4 18:24:25 2026] [::1]:39724 Closing
+[Sat Apr  4 18:24:25 2026] [::1]:39736 Closing
+[Sat Apr  4 18:24:28 2026] [::1]:39740 Accepted
+[Sat Apr  4 18:24:28 2026] [::1]:39740 [200]: GET /login.php
+[Sat Apr  4 18:24:28 2026] [::1]:39740 Closing
+[Sat Apr  4 18:24:28 2026] [::1]:39752 Accepted
+[Sat Apr  4 18:24:28 2026] [::1]:39756 Accepted
+[Sat Apr  4 18:24:28 2026] [::1]:39752 [200]: GET /assets/css/styles.css
+[Sat Apr  4 18:24:28 2026] [::1]:39756 [200]: GET /assets/js/scripts.js
+[Sat Apr  4 18:24:28 2026] [::1]:39752 Closing
+[Sat Apr  4 18:24:28 2026] [::1]:39756 Closing
+[Sat Apr  4 18:24:29 2026] [::1]:39758 Accepted
+[Sat Apr  4 18:24:29 2026] [::1]:39758 [302]: POST /login.php
+[Sat Apr  4 18:24:29 2026] [::1]:39758 Closing
+[Sat Apr  4 18:24:29 2026] [::1]:39764 Accepted
+[Sat Apr  4 18:24:29 2026] [::1]:39764 [200]: GET /user/dashboard.php
+[Sat Apr  4 18:24:29 2026] [::1]:39764 Closing
+[Sat Apr  4 18:24:29 2026] [::1]:39780 Accepted
+[Sat Apr  4 18:24:29 2026] [::1]:39792 Accepted
+[Sat Apr  4 18:24:29 2026] [::1]:39780 [200]: GET /assets/css/styles.css
+[Sat Apr  4 18:24:29 2026] [::1]:39792 [200]: GET /assets/js/scripts.js
+[Sat Apr  4 18:24:29 2026] [::1]:39780 Closing
+[Sat Apr  4 18:24:29 2026] [::1]:39792 Closing
+[Sat Apr  4 18:24:30 2026] [::1]:32768 Accepted
+[Sat Apr  4 18:24:30 2026] [::1]:32768 [200]: GET /product_detail.php?id=1
+[Sat Apr  4 18:24:30 2026] [::1]:32768 Closing
+[Sat Apr  4 18:24:30 2026] [::1]:32772 Accepted
+[Sat Apr  4 18:24:30 2026] [::1]:32784 Accepted
+[Sat Apr  4 18:24:30 2026] [::1]:32772 [200]: GET /assets/css/styles.css
+[Sat Apr  4 18:24:30 2026] [::1]:32772 Closing
+[Sat Apr  4 18:24:30 2026] [::1]:32784 [200]: GET /assets/js/scripts.js
+[Sat Apr  4 18:24:30 2026] [::1]:32784 Closing
+[Sat Apr  4 18:24:31 2026] [::1]:32798 Accepted
+[Sat Apr  4 18:24:31 2026] [::1]:32798 [200]: POST /checkout.php
+[Sat Apr  4 18:24:31 2026] [::1]:32798 Closing
+[Sat Apr  4 18:24:31 2026] [::1]:32808 Accepted
+[Sat Apr  4 18:24:31 2026] [::1]:32820 Accepted
+[Sat Apr  4 18:24:31 2026] [::1]:32808 [200]: GET /assets/css/styles.css
+[Sat Apr  4 18:24:31 2026] [::1]:32820 [200]: GET /assets/js/scripts.js
+[Sat Apr  4 18:24:31 2026] [::1]:32808 Closing
+[Sat Apr  4 18:24:31 2026] [::1]:32820 Closing
+[Sat Apr  4 18:24:33 2026] [::1]:32830 Accepted
+[Sat Apr  4 18:24:33 2026] PHP Fatal error:  Uncaught Error: Cannot use object of type User as array in /app/user/network.php:57
+Stack trace:
+#0 {main}
+  thrown in /app/user/network.php on line 57
+[Sat Apr  4 18:24:33 2026] [::1]:32830 [200]: GET /user/network.php - Uncaught Error: Cannot use object of type User as array in /app/user/network.php:57
+Stack trace:
+#0 {main}
+  thrown in /app/user/network.php on line 57
+[Sat Apr  4 18:24:33 2026] [::1]:32830 Closing
+[Sat Apr  4 18:24:33 2026] [::1]:32832 Accepted
+[Sat Apr  4 18:24:33 2026] [::1]:32832 [200]: GET /assets/css/styles.css
+[Sat Apr  4 18:24:33 2026] [::1]:32832 Closing
+[Sat Apr  4 18:24:34 2026] [::1]:32844 Accepted
+[Sat Apr  4 18:24:34 2026] [::1]:32844 [302]: GET /logout.php
+[Sat Apr  4 18:24:34 2026] [::1]:32844 Closing
+[Sat Apr  4 18:24:34 2026] [::1]:32848 Accepted
+[Sat Apr  4 18:24:34 2026] [::1]:32848 [200]: GET /login.php
+[Sat Apr  4 18:24:34 2026] [::1]:32848 Closing
+[Sat Apr  4 18:24:34 2026] [::1]:32852 Accepted
+[Sat Apr  4 18:24:34 2026] [::1]:32862 Accepted
+[Sat Apr  4 18:24:34 2026] [::1]:32852 [200]: GET /assets/css/styles.css
+[Sat Apr  4 18:24:34 2026] [::1]:32862 [200]: GET /assets/js/scripts.js
+[Sat Apr  4 18:24:34 2026] [::1]:32852 Closing
+[Sat Apr  4 18:24:34 2026] [::1]:32862 Closing
+[Sat Apr  4 18:24:35 2026] [::1]:32878 Accepted
+[Sat Apr  4 18:24:35 2026] [::1]:32878 [200]: GET /admin/login.php
+[Sat Apr  4 18:24:35 2026] [::1]:32878 Closing
+[Sat Apr  4 18:24:35 2026] [::1]:32886 Accepted
+[Sat Apr  4 18:24:35 2026] [::1]:32886 [200]: GET /assets/css/styles.css
+[Sat Apr  4 18:24:35 2026] [::1]:32886 Closing
+[Sat Apr  4 18:24:36 2026] [::1]:32896 Accepted
+[Sat Apr  4 18:24:36 2026] [::1]:32896 [302]: POST /admin/login.php
+[Sat Apr  4 18:24:36 2026] [::1]:32896 Closing
+[Sat Apr  4 18:24:36 2026] [::1]:32904 Accepted
+[Sat Apr  4 18:24:36 2026] [::1]:32904 [200]: GET /admin/dashboard.php
+[Sat Apr  4 18:24:36 2026] [::1]:32904 Closing
+[Sat Apr  4 18:24:36 2026] [::1]:32916 Accepted
+[Sat Apr  4 18:24:36 2026] [::1]:32926 Accepted
+[Sat Apr  4 18:24:36 2026] [::1]:32940 Accepted
+[Sat Apr  4 18:24:36 2026] [::1]:32946 Accepted
+[Sat Apr  4 18:24:36 2026] [::1]:32952 Accepted
+[Sat Apr  4 18:24:36 2026] [::1]:32966 Accepted
+[Sat Apr  4 18:24:36 2026] [::1]:32916 [404]: GET /admin/css/simplebar.min.css - No such file or directory
+[Sat Apr  4 18:24:36 2026] [::1]:32916 Closing
+[Sat Apr  4 18:24:36 2026] [::1]:32978 Accepted
+[Sat Apr  4 18:24:36 2026] [::1]:32926 [404]: GET /admin/css/app.css - No such file or directory
+[Sat Apr  4 18:24:36 2026] [::1]:32926 Closing
+[Sat Apr  4 18:24:36 2026] [::1]:32940 [404]: GET /admin/css/vendor-material-icons.css - No such file or directory
+[Sat Apr  4 18:24:36 2026] [::1]:32946 [404]: GET /admin/css/vendor-fontawesome-free.css - No such file or directory
+[Sat Apr  4 18:24:36 2026] [::1]:32940 Closing
+[Sat Apr  4 18:24:36 2026] [::1]:32946 Closing
+[Sat Apr  4 18:24:36 2026] [::1]:32952 [404]: GET /admin/css/vendor-flatpickr.css - No such file or directory
+[Sat Apr  4 18:24:36 2026] [::1]:32952 Closing
+[Sat Apr  4 18:24:36 2026] [::1]:32990 Accepted
+[Sat Apr  4 18:24:36 2026] [::1]:32992 Accepted
+[Sat Apr  4 18:24:36 2026] [::1]:33002 Accepted
+[Sat Apr  4 18:24:36 2026] [::1]:33010 Accepted
+[Sat Apr  4 18:24:36 2026] [::1]:32966 [404]: GET /admin/css/vendor-flatpickr-airbnb.css - No such file or directory
+[Sat Apr  4 18:24:36 2026] [::1]:32966 Closing
+[Sat Apr  4 18:24:36 2026] [::1]:33022 Accepted
+[Sat Apr  4 18:24:36 2026] [::1]:32978 [200]: GET /assets/css/admin.css
+[Sat Apr  4 18:24:36 2026] [::1]:32978 Closing
+[Sat Apr  4 18:24:36 2026] [::1]:33026 Accepted
+[Sat Apr  4 18:24:36 2026] [::1]:32990 [404]: GET /admin/js/jquery.min.js - No such file or directory
+[Sat Apr  4 18:24:36 2026] [::1]:32990 Closing
+[Sat Apr  4 18:24:36 2026] [::1]:32992 [404]: GET /admin/js/popper.min.js - No such file or directory
+[Sat Apr  4 18:24:36 2026] [::1]:32992 Closing
+[Sat Apr  4 18:24:36 2026] [::1]:33002 [404]: GET /admin/js/bootstrap.min.js - No such file or directory
+[Sat Apr  4 18:24:36 2026] [::1]:33002 Closing
+[Sat Apr  4 18:24:36 2026] [::1]:33010 [404]: GET /admin/js/simplebar.min.js - No such file or directory
+[Sat Apr  4 18:24:36 2026] [::1]:33010 Closing
+[Sat Apr  4 18:24:36 2026] [::1]:33022 [404]: GET /admin/js/dom-factory.js - No such file or directory
+[Sat Apr  4 18:24:36 2026] [::1]:33022 Closing
+[Sat Apr  4 18:24:36 2026] [::1]:33026 [404]: GET /admin/js/material-design-kit.js - No such file or directory
+[Sat Apr  4 18:24:36 2026] [::1]:33030 Accepted
+[Sat Apr  4 18:24:36 2026] [::1]:33026 Closing
+[Sat Apr  4 18:24:36 2026] [::1]:33030 [404]: GET /admin/js/app.js - No such file or directory
+[Sat Apr  4 18:24:36 2026] [::1]:33030 Closing
+[Sat Apr  4 18:24:37 2026] [::1]:33034 Accepted
+[Sat Apr  4 18:24:37 2026] [::1]:33034 [200]: GET /admin/network.php
+[Sat Apr  4 18:24:37 2026] [::1]:33034 Closing
+[Sat Apr  4 18:24:37 2026] [::1]:33046 Accepted
+[Sat Apr  4 18:24:37 2026] [::1]:33046 [404]: GET /admin/css/simplebar.min.css - No such file or directory
+[Sat Apr  4 18:24:37 2026] [::1]:33046 Closing
+[Sat Apr  4 18:24:37 2026] [::1]:33048 Accepted
+[Sat Apr  4 18:24:37 2026] [::1]:33064 Accepted
+[Sat Apr  4 18:24:37 2026] [::1]:33070 Accepted
+[Sat Apr  4 18:24:37 2026] [::1]:33084 Accepted
+[Sat Apr  4 18:24:37 2026] [::1]:33096 Accepted
+[Sat Apr  4 18:24:37 2026] [::1]:33048 [404]: GET /admin/css/app.css - No such file or directory
+[Sat Apr  4 18:24:37 2026] [::1]:33048 Closing
+[Sat Apr  4 18:24:37 2026] [::1]:33110 Accepted
+[Sat Apr  4 18:24:37 2026] [::1]:33118 Accepted
+[Sat Apr  4 18:24:37 2026] [::1]:33064 [404]: GET /admin/css/vendor-material-icons.css - No such file or directory
+[Sat Apr  4 18:24:37 2026] [::1]:33064 Closing
+[Sat Apr  4 18:24:37 2026] [::1]:33070 [404]: GET /admin/css/vendor-fontawesome-free.css - No such file or directory
+[Sat Apr  4 18:24:37 2026] [::1]:33070 Closing
+[Sat Apr  4 18:24:37 2026] [::1]:33128 Accepted
+[Sat Apr  4 18:24:37 2026] [::1]:33140 Accepted
+[Sat Apr  4 18:24:37 2026] [::1]:33110 [200]: GET /assets/css/admin.css
+[Sat Apr  4 18:24:37 2026] [::1]:33084 [404]: GET /admin/css/vendor-flatpickr.css - No such file or directory
+[Sat Apr  4 18:24:37 2026] [::1]:33096 [404]: GET /admin/css/vendor-flatpickr-airbnb.css - No such file or directory
+[Sat Apr  4 18:24:37 2026] [::1]:33118 [404]: GET /admin/js/jquery.min.js - No such file or directory
+[Sat Apr  4 18:24:37 2026] [::1]:33128 [404]: GET /admin/js/popper.min.js - No such file or directory
+[Sat Apr  4 18:24:37 2026] [::1]:33140 [404]: GET /admin/js/bootstrap.min.js - No such file or directory
+[Sat Apr  4 18:24:37 2026] [::1]:33084 Closing
+[Sat Apr  4 18:24:37 2026] [::1]:33096 Closing
+[Sat Apr  4 18:24:37 2026] [::1]:33118 Closing
+[Sat Apr  4 18:24:37 2026] [::1]:33128 Closing
+[Sat Apr  4 18:24:37 2026] [::1]:33140 Closing
+[Sat Apr  4 18:24:37 2026] [::1]:33110 Closing
+[Sat Apr  4 18:24:37 2026] [::1]:33150 Accepted
+[Sat Apr  4 18:24:37 2026] [::1]:33158 Accepted
+[Sat Apr  4 18:24:37 2026] [::1]:33168 Accepted
+[Sat Apr  4 18:24:37 2026] [::1]:33180 Accepted
+[Sat Apr  4 18:24:37 2026] [::1]:33150 [404]: GET /admin/js/simplebar.min.js - No such file or directory
+[Sat Apr  4 18:24:37 2026] [::1]:33150 Closing
+[Sat Apr  4 18:24:37 2026] [::1]:33158 [404]: GET /admin/js/dom-factory.js - No such file or directory
+[Sat Apr  4 18:24:37 2026] [::1]:33158 Closing
+[Sat Apr  4 18:24:37 2026] [::1]:33168 [404]: GET /admin/js/material-design-kit.js - No such file or directory
+[Sat Apr  4 18:24:37 2026] [::1]:33168 Closing
+[Sat Apr  4 18:24:37 2026] [::1]:33180 [404]: GET /admin/js/app.js - No such file or directory
+[Sat Apr  4 18:24:37 2026] [::1]:33180 Closing
+[Sat Apr  4 18:33:43 2026] [::1]:49254 Accepted
+[Sat Apr  4 18:33:43 2026] [::1]:49254 [200]: GET /register.php
+[Sat Apr  4 18:33:43 2026] [::1]:49254 Closing
+[Sat Apr  4 18:33:43 2026] [::1]:49270 Accepted
+[Sat Apr  4 18:33:43 2026] [::1]:49274 Accepted
+[Sat Apr  4 18:33:43 2026] [::1]:49270 [200]: GET /assets/css/styles.css
+[Sat Apr  4 18:33:43 2026] [::1]:49274 [200]: GET /assets/js/scripts.js
+[Sat Apr  4 18:33:43 2026] [::1]:49270 Closing
+[Sat Apr  4 18:33:43 2026] [::1]:49274 Closing
+[Sat Apr  4 18:33:45 2026] [::1]:49286 Accepted
+[Sat Apr  4 18:33:45 2026] [::1]:49286 [200]: POST /register.php
+[Sat Apr  4 18:33:45 2026] [::1]:49286 Closing
+[Sat Apr  4 18:33:45 2026] [::1]:49298 Accepted
+[Sat Apr  4 18:33:45 2026] [::1]:49306 Accepted
+[Sat Apr  4 18:33:45 2026] [::1]:49298 [200]: GET /assets/css/styles.css
+[Sat Apr  4 18:33:45 2026] [::1]:49298 Closing
+[Sat Apr  4 18:33:45 2026] [::1]:49306 [200]: GET /assets/js/scripts.js
+[Sat Apr  4 18:33:45 2026] [::1]:49306 Closing
+[Sat Apr  4 18:33:47 2026] [::1]:49316 Accepted
+[Sat Apr  4 18:33:47 2026] [::1]:49316 [200]: GET /login.php
+[Sat Apr  4 18:33:47 2026] [::1]:49316 Closing
+[Sat Apr  4 18:33:47 2026] [::1]:49328 Accepted
+[Sat Apr  4 18:33:47 2026] [::1]:49334 Accepted
+[Sat Apr  4 18:33:47 2026] [::1]:49328 [200]: GET /assets/css/styles.css
+[Sat Apr  4 18:33:47 2026] [::1]:49334 [200]: GET /assets/js/scripts.js
+[Sat Apr  4 18:33:47 2026] [::1]:49328 Closing
+[Sat Apr  4 18:33:47 2026] [::1]:49334 Closing
+[Sat Apr  4 18:33:47 2026] [::1]:49342 Accepted
+[Sat Apr  4 18:33:47 2026] [::1]:49342 [302]: POST /login.php
+[Sat Apr  4 18:33:47 2026] [::1]:49342 Closing
+[Sat Apr  4 18:33:47 2026] [::1]:49344 Accepted
+[Sat Apr  4 18:33:47 2026] [::1]:49344 [200]: GET /user/dashboard.php
+[Sat Apr  4 18:33:47 2026] [::1]:49344 Closing
+[Sat Apr  4 18:33:47 2026] [::1]:49356 Accepted
+[Sat Apr  4 18:33:47 2026] [::1]:49368 Accepted
+[Sat Apr  4 18:33:47 2026] [::1]:49356 [200]: GET /assets/css/styles.css
+[Sat Apr  4 18:33:47 2026] [::1]:49368 [200]: GET /assets/js/scripts.js
+[Sat Apr  4 18:33:47 2026] [::1]:49356 Closing
+[Sat Apr  4 18:33:47 2026] [::1]:49368 Closing
+[Sat Apr  4 18:33:48 2026] [::1]:49370 Accepted
+[Sat Apr  4 18:33:48 2026] [::1]:49370 [200]: GET /product_detail.php?id=1
+[Sat Apr  4 18:33:48 2026] [::1]:49370 Closing
+[Sat Apr  4 18:33:48 2026] [::1]:49376 Accepted
+[Sat Apr  4 18:33:48 2026] [::1]:49384 Accepted
+[Sat Apr  4 18:33:48 2026] [::1]:49376 [200]: GET /assets/css/styles.css
+[Sat Apr  4 18:33:48 2026] [::1]:49376 Closing
+[Sat Apr  4 18:33:48 2026] [::1]:49384 [200]: GET /assets/js/scripts.js
+[Sat Apr  4 18:33:48 2026] [::1]:49384 Closing
+[Sat Apr  4 18:33:49 2026] [::1]:49398 Accepted
+[Sat Apr  4 18:33:49 2026] [::1]:49398 [302]: POST /cart.php
+[Sat Apr  4 18:33:49 2026] [::1]:49398 Closing
+[Sat Apr  4 18:33:49 2026] [::1]:49400 Accepted
+[Sat Apr  4 18:33:49 2026] [::1]:49400 [200]: GET /cart.php
+[Sat Apr  4 18:33:49 2026] [::1]:49400 Closing
+[Sat Apr  4 18:33:49 2026] [::1]:49404 Accepted
+[Sat Apr  4 18:33:49 2026] [::1]:49416 Accepted
+[Sat Apr  4 18:33:49 2026] [::1]:49404 [200]: GET /assets/css/styles.css
+[Sat Apr  4 18:33:49 2026] [::1]:49404 Closing
+[Sat Apr  4 18:33:49 2026] [::1]:49416 [200]: GET /assets/js/scripts.js
+[Sat Apr  4 18:33:49 2026] [::1]:49416 Closing
+[Sat Apr  4 18:33:50 2026] [::1]:55484 Accepted
+[Sat Apr  4 18:33:50 2026] [::1]:55484 [200]: GET /product_detail.php?id=2
+[Sat Apr  4 18:33:50 2026] [::1]:55484 Closing
+[Sat Apr  4 18:33:50 2026] [::1]:55490 Accepted
+[Sat Apr  4 18:33:50 2026] [::1]:55492 Accepted
+[Sat Apr  4 18:33:50 2026] [::1]:55490 [200]: GET /assets/css/styles.css
+[Sat Apr  4 18:33:50 2026] [::1]:55492 [200]: GET /assets/js/scripts.js
+[Sat Apr  4 18:33:50 2026] [::1]:55490 Closing
+[Sat Apr  4 18:33:50 2026] [::1]:55492 Closing
+[Sat Apr  4 18:33:51 2026] [::1]:55504 Accepted
+[Sat Apr  4 18:33:51 2026] [::1]:55504 [302]: POST /cart.php
+[Sat Apr  4 18:33:51 2026] [::1]:55504 Closing
+[Sat Apr  4 18:33:51 2026] [::1]:55520 Accepted
+[Sat Apr  4 18:33:51 2026] [::1]:55520 [200]: GET /cart.php
+[Sat Apr  4 18:33:51 2026] [::1]:55520 Closing
+[Sat Apr  4 18:33:51 2026] [::1]:55536 Accepted
+[Sat Apr  4 18:33:51 2026] [::1]:55546 Accepted
+[Sat Apr  4 18:33:51 2026] [::1]:55536 [200]: GET /assets/css/styles.css
+[Sat Apr  4 18:33:51 2026] [::1]:55546 [200]: GET /assets/js/scripts.js
+[Sat Apr  4 18:33:51 2026] [::1]:55536 Closing
+[Sat Apr  4 18:33:51 2026] [::1]:55546 Closing
+[Sat Apr  4 18:33:52 2026] [::1]:55562 Accepted
+[Sat Apr  4 18:33:52 2026] PHP Fatal error:  Uncaught mysqli_sql_exception: Duplicate entry 'ORD-69D159904C425' for key 'orders.order_id' in /app/classes/Database.php:52
+Stack trace:
+#0 /app/classes/Database.php(52): mysqli_stmt->execute()
+#1 /app/classes/Order.php(11): Database->insert()
+#2 /app/checkout.php(65): Order->create()
+#3 {main}
+  thrown in /app/classes/Database.php on line 52
+[Sat Apr  4 18:33:52 2026] [::1]:55562 [500]: POST /checkout.php - Uncaught mysqli_sql_exception: Duplicate entry 'ORD-69D159904C425' for key 'orders.order_id' in /app/classes/Database.php:52
+Stack trace:
+#0 /app/classes/Database.php(52): mysqli_stmt->execute()
+#1 /app/classes/Order.php(11): Database->insert()
+#2 /app/checkout.php(65): Order->create()
+#3 {main}
+  thrown in /app/classes/Database.php on line 52
+[Sat Apr  4 18:33:52 2026] [::1]:55562 Closing
+[Sat Apr  4 18:33:54 2026] [::1]:55572 Accepted
+[Sat Apr  4 18:33:54 2026] [::1]:55572 [302]: GET /logout.php
+[Sat Apr  4 18:33:54 2026] [::1]:55572 Closing
+[Sat Apr  4 18:33:54 2026] [::1]:55578 Accepted
+[Sat Apr  4 18:33:54 2026] [::1]:55578 [200]: GET /login.php
+[Sat Apr  4 18:33:54 2026] [::1]:55578 Closing
+[Sat Apr  4 18:33:54 2026] [::1]:55592 Accepted
+[Sat Apr  4 18:33:54 2026] [::1]:55598 Accepted
+[Sat Apr  4 18:33:54 2026] [::1]:55592 [200]: GET /assets/css/styles.css
+[Sat Apr  4 18:33:54 2026] [::1]:55598 [200]: GET /assets/js/scripts.js
+[Sat Apr  4 18:33:54 2026] [::1]:55592 Closing
+[Sat Apr  4 18:33:54 2026] [::1]:55598 Closing
+[Sat Apr  4 18:33:54 2026] [::1]:55604 Accepted
+[Sat Apr  4 18:33:54 2026] [::1]:55604 [200]: GET /admin/login.php
+[Sat Apr  4 18:33:54 2026] [::1]:55604 Closing
+[Sat Apr  4 18:33:54 2026] [::1]:55612 Accepted
+[Sat Apr  4 18:33:54 2026] [::1]:55612 [200]: GET /assets/css/styles.css
+[Sat Apr  4 18:33:54 2026] [::1]:55612 Closing
+[Sat Apr  4 18:33:54 2026] [::1]:55622 Accepted
+[Sat Apr  4 18:33:54 2026] [::1]:55622 [302]: POST /admin/login.php
+[Sat Apr  4 18:33:54 2026] [::1]:55622 Closing
+[Sat Apr  4 18:33:54 2026] [::1]:55630 Accepted
+[Sat Apr  4 18:33:54 2026] [::1]:55630 [200]: GET /admin/dashboard.php
+[Sat Apr  4 18:33:54 2026] [::1]:55630 Closing
+[Sat Apr  4 18:33:54 2026] [::1]:55644 Accepted
+[Sat Apr  4 18:33:54 2026] [::1]:55654 Accepted
+[Sat Apr  4 18:33:54 2026] [::1]:55668 Accepted
+[Sat Apr  4 18:33:54 2026] [::1]:55670 Accepted
+[Sat Apr  4 18:33:54 2026] [::1]:55684 Accepted
+[Sat Apr  4 18:33:54 2026] [::1]:55690 Accepted
+[Sat Apr  4 18:33:54 2026] [::1]:55644 [404]: GET /admin/css/simplebar.min.css - No such file or directory
+[Sat Apr  4 18:33:54 2026] [::1]:55644 Closing
+[Sat Apr  4 18:33:54 2026] [::1]:55654 [404]: GET /admin/css/app.css - No such file or directory
+[Sat Apr  4 18:33:54 2026] [::1]:55668 [404]: GET /admin/css/vendor-material-icons.css - No such file or directory
+[Sat Apr  4 18:33:54 2026] [::1]:55670 [404]: GET /admin/css/vendor-fontawesome-free.css - No such file or directory
+[Sat Apr  4 18:33:54 2026] [::1]:55654 Closing
+[Sat Apr  4 18:33:54 2026] [::1]:55668 Closing
+[Sat Apr  4 18:33:54 2026] [::1]:55670 Closing
+[Sat Apr  4 18:33:54 2026] [::1]:55684 [404]: GET /admin/css/vendor-flatpickr.css - No such file or directory
+[Sat Apr  4 18:33:54 2026] [::1]:55690 [404]: GET /admin/css/vendor-flatpickr-airbnb.css - No such file or directory
+[Sat Apr  4 18:33:54 2026] [::1]:55684 Closing
+[Sat Apr  4 18:33:54 2026] [::1]:55690 Closing
+[Sat Apr  4 18:33:54 2026] [::1]:55702 Accepted
+[Sat Apr  4 18:33:54 2026] [::1]:55710 Accepted
+[Sat Apr  4 18:33:54 2026] [::1]:55718 Accepted
+[Sat Apr  4 18:33:54 2026] [::1]:55732 Accepted
+[Sat Apr  4 18:33:54 2026] [::1]:55748 Accepted
+[Sat Apr  4 18:33:54 2026] [::1]:55752 Accepted
+[Sat Apr  4 18:33:54 2026] [::1]:55702 [200]: GET /assets/css/admin.css
+[Sat Apr  4 18:33:54 2026] [::1]:55702 Closing
+[Sat Apr  4 18:33:54 2026] [::1]:55710 [404]: GET /admin/js/jquery.min.js - No such file or directory
+[Sat Apr  4 18:33:54 2026] [::1]:55710 Closing
+[Sat Apr  4 18:33:54 2026] [::1]:55766 Accepted
+[Sat Apr  4 18:33:54 2026] [::1]:55718 [404]: GET /admin/js/popper.min.js - No such file or directory
+[Sat Apr  4 18:33:54 2026] [::1]:55718 Closing
+[Sat Apr  4 18:33:54 2026] [::1]:55732 [404]: GET /admin/js/bootstrap.min.js - No such file or directory
+[Sat Apr  4 18:33:54 2026] [::1]:55732 Closing
+[Sat Apr  4 18:33:54 2026] [::1]:55748 [404]: GET /admin/js/simplebar.min.js - No such file or directory
+[Sat Apr  4 18:33:54 2026] [::1]:55748 Closing
+[Sat Apr  4 18:33:54 2026] [::1]:55752 [404]: GET /admin/js/dom-factory.js - No such file or directory
+[Sat Apr  4 18:33:54 2026] [::1]:55752 Closing
+[Sat Apr  4 18:33:54 2026] [::1]:55768 Accepted
+[Sat Apr  4 18:33:54 2026] [::1]:55766 [404]: GET /admin/js/material-design-kit.js - No such file or directory
+[Sat Apr  4 18:33:54 2026] [::1]:55766 Closing
+[Sat Apr  4 18:33:54 2026] [::1]:55768 [404]: GET /admin/js/app.js - No such file or directory
+[Sat Apr  4 18:33:54 2026] [::1]:55768 Closing
+[Sat Apr  4 18:33:55 2026] [::1]:55776 Accepted
+[Sat Apr  4 18:33:55 2026] [::1]:55776 [200]: GET /admin/network.php
+[Sat Apr  4 18:33:55 2026] [::1]:55776 Closing
+[Sat Apr  4 18:33:55 2026] [::1]:55788 Accepted
+[Sat Apr  4 18:33:55 2026] [::1]:55794 Accepted
+[Sat Apr  4 18:33:55 2026] [::1]:55802 Accepted
+[Sat Apr  4 18:33:55 2026] [::1]:55818 Accepted
+[Sat Apr  4 18:33:55 2026] [::1]:55824 Accepted
+[Sat Apr  4 18:33:55 2026] [::1]:55826 Accepted
+[Sat Apr  4 18:33:55 2026] [::1]:55788 [404]: GET /admin/css/vendor-material-icons.css - No such file or directory
+[Sat Apr  4 18:33:55 2026] [::1]:55788 Closing
+[Sat Apr  4 18:33:55 2026] [::1]:55794 [404]: GET /admin/css/vendor-fontawesome-free.css - No such file or directory
+[Sat Apr  4 18:33:55 2026] [::1]:55802 [404]: GET /admin/css/vendor-flatpickr.css - No such file or directory
+[Sat Apr  4 18:33:55 2026] [::1]:55818 [404]: GET /admin/css/simplebar.min.css - No such file or directory
+[Sat Apr  4 18:33:55 2026] [::1]:55824 [404]: GET /admin/css/vendor-flatpickr-airbnb.css - No such file or directory
+[Sat Apr  4 18:33:55 2026] [::1]:55826 [404]: GET /admin/css/app.css - No such file or directory
+[Sat Apr  4 18:33:55 2026] [::1]:55794 Closing
+[Sat Apr  4 18:33:55 2026] [::1]:55802 Closing
+[Sat Apr  4 18:33:55 2026] [::1]:55818 Closing
+[Sat Apr  4 18:33:55 2026] [::1]:55824 Closing
+[Sat Apr  4 18:33:55 2026] [::1]:55826 Closing
+[Sat Apr  4 18:33:55 2026] [::1]:55836 Accepted
+[Sat Apr  4 18:33:55 2026] [::1]:55850 Accepted
+[Sat Apr  4 18:33:55 2026] [::1]:55864 Accepted
+[Sat Apr  4 18:33:55 2026] [::1]:55866 Accepted
+[Sat Apr  4 18:33:55 2026] [::1]:55872 Accepted
+[Sat Apr  4 18:33:55 2026] [::1]:55836 [200]: GET /assets/css/admin.css
+[Sat Apr  4 18:33:55 2026] [::1]:55878 Accepted
+[Sat Apr  4 18:33:55 2026] [::1]:55836 Closing
+[Sat Apr  4 18:33:55 2026] [::1]:55882 Accepted
+[Sat Apr  4 18:33:55 2026] [::1]:55850 [404]: GET /admin/js/jquery.min.js - No such file or directory
+[Sat Apr  4 18:33:55 2026] [::1]:55864 [404]: GET /admin/js/popper.min.js - No such file or directory
+[Sat Apr  4 18:33:55 2026] [::1]:55866 [404]: GET /admin/js/bootstrap.min.js - No such file or directory
+[Sat Apr  4 18:33:55 2026] [::1]:55850 Closing
+[Sat Apr  4 18:33:55 2026] [::1]:55864 Closing
+[Sat Apr  4 18:33:55 2026] [::1]:55866 Closing
+[Sat Apr  4 18:33:55 2026] [::1]:55872 [404]: GET /admin/js/simplebar.min.js - No such file or directory
+[Sat Apr  4 18:33:55 2026] [::1]:55878 [404]: GET /admin/js/dom-factory.js - No such file or directory
+[Sat Apr  4 18:33:55 2026] [::1]:55882 [404]: GET /admin/js/material-design-kit.js - No such file or directory
+[Sat Apr  4 18:33:55 2026] [::1]:55872 Closing
+[Sat Apr  4 18:33:55 2026] [::1]:55878 Closing
+[Sat Apr  4 18:33:55 2026] [::1]:55882 Closing
+[Sat Apr  4 18:33:55 2026] [::1]:55898 Accepted
+[Sat Apr  4 18:33:55 2026] [::1]:55898 [404]: GET /admin/js/app.js - No such file or directory
+[Sat Apr  4 18:33:55 2026] [::1]:55898 Closing
+[Sat Apr  4 18:38:40 2026] [::1]:51748 Accepted
+[Sat Apr  4 18:38:40 2026] [::1]:51748 [200]: GET /register.php
+[Sat Apr  4 18:38:40 2026] [::1]:51748 Closing
+[Sat Apr  4 18:38:40 2026] [::1]:51750 Accepted
+[Sat Apr  4 18:38:40 2026] [::1]:51762 Accepted
+[Sat Apr  4 18:38:40 2026] [::1]:51750 [200]: GET /assets/css/styles.css
+[Sat Apr  4 18:38:40 2026] [::1]:51750 Closing
+[Sat Apr  4 18:38:40 2026] [::1]:51762 [200]: GET /assets/js/scripts.js
+[Sat Apr  4 18:38:40 2026] [::1]:51762 Closing
+[Sat Apr  4 18:38:42 2026] [::1]:51772 Accepted
+[Sat Apr  4 18:38:42 2026] [::1]:51772 [200]: POST /register.php
+[Sat Apr  4 18:38:42 2026] [::1]:51772 Closing
+[Sat Apr  4 18:38:42 2026] [::1]:51782 Accepted
+[Sat Apr  4 18:38:42 2026] [::1]:51782 [200]: GET /assets/css/styles.css
+[Sat Apr  4 18:38:42 2026] [::1]:51782 Closing
+[Sat Apr  4 18:38:42 2026] [::1]:51794 Accepted
+[Sat Apr  4 18:38:42 2026] [::1]:51794 [200]: GET /assets/js/scripts.js
+[Sat Apr  4 18:38:42 2026] [::1]:51794 Closing
+[Sat Apr  4 18:38:43 2026] [::1]:51796 Accepted
+[Sat Apr  4 18:38:43 2026] [::1]:51796 [200]: GET /login.php
+[Sat Apr  4 18:38:43 2026] [::1]:51796 Closing
+[Sat Apr  4 18:38:43 2026] [::1]:51806 Accepted
+[Sat Apr  4 18:38:43 2026] [::1]:51810 Accepted
+[Sat Apr  4 18:38:43 2026] [::1]:51806 [200]: GET /assets/css/styles.css
+[Sat Apr  4 18:38:43 2026] [::1]:51810 [200]: GET /assets/js/scripts.js
+[Sat Apr  4 18:38:43 2026] [::1]:51806 Closing
+[Sat Apr  4 18:38:43 2026] [::1]:51810 Closing
+[Sat Apr  4 18:38:44 2026] [::1]:51812 Accepted
+[Sat Apr  4 18:38:44 2026] [::1]:51812 [302]: POST /login.php
+[Sat Apr  4 18:38:44 2026] [::1]:51812 Closing
+[Sat Apr  4 18:38:44 2026] [::1]:51828 Accepted
+[Sat Apr  4 18:38:44 2026] [::1]:51828 [200]: GET /user/dashboard.php
+[Sat Apr  4 18:38:44 2026] [::1]:51828 Closing
+[Sat Apr  4 18:38:44 2026] [::1]:51842 Accepted
+[Sat Apr  4 18:38:44 2026] [::1]:51858 Accepted
+[Sat Apr  4 18:38:44 2026] [::1]:51842 [200]: GET /assets/css/styles.css
+[Sat Apr  4 18:38:44 2026] [::1]:51858 [200]: GET /assets/js/scripts.js
+[Sat Apr  4 18:38:44 2026] [::1]:51842 Closing
+[Sat Apr  4 18:38:44 2026] [::1]:51858 Closing
+[Sat Apr  4 18:38:45 2026] [::1]:51864 Accepted
+[Sat Apr  4 18:38:45 2026] [::1]:51864 [200]: GET /product_detail.php?id=1
+[Sat Apr  4 18:38:45 2026] [::1]:51864 Closing
+[Sat Apr  4 18:38:45 2026] [::1]:51868 Accepted
+[Sat Apr  4 18:38:45 2026] [::1]:51870 Accepted
+[Sat Apr  4 18:38:45 2026] [::1]:51868 [200]: GET /assets/css/styles.css
+[Sat Apr  4 18:38:45 2026] [::1]:51870 [200]: GET /assets/js/scripts.js
+[Sat Apr  4 18:38:45 2026] [::1]:51868 Closing
+[Sat Apr  4 18:38:45 2026] [::1]:51870 Closing
+[Sat Apr  4 18:38:46 2026] [::1]:51882 Accepted
+[Sat Apr  4 18:38:46 2026] [::1]:51882 [302]: POST /cart.php
+[Sat Apr  4 18:38:46 2026] [::1]:51882 Closing
+[Sat Apr  4 18:38:46 2026] [::1]:51890 Accepted
+[Sat Apr  4 18:38:46 2026] [::1]:51890 [200]: GET /cart.php
+[Sat Apr  4 18:38:46 2026] [::1]:51890 Closing
+[Sat Apr  4 18:38:46 2026] [::1]:51892 Accepted
+[Sat Apr  4 18:38:46 2026] [::1]:51904 Accepted
+[Sat Apr  4 18:38:46 2026] [::1]:51892 [200]: GET /assets/css/styles.css
+[Sat Apr  4 18:38:46 2026] [::1]:51904 [200]: GET /assets/js/scripts.js
+[Sat Apr  4 18:38:46 2026] [::1]:51892 Closing
+[Sat Apr  4 18:38:46 2026] [::1]:51904 Closing
+[Sat Apr  4 18:38:47 2026] [::1]:51914 Accepted
+[Sat Apr  4 18:38:47 2026] [::1]:51914 [200]: GET /product_detail.php?id=2
+[Sat Apr  4 18:38:47 2026] [::1]:51914 Closing
+[Sat Apr  4 18:38:47 2026] [::1]:51930 Accepted
+[Sat Apr  4 18:38:47 2026] [::1]:51936 Accepted
+[Sat Apr  4 18:38:47 2026] [::1]:51930 [200]: GET /assets/css/styles.css
+[Sat Apr  4 18:38:47 2026] [::1]:51930 Closing
+[Sat Apr  4 18:38:47 2026] [::1]:51936 [200]: GET /assets/js/scripts.js
+[Sat Apr  4 18:38:47 2026] [::1]:51936 Closing
+[Sat Apr  4 18:38:47 2026] [::1]:51950 Accepted
+[Sat Apr  4 18:38:47 2026] [::1]:51950 [302]: POST /cart.php
+[Sat Apr  4 18:38:47 2026] [::1]:51950 Closing
+[Sat Apr  4 18:38:47 2026] [::1]:51956 Accepted
+[Sat Apr  4 18:38:47 2026] [::1]:51956 [200]: GET /cart.php
+[Sat Apr  4 18:38:47 2026] [::1]:51956 Closing
+[Sat Apr  4 18:38:47 2026] [::1]:51958 Accepted
+[Sat Apr  4 18:38:47 2026] [::1]:51972 Accepted
+[Sat Apr  4 18:38:47 2026] [::1]:51958 [200]: GET /assets/css/styles.css
+[Sat Apr  4 18:38:47 2026] [::1]:51972 [200]: GET /assets/js/scripts.js
+[Sat Apr  4 18:38:47 2026] [::1]:51958 Closing
+[Sat Apr  4 18:38:47 2026] [::1]:51972 Closing
+[Sat Apr  4 18:38:48 2026] [::1]:51988 Accepted
+[Sat Apr  4 18:38:48 2026] PHP Fatal error:  Uncaught mysqli_sql_exception: Duplicate entry 'ORD-69D15AB89EB4F' for key 'orders.order_id' in /app/classes/Database.php:52
+Stack trace:
+#0 /app/classes/Database.php(52): mysqli_stmt->execute()
+#1 /app/classes/Order.php(11): Database->insert()
+#2 /app/checkout.php(65): Order->create()
+#3 {main}
+  thrown in /app/classes/Database.php on line 52
+[Sat Apr  4 18:38:48 2026] [::1]:51988 [500]: POST /checkout.php - Uncaught mysqli_sql_exception: Duplicate entry 'ORD-69D15AB89EB4F' for key 'orders.order_id' in /app/classes/Database.php:52
+Stack trace:
+#0 /app/classes/Database.php(52): mysqli_stmt->execute()
+#1 /app/classes/Order.php(11): Database->insert()
+#2 /app/checkout.php(65): Order->create()
+#3 {main}
+  thrown in /app/classes/Database.php on line 52
+[Sat Apr  4 18:38:48 2026] [::1]:51988 Closing
+[Sat Apr  4 18:38:50 2026] [::1]:43244 Accepted
+[Sat Apr  4 18:38:50 2026] [::1]:43244 [302]: GET /logout.php
+[Sat Apr  4 18:38:50 2026] [::1]:43244 Closing
+[Sat Apr  4 18:38:50 2026] [::1]:43248 Accepted
+[Sat Apr  4 18:38:50 2026] [::1]:43248 [200]: GET /login.php
+[Sat Apr  4 18:38:50 2026] [::1]:43248 Closing
+[Sat Apr  4 18:38:50 2026] [::1]:43250 Accepted
+[Sat Apr  4 18:38:50 2026] [::1]:43258 Accepted
+[Sat Apr  4 18:38:50 2026] [::1]:43250 [200]: GET /assets/css/styles.css
+[Sat Apr  4 18:38:50 2026] [::1]:43258 [200]: GET /assets/js/scripts.js
+[Sat Apr  4 18:38:50 2026] [::1]:43250 Closing
+[Sat Apr  4 18:38:50 2026] [::1]:43258 Closing
+[Sat Apr  4 18:38:50 2026] [::1]:43260 Accepted
+[Sat Apr  4 18:38:50 2026] [::1]:43260 [200]: GET /admin/login.php
+[Sat Apr  4 18:38:50 2026] [::1]:43260 Closing
+[Sat Apr  4 18:38:50 2026] [::1]:43270 Accepted
+[Sat Apr  4 18:38:50 2026] [::1]:43270 [200]: GET /assets/css/styles.css
+[Sat Apr  4 18:38:50 2026] [::1]:43270 Closing
+[Sat Apr  4 18:38:50 2026] [::1]:43286 Accepted
+[Sat Apr  4 18:38:50 2026] [::1]:43286 [302]: POST /admin/login.php
+[Sat Apr  4 18:38:50 2026] [::1]:43286 Closing
+[Sat Apr  4 18:38:50 2026] [::1]:43296 Accepted
+[Sat Apr  4 18:38:50 2026] [::1]:43296 [200]: GET /admin/dashboard.php
+[Sat Apr  4 18:38:50 2026] [::1]:43296 Closing
+[Sat Apr  4 18:38:50 2026] [::1]:43306 Accepted
+[Sat Apr  4 18:38:50 2026] [::1]:43320 Accepted
+[Sat Apr  4 18:38:50 2026] [::1]:43336 Accepted
+[Sat Apr  4 18:38:50 2026] [::1]:43340 Accepted
+[Sat Apr  4 18:38:50 2026] [::1]:43352 Accepted
+[Sat Apr  4 18:38:50 2026] [::1]:43356 Accepted
+[Sat Apr  4 18:38:50 2026] [::1]:43306 [404]: GET /admin/css/simplebar.min.css - No such file or directory
+[Sat Apr  4 18:38:50 2026] [::1]:43306 Closing
+[Sat Apr  4 18:38:50 2026] [::1]:43320 [404]: GET /admin/css/app.css - No such file or directory
+[Sat Apr  4 18:38:50 2026] [::1]:43320 Closing
+[Sat Apr  4 18:38:50 2026] [::1]:43366 Accepted
+[Sat Apr  4 18:38:50 2026] [::1]:43368 Accepted
+[Sat Apr  4 18:38:50 2026] [::1]:43336 [404]: GET /admin/css/vendor-material-icons.css - No such file or directory
+[Sat Apr  4 18:38:50 2026] [::1]:43336 Closing
+[Sat Apr  4 18:38:50 2026] [::1]:43340 [404]: GET /admin/css/vendor-fontawesome-free.css - No such file or directory
+[Sat Apr  4 18:38:50 2026] [::1]:43340 Closing
+[Sat Apr  4 18:38:50 2026] [::1]:43384 Accepted
+[Sat Apr  4 18:38:50 2026] [::1]:43396 Accepted
+[Sat Apr  4 18:38:50 2026] [::1]:43352 [404]: GET /admin/css/vendor-flatpickr.css - No such file or directory
+[Sat Apr  4 18:38:50 2026] [::1]:43352 Closing
+[Sat Apr  4 18:38:50 2026] [::1]:43356 [404]: GET /admin/css/vendor-flatpickr-airbnb.css - No such file or directory
+[Sat Apr  4 18:38:50 2026] [::1]:43356 Closing
+[Sat Apr  4 18:38:50 2026] [::1]:43412 Accepted
+[Sat Apr  4 18:38:50 2026] [::1]:43416 Accepted
+[Sat Apr  4 18:38:50 2026] [::1]:43366 [200]: GET /assets/css/admin.css
+[Sat Apr  4 18:38:50 2026] [::1]:43366 Closing
+[Sat Apr  4 18:38:50 2026] [::1]:43368 [404]: GET /admin/js/jquery.min.js - No such file or directory
+[Sat Apr  4 18:38:50 2026] [::1]:43368 Closing
+[Sat Apr  4 18:38:50 2026] [::1]:43428 Accepted
+[Sat Apr  4 18:38:50 2026] [::1]:43384 [404]: GET /admin/js/popper.min.js - No such file or directory
+[Sat Apr  4 18:38:50 2026] [::1]:43384 Closing
+[Sat Apr  4 18:38:50 2026] [::1]:43396 [404]: GET /admin/js/bootstrap.min.js - No such file or directory
+[Sat Apr  4 18:38:50 2026] [::1]:43396 Closing
+[Sat Apr  4 18:38:50 2026] [::1]:43412 [404]: GET /admin/js/simplebar.min.js - No such file or directory
+[Sat Apr  4 18:38:50 2026] [::1]:43412 Closing
+[Sat Apr  4 18:38:50 2026] [::1]:43416 [404]: GET /admin/js/dom-factory.js - No such file or directory
+[Sat Apr  4 18:38:50 2026] [::1]:43416 Closing
+[Sat Apr  4 18:38:50 2026] [::1]:43440 Accepted
+[Sat Apr  4 18:38:50 2026] [::1]:43428 [404]: GET /admin/js/material-design-kit.js - No such file or directory
+[Sat Apr  4 18:38:50 2026] [::1]:43428 Closing
+[Sat Apr  4 18:38:50 2026] [::1]:43440 [404]: GET /admin/js/app.js - No such file or directory
+[Sat Apr  4 18:38:50 2026] [::1]:43440 Closing
+[Sat Apr  4 18:38:51 2026] [::1]:43456 Accepted
+[Sat Apr  4 18:38:51 2026] [::1]:43456 [200]: GET /admin/network.php
+[Sat Apr  4 18:38:51 2026] [::1]:43456 Closing
+[Sat Apr  4 18:38:51 2026] [::1]:43462 Accepted
+[Sat Apr  4 18:38:51 2026] [::1]:43468 Accepted
+[Sat Apr  4 18:38:51 2026] [::1]:43484 Accepted
+[Sat Apr  4 18:38:51 2026] [::1]:43488 Accepted
+[Sat Apr  4 18:38:51 2026] [::1]:43462 [404]: GET /admin/css/simplebar.min.css - No such file or directory
+[Sat Apr  4 18:38:51 2026] [::1]:43462 Closing
+[Sat Apr  4 18:38:51 2026] [::1]:43492 Accepted
+[Sat Apr  4 18:38:51 2026] [::1]:43498 Accepted
+[Sat Apr  4 18:38:51 2026] [::1]:43510 Accepted
+[Sat Apr  4 18:38:51 2026] [::1]:43468 [404]: GET /admin/css/app.css - No such file or directory
+[Sat Apr  4 18:38:51 2026] [::1]:43468 Closing
+[Sat Apr  4 18:38:51 2026] [::1]:43518 Accepted
+[Sat Apr  4 18:38:51 2026] [::1]:43484 [404]: GET /admin/css/vendor-material-icons.css - No such file or directory
+[Sat Apr  4 18:38:51 2026] [::1]:43488 [404]: GET /admin/css/vendor-fontawesome-free.css - No such file or directory
+[Sat Apr  4 18:38:51 2026] [::1]:43492 [404]: GET /admin/css/vendor-flatpickr.css - No such file or directory
+[Sat Apr  4 18:38:51 2026] [::1]:43484 Closing
+[Sat Apr  4 18:38:51 2026] [::1]:43488 Closing
+[Sat Apr  4 18:38:51 2026] [::1]:43492 Closing
+[Sat Apr  4 18:38:51 2026] [::1]:43498 [404]: GET /admin/css/vendor-flatpickr-airbnb.css - No such file or directory
+[Sat Apr  4 18:38:51 2026] [::1]:43510 [200]: GET /assets/css/admin.css
+[Sat Apr  4 18:38:51 2026] [::1]:43498 Closing
+[Sat Apr  4 18:38:51 2026] [::1]:43510 Closing
+[Sat Apr  4 18:38:51 2026] [::1]:43524 Accepted
+[Sat Apr  4 18:38:51 2026] [::1]:43528 Accepted
+[Sat Apr  4 18:38:51 2026] [::1]:43536 Accepted
+[Sat Apr  4 18:38:51 2026] [::1]:43550 Accepted
+[Sat Apr  4 18:38:51 2026] [::1]:43556 Accepted
+[Sat Apr  4 18:38:51 2026] [::1]:43518 [404]: GET /admin/js/jquery.min.js - No such file or directory
+[Sat Apr  4 18:38:51 2026] [::1]:43524 [404]: GET /admin/js/popper.min.js - No such file or directory
+[Sat Apr  4 18:38:51 2026] [::1]:43518 Closing
+[Sat Apr  4 18:38:51 2026] [::1]:43524 Closing
+[Sat Apr  4 18:38:51 2026] [::1]:43528 [404]: GET /admin/js/bootstrap.min.js - No such file or directory
+[Sat Apr  4 18:38:51 2026] [::1]:43528 Closing
+[Sat Apr  4 18:38:51 2026] [::1]:43536 [404]: GET /admin/js/simplebar.min.js - No such file or directory
+[Sat Apr  4 18:38:51 2026] [::1]:43536 Closing
+[Sat Apr  4 18:38:51 2026] [::1]:43550 [404]: GET /admin/js/dom-factory.js - No such file or directory
+[Sat Apr  4 18:38:51 2026] [::1]:43550 Closing
+[Sat Apr  4 18:38:51 2026] [::1]:43556 [404]: GET /admin/js/material-design-kit.js - No such file or directory
+[Sat Apr  4 18:38:51 2026] [::1]:43556 Closing
+[Sat Apr  4 18:38:51 2026] [::1]:43570 Accepted
+[Sat Apr  4 18:38:51 2026] [::1]:43570 [404]: GET /admin/js/app.js - No such file or directory
+[Sat Apr  4 18:38:51 2026] [::1]:43570 Closing

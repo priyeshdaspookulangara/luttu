@@ -5,12 +5,14 @@ require_once __DIR__ . '/../classes/User.php';
 require_once __DIR__ . '/../classes/Customer.php';
 require_once __DIR__ . '/../classes/Category.php';
 require_once __DIR__ . '/../classes/Wallet.php';
+require_once __DIR__ . '/../classes/Cart.php';
 
 $database = new Database($conn);
 $user = new User($database);
 $customer = new Customer($database);
 $cat = new Category($database);
 $wallet = new Wallet($database);
+$cart_system = new Cart();
 
 $is_logged_in = $customer->isLoggedIn();
 $is_admin = $user->isAdmin();
@@ -48,7 +50,8 @@ $categories_nav = $cat->getAll();
       Products <span class="chevron">▾</span>
     </div>
     <?php if ($is_logged_in): ?>
-        <a class="nav-item" href="<?php echo $base_url; ?>user/dashboard.php">My Wallet & Orders</a>
+        <a class="nav-item" href="<?php echo $base_url; ?>user/dashboard.php">Wallet</a>
+        <a class="nav-item" href="<?php echo $base_url; ?>user/network.php">Network</a>
     <?php endif; ?>
   </div>
   <div class="nav-right">
@@ -58,8 +61,8 @@ $categories_nav = $cat->getAll();
         <div class="nav-action" onclick="window.location.href='<?php echo $base_url; ?>login.php'">⊙ Login</div>
     <?php endif; ?>
     <div class="nav-action">⌕ Search</div>
-    <div class="nav-action cart" onclick="window.location.href='<?php echo $base_url; ?>user/dashboard.php'">
-      Rewards <span class="cart-count">PV</span>
+    <div class="nav-action cart" onclick="window.location.href='<?php echo $base_url; ?>cart.php'">
+      Bag <span class="cart-count"><?php echo $cart_system->getTotalCount(); ?></span>
     </div>
   </div>
 </nav>

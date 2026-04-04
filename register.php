@@ -10,16 +10,23 @@ $error = '';
 $success = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (!verify_csrf_token($_POST['csrf_token'] ?? '')) {
+        die("CSRF token validation failed.");
+    }
+
     $username = $_POST['username'] ?? '';
     $email = $_POST['email'] ?? '';
     $password = $_POST['password'] ?? '';
     $confirm_password = $_POST['confirm_password'] ?? '';
+    $sponsor_code = $_POST['sponsor_code'] ?? '';
 
     if ($password !== $confirm_password) {
         $error = 'Passwords do not match.';
+    } else if (empty($sponsor_code)) {
+        $error = 'Sponsor Code is required.';
     } else {
         try {
-            if ($customer->register($username, $password, $email)) {
+            if ($customer->register($username, $password, $email, $sponsor_code)) {
                 $success = 'Registration successful! <a href="login.php" style="color:white;text-decoration:underline">Login here</a>';
             } else {
                 $error = 'Registration failed. Username or email may already be taken.';
@@ -57,6 +64,11 @@ require_once __DIR__ . '/includes/header.php';
         <?php endif; ?>
 
         <form method="POST">
+            <?php csrf_field(); ?>
+            <div class="form-field">
+                <label class="form-label">Sponsor Code</label>
+                <input type="text" name="sponsor_code" class="form-input" placeholder="Enter MBXXXXXX" value="<?php echo h($_GET['ref'] ?? ''); ?>" required>
+            </div>
             <div class="form-field">
                 <label class="form-label">Username</label>
                 <input type="text" name="username" class="form-input" placeholder="Choose a username" required>

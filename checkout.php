@@ -5,44 +5,87 @@ require_once __DIR__ . '/classes/Customer.php';
 require_once __DIR__ . '/classes/Product.php';
 require_once __DIR__ . '/classes/Wallet.php';
 require_once __DIR__ . '/classes/Order.php';
+require_once __DIR__ . '/classes/MLM.php';
+require_once __DIR__ . '/classes/Cart.php';
 
 $database = new Database($conn);
-$prod = new Product($database);
+$prod_manager = new Product($database);
 $customer = new Customer($database);
 $wallet = new Wallet($database);
-$order = new Order($database);
+$order_manager = new Order($database);
+$mlm = new MLM($database);
+$cart = new Cart();
 
 if (!$customer->isLoggedIn()) {
     header('Location: login.php');
     exit;
 }
 
-$id = $_POST['product_id'] ?? null;
-$p = $prod->getById($id);
+$user_id = (int)$customer->getSessionId();
+$order_id = 'ORD-' . strtoupper(uniqid());
+$checkout_type = $_POST['checkout_type'] ?? 'single';
 
-if (!$p) {
+$items_to_process = [];
+if ($checkout_type === 'cart') {
+    $cart_items = $cart->getItems();
+    foreach ($cart_items as $pid => $qty) {
+        $p = $prod_manager->getById($pid);
+        if ($p) {
+            $items_to_process[] = [
+                'id' => $p['id'],
+                'price' => $p['price'],
+                'pv' => $p['pv_value'] * $qty,
+                'qty' => $qty
+            ];
+        }
+    }
+} else {
+    $id = $_POST['product_id'] ?? null;
+    $p = $prod_manager->getById($id);
+    if ($p) {
+        $items_to_process[] = [
+            'id' => $p['id'],
+            'price' => $p['price'],
+            'pv' => $p['pv_value'],
+            'qty' => 1
+        ];
+    }
+}
+
+if (empty($items_to_process)) {
     header('Location: index.php');
     exit;
 }
 
-$order_id = 'ORD-' . strtoupper(uniqid());
-$pv_value = (float)$p['pv_value'];
-$user_id = (int)$customer->getSessionId();
+$total_pv = 0;
+$success = true;
 
-$success = false;
+// Use transaction logic (manually since Database class is simple)
+foreach ($items_to_process as $item) {
+    if (!$order_manager->create($user_id, (int)$item['id'], $order_id, (float)$item['price'], (float)$item['pv'])) {
+        $success = false;
+        break;
+    }
+    $total_pv += $item['pv'];
+}
 
-// Idempotency check
-$check_sql = "SELECT id FROM wallet_transactions WHERE reference_id = ? AND user_id = ?";
-$res = $database->query($check_sql, [$order_id, $user_id], "si");
+if ($success) {
+    // Check idempotency for wallet
+    $check_sql = "SELECT id FROM wallet_transactions WHERE reference_id = ? AND user_id = ?";
+    $res = $database->query($check_sql, [$order_id, $user_id], "si");
 
-if (empty($res)) {
-    if ($order->create($user_id, (int)$p['id'], $order_id, (float)$p['price'], $pv_value)) {
-        if ($wallet->addTransaction($user_id, $pv_value, 'credit', "Earned PV from order $order_id", $order_id)) {
-            $success = true;
+    if (empty($res)) {
+        if ($wallet->addTransaction($user_id, $total_pv, 'credit', "Earned PV from order $order_id", $order_id)) {
+            // Distribute MLM Commissions
+            $mlm->distributeCommission($user_id, $order_id, $total_pv);
+
+            if ($checkout_type === 'cart') {
+                $cart->clear();
+            }
+        } else {
+            $success = false;
         }
     }
-} else {
-    $success = true;
 }
 
 $page_title = 'Checkout Success - ShopPV';
@@ -63,7 +106,7 @@ require_once __DIR__ . '/includes/header.php';
 
             <div style="background:var(--cream);padding:30px;border-radius:var(--r-lg);margin-bottom:40px;border:1.5px solid var(--sand)">
                 <div style="font-size:.65rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--terra);margin-bottom:10px">Rewards Credited</div>
-                <h2 style="font-family:var(--display);font-size:2.5rem;color:var(--ink)">You earned <strong><?php echo h($pv_value); ?> PV</strong>!</h2>
+                <h2 style="font-family:var(--display);font-size:2.5rem;color:var(--ink)">You earned <strong><?php echo number_format($total_pv, 2); ?> PV</strong>!</h2>
             </div>
 
             <div style="display:flex;gap:16px;justify-content:center">

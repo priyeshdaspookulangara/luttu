@@ -24,6 +24,7 @@ CREATE TABLE IF NOT EXISTS products (
     name VARCHAR(255) NOT NULL,
     description TEXT,
     price DECIMAL(10, 2) NOT NULL,
+    list_price DECIMAL(10, 2) NOT NULL DEFAULT 0.00,
     margin_amount DECIMAL(10, 2) NOT NULL,
     pv_value DECIMAL(10, 2) NOT NULL,
     brand VARCHAR(100),

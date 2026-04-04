@@ -9,6 +9,10 @@ $customer = new Customer($database);
 $error = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (!verify_csrf_token($_POST['csrf_token'] ?? '')) {
+        die("CSRF token validation failed.");
+    }
+
     $username = $_POST['username'] ?? '';
     $password = $_POST['password'] ?? '';
 
@@ -44,6 +48,7 @@ require_once __DIR__ . '/includes/header.php';
         <?php endif; ?>
 
         <form method="POST">
+            <?php csrf_field(); ?>
             <div class="form-field">
                 <label class="form-label">Username</label>
                 <input type="text" name="username" class="form-input" placeholder="Enter username" required>

@@ -33,6 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $name = $_POST['name'] ?? '';
         $description = $_POST['description'] ?? '';
         $price = (float)($_POST['price'] ?? 0);
+        $list_price = (float)($_POST['list_price'] ?? 0);
         $margin_amount = (float)($_POST['margin_amount'] ?? 0);
         $pv_value = (float)($_POST['pv_value'] ?? 0);
         $brand = $_POST['brand'] ?? '';
@@ -50,11 +51,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         try {
             if ($action === 'create') {
-                $product_id = $prod->create($category_id, $name, $description, $price, $margin_amount, $pv_value, $brand, $manufacturer, $supplier, $attributes);
+                $product_id = $prod->create($category_id, $name, $description, $price, $list_price, $margin_amount, $pv_value, $brand, $manufacturer, $supplier, $attributes);
                 $message = 'Product created successfully!';
             } else {
                 $product_id = (int)$_POST['id'];
-                $prod->update($product_id, $category_id, $name, $description, $price, $margin_amount, $pv_value, $brand, $manufacturer, $supplier, $attributes);
+                $prod->update($product_id, $category_id, $name, $description, $price, $list_price, $margin_amount, $pv_value, $brand, $manufacturer, $supplier, $attributes);
                 $message = 'Product updated successfully!';
             }
 
@@ -152,8 +153,13 @@ require_once __DIR__ . '/includes/header.php';
             </div>
 
             <div class="form-group">
-                <label>Public Price (₹)</label>
-                <input type="number" step="0.01" name="price" class="form-control-admin" value="<?php echo $editing_prod ? h($editing_prod['price']) : ''; ?>" required>
+                <label>M.R.P. (₹)</label>
+                <input type="number" step="0.01" name="list_price" class="form-control-admin" value="<?php echo $editing_prod ? h($editing_prod['list_price']) : ''; ?>" required placeholder="Maximum Retail Price">
+            </div>
+
+            <div class="form-group">
+                <label>S.P. (Selling Price ₹)</label>
+                <input type="number" step="0.01" name="price" class="form-control-admin" value="<?php echo $editing_prod ? h($editing_prod['price']) : ''; ?>" required placeholder="Discounted Price">
             </div>
 
             <div class="form-group">
@@ -230,7 +236,7 @@ require_once __DIR__ . '/includes/header.php';
                         <th>ID</th>
                         <th>Product</th>
                         <th>Category</th>
-                        <th>Price</th>
+                        <th>M.R.P / S.P.</th>
                         <th>PV Value</th>
                         <th>Actions</th>
                     </tr>
@@ -242,7 +248,10 @@ require_once __DIR__ . '/includes/header.php';
                             <td>#<?php echo h($p['id']); ?></td>
                             <td><strong><?php echo h($p['name']); ?></strong></td>
                             <td><?php echo h($p['category_name']); ?></td>
-                            <td>₹<?php echo h($p['price']); ?></td>
+                            <td>
+                                <span style="text-decoration:line-through; color:#999; font-size:0.85em">₹<?php echo h($p['list_price']); ?></span><br>
+                                <strong>₹<?php echo h($p['price']); ?></strong>
+                            </td>
                             <td><span style="color:var(--primary-color); font-weight:600"><?php echo h($p['pv_value']); ?> PV</span></td>
                             <td>
                                 <div style="display:flex; gap:15px">
